@@ -152,39 +152,97 @@ let $config = {
   customComps,
   refine: {
     type: 'multipleFieldGroups',
+    columns: true,
     multipleFieldGroups: {
+      status: {
+        radio: {
+          'Active Projects': {
+
+          },
+          'Archived Projects': {
+
+          }
+        }
+
+      },
       projectCategory: {
-        'Parks & Recreation': {
-          name: 'Parks_Recreation',
-          value: function (item) { return item.properties.client_dept == 'Philadephia Parks and Recreation'; },
+        checkbox: {
+          'Parks & Recreation': {
+            name: 'Parks_Recreation',
+            value: function (item) { return item.properties.client_dept == 'Philadephia Parks and Recreation'; },
+          },
+          'Public Health': {
+            name: 'Public_Health',
+            value: function (item) { return item.properties.client_dept !== null; },
+          },
+          'Human Services': {
+            name: 'Human_Services',
+            value: function (item) { return item.properties.client_dept !== null; },
+          },
+          'Free Library': {
+            name: 'Free_Library',
+            value: function (item) { return item.properties.client_dept !== null; },
+          },
+          'Fire Department': {
+            name: 'Fire_Department',
+            value: function (item) { return item.properties.client_dept !== null; },
+          },
+          'Police Department': {
+            name: 'Police_Department',
+            value: function (item) { return item.properties.client_dept !== null; },
+          },
+          'Public Property': {
+            name: 'Public_Property',
+            value: function (item) { return item.properties.client_dept !== null; },
+          },
+          'Other': {
+            name: 'Other',
+            value: function (item) { return item.properties.client_dept !== null; },
+          },
         },
-        'Public Health': {
-          name: 'Public_Health',
-          value: function (item) { return item.properties.client_dept !== null; },
-        },
-        'Human Services': {
-          name: 'Human_Services',
-          value: function (item) { return item.properties.client_dept !== null; },
-        },
-        'Free Library': {
-          name: 'Free_Library',
-          value: function (item) { return item.properties.client_dept !== null; },
-        },
-        'Fire Department': {
-          name: 'Fire_Department',
-          value: function (item) { return item.properties.client_dept !== null; },
-        },
-        'Police Department': {
-          name: 'Police_Department',
-          value: function (item) { return item.properties.client_dept !== null; },
-        },
-        'Public Property': {
-          name: 'Public_Property',
-          value: function (item) { return item.properties.client_dept !== null; },
-        },
-        'Other': {
-          name: 'Other',
-          value: function (item) { return item.properties.client_dept !== null; },
+      },
+      councilDistrict: {
+        checkbox: {
+          'District 1': {
+            name: 'District1',
+            value: function (item) { return item.properties.council_district == 1; },
+          },
+          'District 2': {
+            name: 'District2',
+            value: function (item) { return item.properties.council_district == 2; },
+          },
+          'District 3': {
+            name: 'District3',
+            value: function (item) { return item.properties.council_district == 3; },
+          },
+          'District 4': {
+            name: 'District4',
+            value: function (item) { return item.properties.council_district == 4; },
+          },
+          'District 5': {
+            name: 'District5',
+            value: function (item) { return item.properties.council_district == 5; },
+          },
+          'District 6': {
+            name: 'District6',
+            value: function (item) { return item.properties.council_district == 6; },
+          },
+          'District 7': {
+            name: 'District7',
+            value: function (item) { return item.properties.council_district == 7; },
+          },
+          'District 8': {
+            name: 'District8',
+            value: function (item) { return item.properties.council_district == 8; },
+          },
+          'District 9': {
+            name: 'District9',
+            value: function (item) { return item.properties.council_district == 9; },
+          },
+          'District 10': {
+            name: 'District10',
+            value: function (item) { return item.properties.council_district == 10; },
+          },
         },
       },
     },
