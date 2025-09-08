@@ -29,5 +29,5 @@ export default {
     },
     "section2Title": "",
   },
-  // FILTER TEXT
+  "Philadephia Parks and Recreation": "Philadephia Parks and Recreation",
 }

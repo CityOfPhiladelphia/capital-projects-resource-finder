@@ -66,9 +66,9 @@ let $config = {
     fuseDistance: 500,
   },
   locationInfo: {
-    siteNameField: 'organization_name',
-    siteName: function(item) { return item.properties.organization_name },
-    tagsPhrase: function(item) { return item.properties.languagesSpoken },
+    siteNameField: 'project_name',
+    siteName: function (item) { return item.properties.project_name },
+    //tagsPhrase: function (item) { return item.properties.languagesSpoken },
   },
   tags: {
     type: 'fieldValues',
@@ -151,10 +151,43 @@ let $config = {
   },
   customComps,
   refine: {
-    type: 'categoryField_array',
-    value: function(item) {
-      return item.properties.services_offered;
-    }
+    type: 'multipleFieldGroups',
+    multipleFieldGroups: {
+      projectCategory: {
+        'Parks & Recreation': {
+          name: 'Parks_Recreation',
+          value: function (item) { return item.properties.client_dept == 'Philadephia Parks and Recreation'; },
+        },
+        'Public Health': {
+          name: 'Public_Health',
+          value: function (item) { return item.properties.client_dept !== null; },
+        },
+        'Human Services': {
+          name: 'Human_Services',
+          value: function (item) { return item.properties.client_dept !== null; },
+        },
+        'Free Library': {
+          name: 'Free_Library',
+          value: function (item) { return item.properties.client_dept !== null; },
+        },
+        'Fire Department': {
+          name: 'Fire_Department',
+          value: function (item) { return item.properties.client_dept !== null; },
+        },
+        'Police Department': {
+          name: 'Police_Department',
+          value: function (item) { return item.properties.client_dept !== null; },
+        },
+        'Public Property': {
+          name: 'Public_Property',
+          value: function (item) { return item.properties.client_dept !== null; },
+        },
+        'Other': {
+          name: 'Other',
+          value: function (item) { return item.properties.client_dept !== null; },
+        },
+      },
+    },
   },
   dataSources: {
     capitalProjects,
