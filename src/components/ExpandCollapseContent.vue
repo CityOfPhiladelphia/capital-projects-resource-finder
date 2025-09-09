@@ -67,10 +67,32 @@ const parseTagsList = (list) => {
   return finalTags.sort().join(", ");
 };
 
+const selectedProjectName = ref(null);
+
+const handleProjectClick = (projectName) => {
+  selectedProjectName.value = projectName;
+};
+
 </script>
 
 <template>
-  <div class='main-ec-content'>
+  <!-- <div class='main-ec-content'> -->
+    <div class="columns is-multiline is-mobile">
+      <button
+        v-for="project in item.properties.projects"
+        :key="project.objectid"
+        class="project-select column is-4-desktop is-3-mobile has-text-centered add-borders pl-1 pr-1"
+        :class="{ 'project-selected': project.project_name === selectedProjectName }"
+        @click="handleProjectClick(project.project_name)"
+      >
+        {{ project.project_name }}
+      </button>
+    </div>
+
+
+    <div class="tabs">
+      test
+    </div>
     <div class="columns top-section">
       <div class="column is-6">
         <div
@@ -203,5 +225,21 @@ const parseTagsList = (list) => {
         {{ parseTagsList(item.properties.tags) }}
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 </template>
+
+<style scoped>
+
+.project-select {
+  color: #444444;
+  font-size: 1rem;
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+
+.project-selected {
+  background-color: white;
+  font-weight: bold;
+}
+
+</style>
