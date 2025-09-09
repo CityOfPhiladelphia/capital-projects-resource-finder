@@ -67,7 +67,7 @@ const parseTagsList = (list) => {
   return finalTags.sort().join(", ");
 };
 
-const selectedProjectName = ref(null);
+const selectedProjectName = ref(props.item.properties.projects[0].project_name);
 
 const handleProjectClick = (projectName) => {
   selectedProjectName.value = projectName;
