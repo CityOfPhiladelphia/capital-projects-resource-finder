@@ -67,7 +67,7 @@ let $config = {
   },
   locationInfo: {
     siteNameField: 'project_name',
-    siteName: function (item) { return item.properties.project_name },
+    siteName: function (item) { return item.properties.site_name },
     //tagsPhrase: function (item) { return item.properties.languagesSpoken },
   },
   tags: {
@@ -163,7 +163,6 @@ let $config = {
 
           }
         }
-
       },
       projectCategory: {
         checkbox: {
