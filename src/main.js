@@ -53,6 +53,7 @@ let $config = {
   // printView: false,
   allowZipcodeSearch: true,
   allowPrint: true,
+  showPrintInCards: false,
   retractableRefine: true,
   dropdownRefine: false,
   searchBar: {
