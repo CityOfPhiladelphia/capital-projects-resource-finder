@@ -163,6 +163,12 @@ let $config = {
               const today = Date.now();
               const completed = new Date(item.properties.actual_completion)
               return !item.properties.actual_completion || (today - completed <= 15814800000);
+            },
+            checkbox: {
+              'planning': {},
+              'design': {},
+              'construction': {},
+              'complete': {}
             }
           },
           'archived': {
