@@ -41,7 +41,7 @@ export default {
     "category": "Project Category",
     "parksRecreation": "Parks & Recreation",
     "publicHealth": "Public Health",
-    "Human Services": "Human Services",
+    "humanServices": "Human Services",
     "freeLibrary": "Free Library",
     "fireDepartment": "Fire Department",
     "policeDepartment": "Police Department",
@@ -60,6 +60,5 @@ export default {
     "district8": "District 8",
     "district9": "District 9",
     "district10": "District 10",
-  },
-  "Philadephia Parks and Recreation": "Philadephia Parks and Recreation",
+  }
 }

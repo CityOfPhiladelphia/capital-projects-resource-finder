@@ -161,14 +161,8 @@ let $config = {
             i18n_key: 'status.active',
             value: function (item) {
               const today = Date.now();
-              const completed = new Date(item.properties.actual_completion)
+              const completed = item.properties.actual_completion ? new Date(item.properties.actual_completion) : 0;
               return !item.properties.actual_completion || (today - completed <= 15814800000);
-            },
-            checkbox: {
-              'planning': {},
-              'design': {},
-              'construction': {},
-              'complete': {}
             }
           },
           'archived': {
@@ -176,8 +170,8 @@ let $config = {
             i18n_key: 'status.archived',
             value: function (item) {
               const today = Date.now();
-              const completed = new Date(item.actual_completion)
-              return !!item.actual_completion || (today - completed > 15814800000);
+              const completed = item.properties.actual_completion ? new Date(item.properties.actual_completion) : 0;
+              return !!item.actual_completion && (today - completed > 15814800000);
             }
           }
         }
