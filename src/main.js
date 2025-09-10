@@ -69,7 +69,6 @@ let $config = {
   locationInfo: {
     siteNameField: 'project_name',
     siteName: function (item) { return item.properties.site_name },
-    //tagsPhrase: function (item) { return item.properties.languagesSpoken },
   },
   tags: {
     type: 'fieldValues',
@@ -157,93 +156,148 @@ let $config = {
     multipleFieldGroups: {
       status: {
         radio: {
-          'Active Projects': {
-
+          'active': {
+            unique_key: 'status_active',
+            i18n_key: 'status.active',
+            value: function (item) {
+              const today = Date.now();
+              const completed = new Date(item.properties.actual_completion)
+              return !item.properties.actual_completion || (today - completed <= 15814800000);
+            },
+            checkbox: {
+              'planning': {},
+              'design': {},
+              'construction': {},
+              'complete': {}
+            }
           },
-          'Archived Projects': {
-
+          'archived': {
+            unique_key: 'status_archived',
+            i18n_key: 'status.archived',
+            value: function (item) {
+              const today = Date.now();
+              const completed = new Date(item.actual_completion)
+              return !!item.actual_completion || (today - completed > 15814800000);
+            }
           }
         }
       },
       projectCategory: {
         checkbox: {
-          'Parks & Recreation': {
-            name: 'Parks_Recreation',
+          'parksRecreation': {
+            unique_key: 'projectCategory_parksRecreation',
+            i18n_key: 'projectCategory.parksRecreation',
+            dependentGroups: ['status'],
             value: function (item) { return item.properties.client_dept == 'Philadephia Parks and Recreation'; },
           },
-          'Public Health': {
-            name: 'Public_Health',
-            value: function (item) { return item.properties.client_dept !== null; },
+          'publicHealth': {
+            unique_key: 'projectCategory_publicHealth',
+            i18n_key: 'projectCategory.publicHealth',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.client_dept == 'Public Health'; },
           },
-          'Human Services': {
-            name: 'Human_Services',
-            value: function (item) { return item.properties.client_dept !== null; },
+          'humanServices': {
+            unique_key: 'projectCategory_humanServices',
+            i18n_key: 'projectCategory.humanServices',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.client_dept == 'Human Services'; },
           },
-          'Free Library': {
-            name: 'Free_Library',
-            value: function (item) { return item.properties.client_dept !== null; },
+          'freeLibrary': {
+            unique_key: 'projectCategory_freeLibrary',
+            i18n_key: 'projectCategory.freeLibrary',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.client_dept == 'Free Library'; },
           },
-          'Fire Department': {
-            name: 'Fire_Department',
-            value: function (item) { return item.properties.client_dept !== null; },
+          'fireDepartment': {
+            unique_key: 'projectCategory_fireDepartment',
+            i18n_key: 'projectCategory.fireDepartment',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.client_dept == 'Fire Department'; },
           },
-          'Police Department': {
-            name: 'Police_Department',
-            value: function (item) { return item.properties.client_dept !== null; },
+          'policeDepartment': {
+            unique_key: 'projectCategory_policeDepartment',
+            i18n_key: 'projectCategory.policeDepartment',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.client_dept == 'Police Department'; },
           },
-          'Public Property': {
-            name: 'Public_Property',
-            value: function (item) { return item.properties.client_dept !== null; },
+          'publicProperty': {
+            unique_key: 'projectCategory_publicProperty',
+            i18n_key: 'projectCategory.publicProperty',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.client_dept == 'Public Property'; },
           },
-          'Other': {
-            name: 'Other',
+          'other': {
+            unique_key: 'projectCategory_other',
+            i18n_key: 'projectCategory.other',
+            dependentGroups: ['status'],
             value: function (item) { return item.properties.client_dept !== null; },
           },
         },
       },
       councilDistrict: {
         checkbox: {
-          'District 1': {
-            name: 'District1',
-            value: function (item) { return item.properties.council_district == 1; },
+          'district1': {
+            unique_key: 'councilDistrict_district1',
+            i18n_key: 'councilDistrict.district1',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.council_district == "1"; },
           },
-          'District 2': {
-            name: 'District2',
-            value: function (item) { return item.properties.council_district == 2; },
+          'district2': {
+            unique_key: 'councilDistrict_district2',
+            i18n_key: 'councilDistrict.district2',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.council_district == "2"; },
           },
-          'District 3': {
-            name: 'District3',
-            value: function (item) { return item.properties.council_district == 3; },
+          'district3': {
+            unique_key: 'councilDistrict_district3',
+            i18n_key: 'councilDistrict.district3',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.council_district == "3"; },
           },
-          'District 4': {
-            name: 'District4',
-            value: function (item) { return item.properties.council_district == 4; },
+          'district4': {
+            unique_key: 'councilDistrict_district4',
+            i18n_key: 'councilDistrict.district4',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.council_district == "4"; },
           },
-          'District 5': {
-            name: 'District5',
-            value: function (item) { return item.properties.council_district == 5; },
+          'district5': {
+            unique_key: 'councilDistrict_district5',
+            i18n_key: 'councilDistrict.district5',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.council_district == "5"; },
           },
-          'District 6': {
-            name: 'District6',
-            value: function (item) { return item.properties.council_district == 6; },
+          'district6': {
+            unique_key: 'councilDistrict_district6',
+            i18n_key: 'councilDistrict.district6',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.council_district == "6"; },
           },
-          'District 7': {
-            name: 'District7',
-            value: function (item) { return item.properties.council_district == 7; },
+          'district7': {
+            unique_key: 'councilDistrict_district7',
+            i18n_key: 'councilDistrict.district7',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.council_district == "7"; },
           },
-          'District 8': {
-            name: 'District8',
-            value: function (item) { return item.properties.council_district == 8; },
+          'district8': {
+            unique_key: 'councilDistrict_district8',
+            i18n_key: 'councilDistrict.district8',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.council_district == "8"; },
           },
-          'District 9': {
-            name: 'District9',
-            value: function (item) { return item.properties.council_district == 9; },
+          'district9': {
+            unique_key: 'councilDistrict_district9',
+            i18n_key: 'councilDistrict.district9',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.council_district == "9"; },
           },
-          'District 10': {
-            name: 'District10',
-            value: function (item) { return item.properties.council_district == 10; },
+          'district10': {
+            unique_key: 'councilDistrict_district10',
+            i18n_key: 'councilDistrict.district10',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.council_district == "10"; },
           },
         },
+        columns: 2
       },
     },
   },
