@@ -20,8 +20,9 @@ import { faMinus as farMinus } from '@fortawesome/pro-regular-svg-icons';
 import { faEnvelope as farEnvelope } from '@fortawesome/pro-regular-svg-icons';
 import { faFolder } from '@fortawesome/free-solid-svg-icons';
 import { faMoneyCheckDollar } from '@fortawesome/free-solid-svg-icons';
+import { faChartTreeMap } from '@fortawesome/pro-solid-svg-icons';
 
-library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, faFolder, faMoneyCheckDollar);
+library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, faFolder, faMoneyCheckDollar, faChartTreeMap);
 
 // use these if running off unlinked package
 import pinboard from '@phila/pinboard';

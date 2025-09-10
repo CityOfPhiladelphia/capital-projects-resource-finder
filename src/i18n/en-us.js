@@ -62,4 +62,23 @@ export default {
     "district10": "District 10",
   },
   "Philadephia Parks and Recreation": "Philadephia Parks and Recreation",
+  "card": {
+    "category": "Category",
+    "district": "District",
+    "budget": "Budget",
+    "section_description": "Description",
+    "description_text": "This short description text will provide background context about the project and should be longer than two to three sentences in length.",
+    "section_status": "Status",
+    "status_text": "This short description text will provide additional context to help a user interpret this status component.",
+    "current_stage": "Current Stage",
+    "status_descriptions": {
+      "planning": "The project is in the planning phase. Public input may be requested.",
+      "design": "The project designs or plans are developed. Public input may be requested.",
+      "construction": "Construction is underway.",
+      "complete": "The project is complete."
+    },
+    "estimated_completion_description": "Estimated Completion",
+    "estimated_completion_text": "This short description text will provide additional context to help a user interpret this table and the labels",
+    "project_team_description": "Project Team",
+  }
 }

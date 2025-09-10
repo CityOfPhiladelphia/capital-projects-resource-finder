@@ -25,20 +25,20 @@ const parseAddress = (address) => {
   return formattedAddress;
 };
 
-const parseServiceList = (list) => {
-  console.log('parseServiceList:', list);
-  let formattedService = [];
-  for (let i=0; i < list.length; i++) {
-    if (list[i] === 'Legal services') {
-      let legalLink = props.item.properties.website_legal;
-      let link = `<a href="${legalLink}" target="_blank">${t(list[i])} <i class='fa fa-external-link-alt'></i></a>`;
-      formattedService.push(link);
-    } else {
-      formattedService.push(t(list[i]));
-    }
-  }
-  return formattedService;
-};
+// const parseServiceList = (list) => {
+//   console.log('parseServiceList:', list);
+//   let formattedService = [];
+//   for (let i=0; i < list.length; i++) {
+//     if (list[i] === 'Legal services') {
+//       let legalLink = props.item.properties.website_legal;
+//       let link = `<a href="${legalLink}" target="_blank">${t(list[i])} <i class='fa fa-external-link-alt'></i></a>`;
+//       formattedService.push(link);
+//     } else {
+//       formattedService.push(t(list[i]));
+//     }
+//   }
+//   return formattedService;
+// };
 
 const makeValidUrl = (url) => {
   let newUrl = window.decodeURIComponent(url);
@@ -85,16 +85,24 @@ const selectedProject = computed(() => {
 <template>
   <div class="ec-content columns is-multiline is-mobile">
     <button
-    v-for="project in item.properties.projects"
-    :key="project.objectid"
-    class="project-select column is-4-desktop is-3-mobile has-text-centered add-borders pl-1 pr-1"
-    :class="{ 'project-selected': project.project_name === selectedProjectName }"
-    @click="handleProjectClick(project.project_name)"
-    >
-    {{ project.project_name }}
-  </button>
-</div>
-<div class='main-ec-content'>
+      v-for="project in item.properties.projects"
+      :key="project.objectid"
+      class="project-select column is-4-desktop is-3-mobile p-0"
+      :class="{ 'project-selected': project.project_name === selectedProjectName }"
+      @click="handleProjectClick(project.project_name)"
+      >
+        <div
+          class="has-text-centered add-borders p-1 pl-1 pr-1"
+          :class="{ 'project-selected': project.project_name === selectedProjectName }"
+        >
+          {{ project.project_name }}
+        </div>
+    </button>
+    <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
+    <div v-if="item.properties.projects.length == 2"class="spacer column is-4"></div>
+  </div>
+
+  <div class='main-ec-content'>
 
     <print-share-section
       :item="selectedProject"
@@ -125,7 +133,7 @@ const selectedProject = computed(() => {
           </div>
           <div
             class="column is-11"
-            v-html="'<b>Category: </b>'+selectedProject.client_dept"
+            v-html="'<b>'+t('card.category')+': </b>'+selectedProject.client_dept"
           />
         </div>
 
@@ -163,7 +171,7 @@ const selectedProject = computed(() => {
           </div>
           <div
             class="column is-11"
-            v-html="'<b>Budget: </b>'+ accounting.formatMoney(selectedProject.project_estimated_cost)"
+            v-html="'<b>'+t('card.budget')+': </b>'+ accounting.formatMoney(selectedProject.project_estimated_cost)"
           />
             
         </div>
@@ -175,10 +183,10 @@ const selectedProject = computed(() => {
           <div
             class="column is-1"
           >
-            <font-awesome-icon :icon="['fab', 'twitter']" />
+            <font-awesome-icon icon="chart-tree-map" />
           </div>
           <div class="column is-11">
-            District {{ selectedProject.council_district }}
+            {{ t('card.district') }} {{ selectedProject.council_district }}
           </div>
         </div>
 
@@ -200,33 +208,46 @@ const selectedProject = computed(() => {
       </div>
     </div>
 
-    <div
-      v-if="selectedProject.services_offered"
-    >
+    <div>
       <h3>
-        {{ t('app.servicesOffered') }}
+        {{ t('card.section_description') }}
       </h3>
       <div class="columns is-multiline is-gapless">
-        <div
-          v-for="i in parseServiceList(selectedProject.services_offered)"
-          :key="i"
-          class="column is-half"
-          v-html="i"
-        >
-        </div>
+        {{  t('card.description_text') }}
       </div>
     </div>
 
-    <div
-      v-if="selectedProject.tags && selectedProject.tags.length"
-    >
+    <div>
       <h3>
-        {{ $t('languagesSpoken') }}
+        {{ t('card.section_status') }}
       </h3>
+      <div class="columns is-multiline is-gapless">
+        {{  t('card.status_text') }}
+      </div>
+
       <div>
-        {{ parseTagsList(selectedProject.tags) }}
+        {{ t('card.current_stage') }}: <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}</a>
       </div>
     </div>
+
+    <div>
+      <h3>
+        {{ t('card.estimated_completion_description') }}: {{ selectedProject.estimated_completion }}
+      </h3>
+      <div class="columns is-multiline is-gapless">
+        {{  t('card.description_text') }}
+      </div>
+    </div>
+
+    <div>
+      <h3>
+        {{ t('card.project_team_description') }}
+      </h3>
+      <div class="columns is-multiline is-gapless">
+        
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -237,6 +258,7 @@ const selectedProject = computed(() => {
   font-size: 1rem;
   background-color: #eeeeee;
   cursor: pointer;
+  border: 0px;
 }
 
 .project-selected {
@@ -245,15 +267,23 @@ const selectedProject = computed(() => {
   border-bottom: 0px;
 }
 
+.spacer {
+  background-color: #eeeeee;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(204,204,204);
+}
+
 .ec-content {
+  /* background-color: #eeeeee; */
+  margin-right: -.25rem;
   padding-top: .75rem;
-  padding-bottom: 3rem;
   font-size: 14px;
 
-  a {
-    color: #0f4d90;
-    font-weight: bold;
-    text-decoration: underline;
+  button:nth-child(1) {
+    .project-selected {
+      border-left-width: 0px;
+    }
   }
 }
 
@@ -261,12 +291,6 @@ const selectedProject = computed(() => {
   padding-top: 1rem;
   padding-bottom: 5rem;
   font-size: 14px;
-
-  a {
-    color: #0f4d90;
-    font-weight: bold;
-    text-decoration: underline;
-  }
 }
 
 </style>
