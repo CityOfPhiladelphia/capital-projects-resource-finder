@@ -70,7 +70,7 @@ let $config = {
     fuseDistance: 500,
   },
   locationInfo: {
-    siteNameField: 'project_name',
+    siteNameField: 'site_name',
     siteName: function (item) { return item.properties.site_name },
   },
   tags: {
