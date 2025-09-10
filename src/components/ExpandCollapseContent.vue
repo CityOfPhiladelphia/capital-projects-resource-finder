@@ -1,5 +1,9 @@
 <script setup>
 
+import PrintShareSection from './PrintShareSection.vue';
+import StatusBar from './statusBar.vue';
+import accounting from 'accounting';
+
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
@@ -20,21 +24,6 @@ const props = defineProps({
 const parseAddress = (address) => {
   const formattedAddress = address.replace(/(Phila.+)/g, city => `<div>${city}</div>`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `<div>${lineOne}</div>`).replace(/,/, '');
   return formattedAddress;
-};
-
-const parseServiceList = (list) => {
-  console.log('parseServiceList:', list);
-  let formattedService = [];
-  for (let i=0; i < list.length; i++) {
-    if (list[i] === 'Legal services') {
-      let legalLink = props.item.properties.website_legal;
-      let link = `<a href="${legalLink}" target="_blank">${t(list[i])} <i class='fa fa-external-link-alt'></i></a>`;
-      formattedService.push(link);
-    } else {
-      formattedService.push(t(list[i]));
-    }
-  }
-  return formattedService;
 };
 
 const makeValidUrl = (url) => {
@@ -73,30 +62,43 @@ const handleProjectClick = (projectName) => {
   selectedProjectName.value = projectName;
 };
 
+const selectedProject = computed(() => {
+  return props.item.properties.projects.find(project => project.project_name === selectedProjectName.value);
+});
+
 </script>
 
 <template>
-  <!-- <div class='main-ec-content'> -->
-    <div class="columns is-multiline is-mobile">
-      <button
-        v-for="project in item.properties.projects"
-        :key="project.objectid"
-        class="project-select column is-4-desktop is-3-mobile has-text-centered add-borders pl-1 pr-1"
-        :class="{ 'project-selected': project.project_name === selectedProjectName }"
-        @click="handleProjectClick(project.project_name)"
+  <div class="ec-content columns is-multiline is-mobile">
+    <button
+      v-for="project in item.properties.projects"
+      :key="project.objectid"
+      class="project-select column is-4-desktop is-3-mobile p-0"
+      :class="{ 'project-selected': project.project_name === selectedProjectName }"
+      @click="handleProjectClick(project.project_name)"
       >
-        {{ project.project_name }}
-      </button>
-    </div>
+        <div
+          class="has-text-centered add-borders p-1 pl-1 pr-1"
+          :class="{ 'project-selected': project.project_name === selectedProjectName }"
+        >
+          {{ project.project_name }}
+        </div>
+    </button>
+    <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
+    <div v-if="item.properties.projects.length == 2"class="spacer column is-4"></div>
+  </div>
 
+  <div class='main-ec-content'>
 
-    <div class="tabs">
-      test
-    </div>
+    <print-share-section
+      :item="selectedProject"
+      v-if="selectedProject"
+    />
+
     <div class="columns top-section">
       <div class="column is-6">
         <div
-          v-if="item.properties.street_address"
+          v-if="selectedProject.site_address"
           class="columns is-mobile"
         >
           <div class="column is-1">
@@ -104,42 +106,25 @@ const handleProjectClick = (projectName) => {
           </div>
           <div
             class="column is-11"
-            v-html="parseAddress(item.properties.street_address)"
+            v-html="parseAddress(selectedProject.site_address)"
           />
         </div>
-      </div>
 
-      <div class="column is-6">
         <div
-          v-if="item.properties.phone_number"
+          v-if="selectedProject.client_dept"
           class="columns is-mobile"
         >
+          <div class="column is-1">
+            <font-awesome-icon icon="folder" />
+          </div>
           <div
-            class="column is-1"
-          >
-            <font-awesome-icon icon="phone" />
-          </div>
-          <div class="column is-11">
-            {{ item.properties.phone_number }}
-          </div>
+            class="column is-11"
+            v-html="'<b>'+t('card.category')+': </b>'+selectedProject.client_dept"
+          />
         </div>
 
         <div
-          v-if="item.properties.email"
-          class="columns is-mobile"
-        >
-          <div
-            class="column is-1"
-          >
-            <font-awesome-icon icon="envelope" />
-          </div>
-          <div class="column is-11">
-            <a :href="`mailto:${item.properties.email}`">{{ item.properties.email }}</a>
-          </div>
-        </div>
-
-        <div
-          v-if="item.properties.website"
+          v-if="selectedProject.website_link"
           class="columns is-mobile website-div"
         >
           <div
@@ -150,82 +135,110 @@ const handleProjectClick = (projectName) => {
           <div class="column is-11">
             <a
               target="_blank"
-              :href="makeValidUrl(item.properties.website)"
+              :href="makeValidUrl(selectedProject.website_link)"
             >
-              {{ item.properties.website }}
-              <font-awesome-icon icon="external-link-alt" />
+              {{ selectedProject.website_link }}
             </a>
           </div>
         </div>
 
+      </div>
+
+      <div class="column is-6">
+
         <div
-          v-if="item.properties.facebook_name"
+          v-if="selectedProject.project_estimated_cost"
           class="columns is-mobile"
         >
           <div
             class="column is-1"
           >
-            <font-awesome-icon :icon="['fab', 'facebook']" />
+            <font-awesome-icon icon="money-check-dollar" />
           </div>
-          <div class="column is-11">
-            <a
-              target="_blank"
-              :href="item.properties.facebook_name"
-            >
-              Facebook
-            </a>
-          </div>
+          <div
+            class="column is-11"
+            v-html="'<b>'+t('card.budget')+': </b>'+ accounting.formatMoney(selectedProject.project_estimated_cost)"
+          />
+            
         </div>
 
         <div
-          v-if="item.properties.twitter"
+          v-if="selectedProject.council_district"
           class="columns is-mobile"
         >
           <div
             class="column is-1"
           >
-            <font-awesome-icon :icon="['fab', 'twitter']" />
+            <font-awesome-icon icon="chart-tree-map" />
           </div>
           <div class="column is-11">
-            <a
-              target="_blank"
-              :href="item.properties.twitter"
-            >
-              Twitter
-            </a>
+            {{ t('card.district') }} {{ selectedProject.council_district }}
           </div>
         </div>
+
+        <div
+          v-if="selectedProject.contact_email"
+          class="columns is-mobile"
+        >
+          <div
+            class="column is-1"
+          >
+            <font-awesome-icon icon="envelope" />
+          </div>
+          <div class="column is-11">
+            <a :href="`mailto:${selectedProject.contact_email}`">{{ selectedProject.contact_email }}</a>
+          </div>
+        </div>
+
+        
       </div>
     </div>
 
-    <div
-      v-if="item.properties.services_offered"
-    >
+    <div>
       <h3>
-        {{ t('app.servicesOffered') }}
+        {{ t('card.section_description') }}
       </h3>
       <div class="columns is-multiline is-gapless">
-        <div
-          v-for="i in parseServiceList(item.properties.services_offered)"
-          :key="i"
-          class="column is-half"
-          v-html="i"
-        >
-        </div>
+        {{  t('card.description_text') }}
       </div>
     </div>
 
-    <div
-      v-if="item.properties.tags && item.properties.tags.length"
-    >
+    <div>
       <h3>
-        {{ $t('languagesSpoken') }}
+        {{ t('card.section_status') }}
       </h3>
+      <div class="columns is-multiline is-gapless mb-0">
+        {{  t('card.status_text') }}
+      </div>
+
+      <status-bar
+        :project="selectedProject"
+      />
+
       <div>
-        {{ parseTagsList(item.properties.tags) }}
+        {{ t('card.current_stage') }}: <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}</a>
       </div>
     </div>
-  <!-- </div> -->
+
+    <div>
+      <h3>
+        {{ t('card.estimated_completion_description') }}: {{ selectedProject.estimated_completion }}
+      </h3>
+      <div class="columns is-multiline is-gapless">
+        {{  t('card.description_text') }}
+      </div>
+    </div>
+
+    <div>
+      <h3>
+        {{ t('card.project_team_description') }}
+      </h3>
+      <div class="columns is-multiline is-gapless">
+        
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <style scoped>
@@ -235,11 +248,39 @@ const handleProjectClick = (projectName) => {
   font-size: 1rem;
   background-color: #eeeeee;
   cursor: pointer;
+  border: 0px;
 }
 
 .project-selected {
   background-color: white;
   font-weight: bold;
+  border-bottom: 0px;
+}
+
+.spacer {
+  background-color: #eeeeee;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(204,204,204);
+}
+
+.ec-content {
+  /* background-color: #eeeeee; */
+  margin-right: -.25rem;
+  padding-top: .75rem;
+  font-size: 14px;
+
+  button:nth-child(1) {
+    .project-selected {
+      border-left-width: 0px;
+    }
+  }
+}
+
+.ec-content-mobile {
+  padding-top: 1rem;
+  padding-bottom: 5rem;
+  font-size: 14px;
 }
 
 </style>
