@@ -28,10 +28,10 @@ const designStatus = projectStatus === 'design' ? 'current' : (['construction', 
 const constructionStatus = projectStatus === 'construction' ? 'current' : (projectStatus === 'complete' ? 'past' : (['planning', 'design'].includes(projectStatus) ? 'future' : 'past'));
 const completeStatus = projectStatus === 'complete' ? 'current' : 'future';
 
-const planningImage = planningStatus === 'past' ? 'src/assets/images/normal_u153.svg' : (planningStatus === 'current' ? 'src/assets/images/normal_u303.svg' : 'src/assets/images/normal_u300.svg');
-const designImage = designStatus === 'past' ? 'src/assets/images/normal_u153.svg' : (designStatus === 'current' ? 'src/assets/images/normal_u303.svg' : 'src/assets/images/normal_u300.svg');
-const constructionImage = constructionStatus === 'past' ? 'src/assets/images/normal_u153.svg' : (constructionStatus === 'current' ? 'src/assets/images/normal_u303.svg' : 'src/assets/images/normal_u300.svg');
-const completeImage = completeStatus === 'past' ? 'src/assets/images/normal_u303.svg' : (completeStatus === 'current' ? 'src/assets/images/normal_u303.svg' : 'src/assets/images/normal_u300.svg');
+const planningImage = planningStatus === 'past' ? 'images/normal_u153.svg' : (planningStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
+const designImage = designStatus === 'past' ? 'images/normal_u153.svg' : (designStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
+const constructionImage = constructionStatus === 'past' ? 'images/normal_u153.svg' : (constructionStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
+const completeImage = completeStatus === 'past' ? 'images/normal_u303.svg' : (completeStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
 
 
 </script>
