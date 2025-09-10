@@ -1,6 +1,7 @@
 <script setup>
 
 import PrintShareSection from './PrintShareSection.vue';
+import StatusBar from './statusBar.vue';
 import accounting from 'accounting';
 
 import { useI18n } from 'vue-i18n';
@@ -24,21 +25,6 @@ const parseAddress = (address) => {
   const formattedAddress = address.replace(/(Phila.+)/g, city => `<div>${city}</div>`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `<div>${lineOne}</div>`).replace(/,/, '');
   return formattedAddress;
 };
-
-// const parseServiceList = (list) => {
-//   console.log('parseServiceList:', list);
-//   let formattedService = [];
-//   for (let i=0; i < list.length; i++) {
-//     if (list[i] === 'Legal services') {
-//       let legalLink = props.item.properties.website_legal;
-//       let link = `<a href="${legalLink}" target="_blank">${t(list[i])} <i class='fa fa-external-link-alt'></i></a>`;
-//       formattedService.push(link);
-//     } else {
-//       formattedService.push(t(list[i]));
-//     }
-//   }
-//   return formattedService;
-// };
 
 const makeValidUrl = (url) => {
   let newUrl = window.decodeURIComponent(url);
@@ -221,9 +207,13 @@ const selectedProject = computed(() => {
       <h3>
         {{ t('card.section_status') }}
       </h3>
-      <div class="columns is-multiline is-gapless">
+      <div class="columns is-multiline is-gapless mb-0">
         {{  t('card.status_text') }}
       </div>
+
+      <status-bar
+        :project="selectedProject"
+      />
 
       <div>
         {{ t('card.current_stage') }}: <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}</a>
