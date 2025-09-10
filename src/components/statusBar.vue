@@ -1,7 +1,6 @@
 <script setup>
 
 const publicPath = import.meta.env.VITE_PUBLICPATH || '/';
-// const publicPath = '/';
 
 const props = defineProps({
   project: {
@@ -18,9 +17,6 @@ const gray = '#F0F0F1';
 
 const projectStatus = props.project.project_status.toLowerCase();
 
-const planningColor = projectStatus === 'planning' ? green : blue;
-const designColor = projectStatus === 'design' ? green : (projectStatus === 'planning' ? gray : blue);
-const constructionColor = projectStatus === 'construction' ? green : (['planning', 'design'].includes(projectStatus) ? gray : blue);
 const completeColor = projectStatus === 'complete' ? blue : gray;
 
 const planningStatus = projectStatus === 'planning' ? 'current' : (['design', 'construction', 'complete'].includes(projectStatus) ? 'past' : 'future');
