@@ -1,5 +1,8 @@
 <script setup>
 
+import PrintShareSection from './PrintShareSection.vue';
+import accounting from 'accounting';
+
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
@@ -73,30 +76,35 @@ const handleProjectClick = (projectName) => {
   selectedProjectName.value = projectName;
 };
 
+const selectedProject = computed(() => {
+  return props.item.properties.projects.find(project => project.project_name === selectedProjectName.value);
+});
+
 </script>
 
 <template>
-  <!-- <div class='main-ec-content'> -->
-    <div class="columns is-multiline is-mobile">
-      <button
-        v-for="project in item.properties.projects"
-        :key="project.objectid"
-        class="project-select column is-4-desktop is-3-mobile has-text-centered add-borders pl-1 pr-1"
-        :class="{ 'project-selected': project.project_name === selectedProjectName }"
-        @click="handleProjectClick(project.project_name)"
-      >
-        {{ project.project_name }}
-      </button>
-    </div>
+  <div class="ec-content columns is-multiline is-mobile">
+    <button
+    v-for="project in item.properties.projects"
+    :key="project.objectid"
+    class="project-select column is-4-desktop is-3-mobile has-text-centered add-borders pl-1 pr-1"
+    :class="{ 'project-selected': project.project_name === selectedProjectName }"
+    @click="handleProjectClick(project.project_name)"
+    >
+    {{ project.project_name }}
+  </button>
+</div>
+<div class='main-ec-content'>
 
+    <print-share-section
+      :item="selectedProject"
+      v-if="selectedProject"
+    />
 
-    <div class="tabs">
-      test
-    </div>
     <div class="columns top-section">
       <div class="column is-6">
         <div
-          v-if="item.properties.street_address"
+          v-if="selectedProject.site_address"
           class="columns is-mobile"
         >
           <div class="column is-1">
@@ -104,42 +112,25 @@ const handleProjectClick = (projectName) => {
           </div>
           <div
             class="column is-11"
-            v-html="parseAddress(item.properties.street_address)"
+            v-html="parseAddress(selectedProject.site_address)"
           />
         </div>
-      </div>
 
-      <div class="column is-6">
         <div
-          v-if="item.properties.phone_number"
+          v-if="selectedProject.client_dept"
           class="columns is-mobile"
         >
+          <div class="column is-1">
+            <font-awesome-icon icon="folder" />
+          </div>
           <div
-            class="column is-1"
-          >
-            <font-awesome-icon icon="phone" />
-          </div>
-          <div class="column is-11">
-            {{ item.properties.phone_number }}
-          </div>
+            class="column is-11"
+            v-html="'<b>Category: </b>'+selectedProject.client_dept"
+          />
         </div>
 
         <div
-          v-if="item.properties.email"
-          class="columns is-mobile"
-        >
-          <div
-            class="column is-1"
-          >
-            <font-awesome-icon icon="envelope" />
-          </div>
-          <div class="column is-11">
-            <a :href="`mailto:${item.properties.email}`">{{ item.properties.email }}</a>
-          </div>
-        </div>
-
-        <div
-          v-if="item.properties.website"
+          v-if="selectedProject.website_link"
           class="columns is-mobile website-div"
         >
           <div
@@ -150,35 +141,35 @@ const handleProjectClick = (projectName) => {
           <div class="column is-11">
             <a
               target="_blank"
-              :href="makeValidUrl(item.properties.website)"
+              :href="makeValidUrl(selectedProject.website_link)"
             >
-              {{ item.properties.website }}
-              <font-awesome-icon icon="external-link-alt" />
+              {{ selectedProject.website_link }}
             </a>
           </div>
         </div>
 
+      </div>
+
+      <div class="column is-6">
+
         <div
-          v-if="item.properties.facebook_name"
+          v-if="selectedProject.project_estimated_cost"
           class="columns is-mobile"
         >
           <div
             class="column is-1"
           >
-            <font-awesome-icon :icon="['fab', 'facebook']" />
+            <font-awesome-icon icon="money-check-dollar" />
           </div>
-          <div class="column is-11">
-            <a
-              target="_blank"
-              :href="item.properties.facebook_name"
-            >
-              Facebook
-            </a>
-          </div>
+          <div
+            class="column is-11"
+            v-html="'<b>Budget: </b>'+ accounting.formatMoney(selectedProject.project_estimated_cost)"
+          />
+            
         </div>
 
         <div
-          v-if="item.properties.twitter"
+          v-if="selectedProject.council_district"
           class="columns is-mobile"
         >
           <div
@@ -187,26 +178,37 @@ const handleProjectClick = (projectName) => {
             <font-awesome-icon :icon="['fab', 'twitter']" />
           </div>
           <div class="column is-11">
-            <a
-              target="_blank"
-              :href="item.properties.twitter"
-            >
-              Twitter
-            </a>
+            District {{ selectedProject.council_district }}
           </div>
         </div>
+
+        <div
+          v-if="selectedProject.contact_email"
+          class="columns is-mobile"
+        >
+          <div
+            class="column is-1"
+          >
+            <font-awesome-icon icon="envelope" />
+          </div>
+          <div class="column is-11">
+            <a :href="`mailto:${selectedProject.contact_email}`">{{ selectedProject.contact_email }}</a>
+          </div>
+        </div>
+
+        
       </div>
     </div>
 
     <div
-      v-if="item.properties.services_offered"
+      v-if="selectedProject.services_offered"
     >
       <h3>
         {{ t('app.servicesOffered') }}
       </h3>
       <div class="columns is-multiline is-gapless">
         <div
-          v-for="i in parseServiceList(item.properties.services_offered)"
+          v-for="i in parseServiceList(selectedProject.services_offered)"
           :key="i"
           class="column is-half"
           v-html="i"
@@ -216,16 +218,16 @@ const handleProjectClick = (projectName) => {
     </div>
 
     <div
-      v-if="item.properties.tags && item.properties.tags.length"
+      v-if="selectedProject.tags && selectedProject.tags.length"
     >
       <h3>
         {{ $t('languagesSpoken') }}
       </h3>
       <div>
-        {{ parseTagsList(item.properties.tags) }}
+        {{ parseTagsList(selectedProject.tags) }}
       </div>
     </div>
-  <!-- </div> -->
+  </div>
 </template>
 
 <style scoped>
@@ -240,6 +242,31 @@ const handleProjectClick = (projectName) => {
 .project-selected {
   background-color: white;
   font-weight: bold;
+  border-bottom: 0px;
+}
+
+.ec-content {
+  padding-top: .75rem;
+  padding-bottom: 3rem;
+  font-size: 14px;
+
+  a {
+    color: #0f4d90;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+.ec-content-mobile {
+  padding-top: 1rem;
+  padding-bottom: 5rem;
+  font-size: 14px;
+
+  a {
+    color: #0f4d90;
+    font-weight: bold;
+    text-decoration: underline;
+  }
 }
 
 </style>

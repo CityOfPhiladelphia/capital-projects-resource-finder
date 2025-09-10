@@ -18,8 +18,10 @@ import { faTimes as farTimes } from '@fortawesome/pro-regular-svg-icons';
 import { faPlus as farPlus } from '@fortawesome/pro-regular-svg-icons';
 import { faMinus as farMinus } from '@fortawesome/pro-regular-svg-icons';
 import { faEnvelope as farEnvelope } from '@fortawesome/pro-regular-svg-icons';
+import { faFolder } from '@fortawesome/free-solid-svg-icons';
+import { faMoneyCheckDollar } from '@fortawesome/free-solid-svg-icons';
 
-library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope);
+library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, faFolder, faMoneyCheckDollar);
 
 // use these if running off unlinked package
 import pinboard from '@phila/pinboard';
