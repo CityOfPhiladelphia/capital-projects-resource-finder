@@ -31,6 +31,8 @@ import '../node_modules/@phila/pinboard/dist/style.css';
 // use this if running off linked package
 // import pinboard from '../node_modules/@phila/pinboard/src/main.js';
 
+import legendControl from './general/legendControl';
+
 // data-sources
 import capitalProjects from './data-sources/capitalProjects';
 
@@ -304,6 +306,7 @@ let $config = {
       },
     },
   },
+  legendControl,
   dataSources: {
     capitalProjects,
   },
@@ -313,7 +316,27 @@ let $config = {
     type: 'circle',
     paint: {
       'circle-radius': 7,
-      'circle-color': '#9400c6',
+      'circle-color':[
+        'match',
+        ['get', 'client_dept'],
+        ' Fire',
+        '#cc3000',
+        'Free Library of Philadelphia',
+        '#f99300',
+        ' Health',
+        '#f3c613',
+        'Human Services',
+        '#58c04d',
+        'Philadephia Parks and Recreation',
+        '#3a833c',
+        'Police Department',
+        '#2176d2',
+        'Public Property',
+        '#9400c6',
+        'Multiple projects',
+        '#444444',
+        /* other */ '#000000'
+      ],
       'circle-stroke-width': 1,
       'circle-stroke-color': 'white',
     },
