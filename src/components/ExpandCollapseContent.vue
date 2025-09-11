@@ -40,22 +40,6 @@ const makeValidUrl = (url) => {
   return newUrl;
 };
 
-const parseTagsList = (list) => {
-  let formattedTags = list.slice();
-  let finalTags = [];
-  // if (import.meta.env.VITE_DEBUG) console.log('formattedTags:', formattedTags);
-  for (let tag of formattedTags) {
-    let singleTag = tag.split(' and ');
-    for (let i=0; i < singleTag.length; i++) {
-      // console.log('singleTag[i]:', singleTag[i]);
-      // finalTags.push(t(`${singleTag[i].toLowerCase()}`));
-      finalTags.push(t(singleTag[i].toLowerCase()));
-    }
-  }
-  // console.log('finalTags:', finalTags);
-  return finalTags.sort().join(", ");
-};
-
 const selectedProjectName = ref(props.item.properties.projects[0].project_name);
 
 const handleProjectClick = (projectName) => {
@@ -73,13 +57,17 @@ const selectedProject = computed(() => {
     <button
       v-for="project in item.properties.projects"
       :key="project.objectid"
-      class="project-select column is-4-desktop is-3-mobile p-0"
+      class="project-select column is-4 p-0"
       :class="{ 'project-selected': project.project_name === selectedProjectName }"
       @click="handleProjectClick(project.project_name)"
       >
         <div
           class="has-text-centered add-borders p-1 pl-1 pr-1"
-          :class="{ 'project-selected': project.project_name === selectedProjectName }"
+          :class="{ 
+            'project-selected': project.project_name === selectedProjectName,
+            'first-child': item.properties.projects.length > 1,
+            'only-child': item.properties.projects.length == 1
+          }"
         >
           {{ project.project_name }}
         </div>
@@ -244,8 +232,9 @@ const selectedProject = computed(() => {
 <style scoped>
 
 .project-select {
-  color: #444444;
+  color: #0f4d90;
   font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
   background-color: #eeeeee;
   cursor: pointer;
   border: 0px;
@@ -253,26 +242,37 @@ const selectedProject = computed(() => {
 
 .project-selected {
   background-color: white;
-  font-weight: bold;
   border-bottom: 0px;
+  /* font-weight: bold; */
 }
 
 .spacer {
   background-color: #eeeeee;
-  border-width: 1px;
+  border-bottom-width: 1px;
+  border-top-width: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
   border-style: solid;
   border-color: rgb(204,204,204);
 }
 
 .ec-content {
-  /* background-color: #eeeeee; */
   margin-right: -.25rem;
   padding-top: .75rem;
   font-size: 14px;
 
   button:nth-child(1) {
-    .project-selected {
+    border-left-width: 0px;
+    border-right-width: 0px;
+
+    .first-child {
       border-left-width: 0px;
+      border-right-width: 0px;
+    }
+
+    .only-child {
+      border-left-width: 0px;
+      border-right-width: 1px;
     }
   }
 }

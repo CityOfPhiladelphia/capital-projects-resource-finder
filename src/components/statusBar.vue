@@ -51,16 +51,16 @@ const completeImage = completeStatus === 'past' ? 'images/normal_u303.svg' : (co
   </div>
 
   <div class="status-labels">
-    <div class="inline-block-div">
+    <div class="inline-block-div mr-5">
       Planning
     </div>
-    <div class="inline-block-div">
+    <div class="inline-block-div mr-5 ml-5">
       Design
     </div>
-    <div class="inline-block-div">
+    <div class="inline-block-div ml-3 mr-3">
       Construction
     </div>
-    <div class="inline-block-div">
+    <div class="inline-block-div ml-4 mr-2">
       Complete
     </div>
   </div>
@@ -89,8 +89,6 @@ const completeImage = completeStatus === 'past' ? 'images/normal_u303.svg' : (co
 
 .inline-block-div {
   display: inline-block;
-  margin-right: 1.5rem;
-  margin-left: 1.5rem;
 }
 
 .status-bar {
