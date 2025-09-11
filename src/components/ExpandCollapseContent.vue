@@ -1,6 +1,7 @@
 <script setup>
 
 import PrintShareSection from './PrintShareSection.vue';
+import ButtonDropdown from './ButtonDropdown.vue';
 import StatusBar from './statusBar.vue';
 import accounting from 'accounting';
 
@@ -42,36 +43,119 @@ const makeValidUrl = (url) => {
 
 const selectedProjectName = ref(props.item.properties.projects[0].project_name);
 
+const moreIsOpen = ref(false);
+
 const handleProjectClick = (projectName) => {
+  moreIsOpen.value = false;
+  if (import.meta.env.VITE_DEBUG) console.log('handleProjectClick projectName:', projectName);
   selectedProjectName.value = projectName;
+};
+
+const handleMoreClick = () => {
+  if (import.meta.env.VITE_DEBUG) console.log('handleMoreClick projectName:', 'more');
+  moreIsOpen.value = true;
 };
 
 const selectedProject = computed(() => {
   return props.item.properties.projects.find(project => project.project_name === selectedProjectName.value);
 });
 
+const excessProjects = computed(() => {
+  let projects = [ ...props.item.properties.projects ];
+  console.log('projects:', projects);
+  return projects.splice(2);
+});
+
+const excessProjectSelected = computed(() => {
+  let excessProjectNames = excessProjects.value.map(project => project.project_name);
+  return excessProjectNames.includes(selectedProjectName.value);
+})
+
 </script>
 
 <template>
   <div class="ec-content columns is-multiline is-mobile">
+
     <button
-      v-for="project in item.properties.projects"
-      :key="project.objectid"
-      class="project-select column is-4 p-0"
-      :class="{ 'project-selected': project.project_name === selectedProjectName }"
-      @click="handleProjectClick(project.project_name)"
+      class="project-button column is-4 p-0"
+      :class="{
+        'project-selected': !moreIsOpen && item.properties.projects[0].project_name === selectedProjectName,
+        'multiple-children': item.properties.projects.length > 1,
+        'only-child': item.properties.projects.length == 1
+      }"
+      @click="handleProjectClick(item.properties.projects[0].project_name)"
+    >
+      <div class="has-text-centered p-1 pl-1 pr-1">
+        {{ item.properties.projects[0].project_name }}
+      </div>
+    </button>
+
+    <button
+      v-if="item.properties.projects.length > 1"
+      class="project-button column is-4 p-0"
+      :class="{
+        'project-selected': !moreIsOpen && item.properties.projects[1].project_name === selectedProjectName,
+        'multiple-children': item.properties.projects.length > 1,
+        'only-child': item.properties.projects.length == 1
+      }"
+      @click="handleProjectClick(item.properties.projects[1].project_name)"
       >
-        <div
-          class="has-text-centered add-borders p-1 pl-1 pr-1"
-          :class="{ 
-            'project-selected': project.project_name === selectedProjectName,
-            'first-child': item.properties.projects.length > 1,
-            'only-child': item.properties.projects.length == 1
-          }"
-        >
-          {{ project.project_name }}
+        <div class="has-text-centered p-1 pl-1 pr-1">
+          {{ item.properties.projects[1].project_name }}
         </div>
     </button>
+
+    <button
+      v-if="item.properties.projects.length == 3"
+      class="project-button column is-4 p-0"
+      :class="{
+        'project-selected': !moreIsOpen && item.properties.projects[2].project_name === selectedProjectName,
+        'multiple-children': item.properties.projects.length > 1,
+        'only-child': item.properties.projects.length == 1
+      }"
+      @click="handleProjectClick(item.properties.projects[2].project_name)"
+      >
+        <div class="has-text-centered p-1 pl-1 pr-1">
+          {{ item.properties.projects[2].project_name }}
+        </div>
+    </button>
+
+    <button
+      v-if="item.properties.projects.length > 3 && !excessProjectSelected"
+      class="project-button column is-4 p-0"
+      :class="{ 'project-selected': moreIsOpen }"
+      @click="handleMoreClick()"
+    >
+      <div
+        class="has-text-centered p-1 pl-1 pr-1"
+        :class="{ 'project-selected': 'more' === selectedProjectName }"
+      >
+        More
+        <font-awesome-icon v-if="!moreIsOpen" icon="caret-down" />
+        <font-awesome-icon v-if="moreIsOpen" icon="caret-up" />
+      </div>
+    </button>
+
+    <button
+      v-if="excessProjectSelected"
+      class="project-button column is-4 p-0 project-selected"
+      @click="handleMoreClick()"
+    >
+      <div class="has-text-centered p-1 pl-1 pr-1">
+        {{ selectedProjectName }}
+      </div>
+    </button>
+
+    <div class="more-zone column is-12 p-0">
+      <button-dropdown
+        v-if="moreIsOpen"
+        :projects="excessProjects"
+        :selectedProject="selectedProjectName"
+        @clicked-project="handleProjectClick"
+      >
+      </button-dropdown>
+    </div>
+
     <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
     <div v-if="item.properties.projects.length == 2"class="spacer column is-4"></div>
   </div>
@@ -231,21 +315,6 @@ const selectedProject = computed(() => {
 
 <style scoped>
 
-.project-select {
-  color: #0f4d90;
-  font-size: 1rem;
-  font-family: 'Montserrat', sans-serif;
-  background-color: #eeeeee;
-  cursor: pointer;
-  border: 0px;
-}
-
-.project-selected {
-  background-color: white;
-  border-bottom: 0px;
-  /* font-weight: bold; */
-}
-
 .spacer {
   background-color: #eeeeee;
   border-bottom-width: 1px;
@@ -263,18 +332,54 @@ const selectedProject = computed(() => {
 
   button:nth-child(1) {
     border-left-width: 0px;
-    border-right-width: 0px;
-
-    .first-child {
-      border-left-width: 0px;
-      border-right-width: 0px;
-    }
-
-    .only-child {
-      border-left-width: 0px;
-      border-right-width: 1px;
-    }
+    /* border-right-width: 0px; */
   }
+
+  .project-button {
+    color: #0f4d90;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #eeeeee;
+    cursor: pointer;
+    border: 0px;
+    border-bottom-width: 1px;
+    border-style: solid;
+    border-color: rgb(204,204,204);
+  }
+
+  .more-button {
+    position: relative;
+    color: #0f4d90;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #eeeeee;
+    cursor: pointer;
+    border: 0px;
+    border-bottom-width: 1px;
+    border-style: solid;
+    border-color: rgb(204,204,204);
+  }
+
+  .more-zone {
+    position: relative;
+
+  }
+
+  .project-selected {
+    background-color: white;
+    border-bottom: 0px;
+  }
+
+  .multiple-children {
+    /* border-left-width: 1px; */
+    border-right-width: 1px;
+  }
+
+  .only-child {
+    border-left-width: 0px;
+    border-right-width: 1px;
+  }
+
 }
 
 .ec-content-mobile {
