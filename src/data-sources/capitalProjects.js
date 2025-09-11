@@ -26,6 +26,7 @@ export default {
         }, new Map()), 
         ([site_name, value]) => ({
           'site_name': site_name,
+          'client_dept': value[0].client_dept,
           'lat': value[0].lat,
           'lon': value[0].lon,
           projects: value
