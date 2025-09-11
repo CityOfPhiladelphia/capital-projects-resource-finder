@@ -145,7 +145,10 @@ const excessProjectSelected = computed(() => {
         {{ selectedProjectName }}
       </div>
     </button>
-
+    
+    <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
+    <div v-if="item.properties.projects.length == 2"class="spacer column is-4"></div>
+    
     <div class="more-zone column is-12 p-0">
       <button-dropdown
         v-if="moreIsOpen"
@@ -156,8 +159,6 @@ const excessProjectSelected = computed(() => {
       </button-dropdown>
     </div>
 
-    <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
-    <div v-if="item.properties.projects.length == 2"class="spacer column is-4"></div>
   </div>
 
   <div class='main-ec-content'>
