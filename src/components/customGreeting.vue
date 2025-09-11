@@ -109,6 +109,17 @@ const getCounts = () => {
       </div>
 
       <div class="half-data-section">
+        <ul class="bullet-list">
+          <li
+            v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul1"
+            :key="index"
+          >
+            {{ t('introPage.ul1.' + index) }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="half-data-section">
         <div class="has-text-centered container">
           <button
             class="button greeting-button"
@@ -129,39 +140,17 @@ const getCounts = () => {
       </div>
 
       <div class="half-data-section">
-        <ul class="bullet-list">
-          <li
-            v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul1"
-            :key="index"
-          >
-            {{ t('introPage.ul1.' + index) }}
-          </li>
-        </ul>
-      </div>
-
-      <div class="half-data-section">
-        <h3>
-          {{ t('introPage.section2Title') }}
-        </h3>
-
         <p v-html="t('introPage.p2')" />
       </div>
-
       <div class="half-data-section">
-        <h3>
-          {{ t('introPage.section3Title') }}
-        </h3>
-
-        <p v-html="t('introPage.p3_1')" />
-        <p v-html="t('introPage.p3_2')" />
-      </div>
-
-      <div class="half-data-section">
-        <h3>
-          {{ t('introPage.section4Title') }}
-        </h3>
-
-        <p v-html="t('introPage.p4')" />
+        <ul class="bullet-list">
+          <li
+            v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul2"
+            :key="index"
+          >
+            {{ t('introPage.ul2.' + index) }}
+          </li>
+        </ul>
       </div>
 
     </div>
