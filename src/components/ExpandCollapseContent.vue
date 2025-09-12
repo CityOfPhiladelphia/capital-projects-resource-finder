@@ -351,6 +351,71 @@ const projectTeam = computed(() => {
 
 <style>
 
+.spacer {
+  background-color: #eeeeee;
+  border-bottom-width: 1px;
+  border-top-width: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-style: solid;
+  border-color: rgb(204,204,204);
+}
+
+.ec-content {
+  margin-right: -.25rem;
+  padding-top: .75rem;
+  font-size: 14px;
+
+  button:nth-child(1) {
+    border-left-width: 0px;
+  }
+
+  .project-button {
+    color: #0f4d90;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #eeeeee;
+    cursor: pointer;
+    border: 0px;
+    border-bottom-width: 1px;
+    border-style: solid;
+    border-color: rgb(204,204,204);
+  }
+
+  .more-button {
+    position: relative;
+    color: #0f4d90;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #eeeeee;
+    cursor: pointer;
+    border: 0px;
+    border-bottom-width: 1px;
+    border-style: solid;
+    border-color: rgb(204,204,204);
+  }
+
+  .more-zone {
+    position: relative;
+
+  }
+
+  .project-selected {
+    background-color: white;
+    border-bottom: 0px;
+  }
+
+  .multiple-children {
+    border-right-width: 1px;
+  }
+
+  .only-child {
+    border-left-width: 0px;
+    border-right-width: 1px;
+  }
+}
+
+/* This is copied from phila-ui-3 and edited to match the project's design */
 .table-style {
   font-family: 'Open Sans', sans-serif;
   width: 100%;
@@ -363,7 +428,7 @@ const projectTeam = computed(() => {
         position: relative;
         background-color: white;
         color: #444;
-        font-weight: normal;
+        font-weight: 600;
         font-size: 14px;
         padding: 6px 16px;
         line-height: 18px;
@@ -379,7 +444,6 @@ const projectTeam = computed(() => {
           &:before,
           &:after {
             border-radius: 1px;
-            /* border: 5px solid transparent; */
             content: "";
             display: block;
             height: 0;
@@ -390,7 +454,6 @@ const projectTeam = computed(() => {
           }
           &:before {
             border-bottom-color: #444;
-            /* border-bottom-color: #b5b5b5; */
           }
           &:after {
             border-top-color: #444;
@@ -465,79 +528,6 @@ const projectTeam = computed(() => {
     overflow: hidden;
     overflow-x: auto;
   }
-}
-
-.spacer {
-  background-color: #eeeeee;
-  border-bottom-width: 1px;
-  border-top-width: 0px;
-  border-left-width: 0px;
-  border-right-width: 0px;
-  border-style: solid;
-  border-color: rgb(204,204,204);
-}
-
-.ec-content {
-  margin-right: -.25rem;
-  padding-top: .75rem;
-  font-size: 14px;
-
-  button:nth-child(1) {
-    border-left-width: 0px;
-    /* border-right-width: 0px; */
-  }
-
-  .project-button {
-    color: #0f4d90;
-    font-size: 1rem;
-    font-family: 'Montserrat', sans-serif;
-    background-color: #eeeeee;
-    cursor: pointer;
-    border: 0px;
-    border-bottom-width: 1px;
-    border-style: solid;
-    border-color: rgb(204,204,204);
-  }
-
-  .more-button {
-    position: relative;
-    color: #0f4d90;
-    font-size: 1rem;
-    font-family: 'Montserrat', sans-serif;
-    background-color: #eeeeee;
-    cursor: pointer;
-    border: 0px;
-    border-bottom-width: 1px;
-    border-style: solid;
-    border-color: rgb(204,204,204);
-  }
-
-  .more-zone {
-    position: relative;
-
-  }
-
-  .project-selected {
-    background-color: white;
-    border-bottom: 0px;
-  }
-
-  .multiple-children {
-    /* border-left-width: 1px; */
-    border-right-width: 1px;
-  }
-
-  .only-child {
-    border-left-width: 0px;
-    border-right-width: 1px;
-  }
-
-}
-
-.ec-content-mobile {
-  padding-top: 1rem;
-  padding-bottom: 5rem;
-  font-size: 14px;
 }
 
 </style>
