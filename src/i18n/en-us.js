@@ -52,7 +52,7 @@ export default {
     "category": "Project Category",
     "parksRecreation": "Parks & Recreation",
     "publicHealth": "Public Health",
-    "Human Services": "Human Services",
+    "humanServices": "Human Services",
     "freeLibrary": "Free Library",
     "fireDepartment": "Fire Department",
     "policeDepartment": "Police Department",
