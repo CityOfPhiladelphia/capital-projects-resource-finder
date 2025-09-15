@@ -1,8 +1,18 @@
 <script setup>
 
-// import { useMainStore } from '../stores/MainStore.js';
-// import { useRoute, useRouter } from 'vue-router';
-import { computed } from 'vue';
+// use these if running off unlinked package
+import { useMainStore } from '@phila/pinboard';
+// OR
+// use this if running off linked package
+// import { useMainStore } from '../../node_modules/@phila/pinboard/src/stores/MainStore.js';
+
+// use these if running off unlinked package
+import { useRoute, useRouter } from '@phila/pinboard';
+// OR
+// use this if running off linked package
+// import { useRoute, useRouter } from '../../node_modules/@phila/pinboard/src/main.js';
+
+import { computed, getCurrentInstance, inject } from 'vue';
 import * as bulmaToast from 'bulma-toast'
 
 bulmaToast.setDefaults({
@@ -13,20 +23,27 @@ bulmaToast.setDefaults({
   zIndex: 9999,
 });
 
-// const route = useRoute();
-// const router = useRouter();
+const instance = getCurrentInstance();
+if (import.meta.env.VITE_DEBUG) console.log('getCurrentInstance:', getCurrentInstance, 'instance:', instance);
 
-// console.log('route:', route);
+const route = useRoute();
+const router = useRouter();
+
+console.log('useRoute:', useRoute, 'route:', route, 'useRouter:', useRouter, 'router:', router);
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
-// const MainStore = useMainStore();
+const MainStore = useMainStore();
 
 const props = defineProps({
   'item': {
     type: Object,
     default: {},
+  },
+  'featureId': {
+    type: [String, Number],
+    default: null,
   },
 });
 
@@ -61,8 +78,8 @@ const clickedShare = () => {
 
 const clickedPrint = () => {
   if (import.meta.env.VITE_DEBUG) console.log('clickedPrint is running');
-  // MainStore.printCheckboxes = [ props.item._featureId ];
-  // router.push({ name: 'printView'  });
+  MainStore.printCheckboxes = [ props.featureId ];
+  router.push({ name: 'printView'  });
 }
 
 </script>
