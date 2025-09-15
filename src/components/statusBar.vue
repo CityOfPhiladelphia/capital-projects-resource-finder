@@ -15,19 +15,20 @@ const green = '#B9F2B1';
 const blue = '#0E4D92';
 const gray = '#F0F0F1';
 
-const projectStatus = props.project.project_status.toLowerCase();
+// const projectStatus = ref(props.project.project_status);//.toLowerCase());
+const projectStatus = computed(() => { return props.project.project_status.toLowerCase(); });
 
-const completeColor = projectStatus === 'complete' ? blue : gray;
+const completeColor = computed(() => { return projectStatus.value === 'complete' ? green : gray; });
 
-const planningStatus = projectStatus === 'planning' ? 'current' : (['design', 'construction', 'complete'].includes(projectStatus) ? 'past' : 'future');
-const designStatus = projectStatus === 'design' ? 'current' : (['construction', 'complete'].includes(projectStatus) ? 'past' : (projectStatus === 'planning' ? 'future' : 'past'));
-const constructionStatus = projectStatus === 'construction' ? 'current' : (projectStatus === 'complete' ? 'past' : (['planning', 'design'].includes(projectStatus) ? 'future' : 'past'));
-const completeStatus = projectStatus === 'complete' ? 'current' : 'future';
+const planningStatus = computed(() => { return projectStatus.value === 'planning' ? 'current' : (['design', 'construction', 'complete'].includes(projectStatus.value) ? 'past' : 'future'); });
+const designStatus = computed(() => { return projectStatus.value === 'design' ? 'current' : (['construction', 'complete'].includes(projectStatus.value) ? 'past' : (projectStatus.value === 'planning' ? 'future' : 'past')); });
+const constructionStatus = computed(() => { return projectStatus.value === 'construction' ? 'current' : (projectStatus.value === 'complete' ? 'past' : (['planning', 'design'].includes(projectStatus.value) ? 'future' : 'past')); });
+const completeStatus = computed(() => { return projectStatus.value === 'complete' ? 'past' : 'future'; });
 
-const planningImage = planningStatus === 'past' ? 'images/normal_u153.svg' : (planningStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
-const designImage = designStatus === 'past' ? 'images/normal_u153.svg' : (designStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
-const constructionImage = constructionStatus === 'past' ? 'images/normal_u153.svg' : (constructionStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
-const completeImage = completeStatus === 'past' ? 'images/normal_u303.svg' : (completeStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
+const planningImage = computed(() => { return planningStatus.value === 'past' ? 'images/normal_u153.svg' : (planningStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
+const designImage = computed(() => { return designStatus.value === 'past' ? 'images/normal_u153.svg' : (designStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
+const constructionImage = computed(() => { return constructionStatus.value === 'past' ? 'images/normal_u153.svg' : (constructionStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
+const completeImage = computed(() => { return completeStatus.value === 'past' ? 'images/normal_u153.svg' : (completeStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
 
 
 </script>

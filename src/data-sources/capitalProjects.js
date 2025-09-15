@@ -11,6 +11,15 @@ export default {
     },
     success: function(data) {
       if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);
+
+      const testArchived = data.rows.filter(r => {
+        return r.project_name == '8th and Diamond Improvements';
+      })[0];
+
+      testArchived.actual_completion = '2023-12-31';
+
+      console.log('testArchived:', testArchived);
+
       data.rows.push(
         {
           "cartodb_id": 40,
@@ -32,7 +41,7 @@ export default {
           "estimated_completion_year": "2025",
           "estimated_completion": "Late 2025",
           "actual_completion": null,
-          "project_status": "Construction",
+          "project_status": "Planning",
           "project_estimated_cost": "100",
           "contact_email": "CPO@phila.gov",
           "website_link": "https://www.phila.gov/programs/rebuild/",
@@ -59,7 +68,7 @@ export default {
           "estimated_completion_year": "2025",
           "estimated_completion": "Late 2025",
           "actual_completion": null,
-          "project_status": "Construction",
+          "project_status": "Design",
           "project_estimated_cost": "200",
           "contact_email": "CPO@phila.gov",
           "website_link": "https://www.phila.gov/programs/rebuild/",
@@ -83,19 +92,17 @@ export default {
           "inspector": "TBD",
           "project_coordinator": "Medow",
           "estimated_completion_season": "Winter",
-          "estimated_completion_year": "2025",
-          "estimated_completion": "Late 2025",
-          "actual_completion": null,
-          "project_status": "Construction",
+          "estimated_completion_year": "2023",
+          "estimated_completion": "Late 2023",
+          "actual_completion": '2023-12-31',
+          "project_status": "Complete",
           "project_estimated_cost": "300",
           "contact_email": "CPO@phila.gov",
           "website_link": "https://www.phila.gov/programs/rebuild/",
           "lat": 40.04670039069094,
           "lon": -75.10160256942602
         },
-      )
-
-
+      );
 
       const reorderedData = Array.from(
         data.rows.reduce((groups, obj) => {
@@ -119,6 +126,7 @@ export default {
       );
 
       if (import.meta.env.VITE_DEBUG) console.log('reorderedData:', reorderedData);
+
       return reorderedData;
     },
   },
