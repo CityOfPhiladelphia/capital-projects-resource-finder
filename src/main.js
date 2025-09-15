@@ -5,6 +5,7 @@
 // (we might not need to use axios with new vue async tools)
 // if that is not needed, we can move this info to main.js
 
+
 import isMac from './util/is-mac';
 if (isMac()) {
   import('./assets/mac-style.scss')
