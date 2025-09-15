@@ -71,6 +71,36 @@ const excessProjectSelected = computed(() => {
   return excessProjectNames.includes(selectedProjectName.value);
 })
 
+const projectTeam = computed(() => {
+  let columns = [
+    {
+      label: 'Name',
+      i18nLabel: 'card.team_name',
+      field: 'name',
+      thClass: 'th-black-class',
+      tdClass: 'table-text',
+    },
+    {
+      label: 'Role',
+      i18nLabel: 'card.team_role',
+      field: 'role',
+      thClass: 'th-black-class',
+      tdClass: 'table-text',
+    }
+  ];
+  let rows = [
+    {
+      name: selectedProject.value.project_coordinator,
+      role: 'Project Coordinator'
+    },
+    {
+      name: selectedProject.value.inspector,
+      role: 'Inspector'
+    },
+  ];
+  return { columns, rows };
+});
+
 </script>
 
 <template>
@@ -306,15 +336,20 @@ const excessProjectSelected = computed(() => {
       <h3>
         {{ t('card.project_team_description') }}
       </h3>
-      <div class="columns is-multiline is-gapless">
+
+      <vue-good-table
+        :columns="projectTeam.columns"
+        :rows="projectTeam.rows"
+        :sort-options="{ enabled: false }"
+        style-class="table-style"
+      />
         
-      </div>
     </div>
 
   </div>
 </template>
 
-<style scoped>
+<style>
 
 .spacer {
   background-color: #eeeeee;
@@ -333,7 +368,6 @@ const excessProjectSelected = computed(() => {
 
   button:nth-child(1) {
     border-left-width: 0px;
-    /* border-right-width: 0px; */
   }
 
   .project-button {
@@ -372,7 +406,6 @@ const excessProjectSelected = computed(() => {
   }
 
   .multiple-children {
-    /* border-left-width: 1px; */
     border-right-width: 1px;
   }
 
@@ -380,13 +413,120 @@ const excessProjectSelected = computed(() => {
     border-left-width: 0px;
     border-right-width: 1px;
   }
-
 }
 
-.ec-content-mobile {
-  padding-top: 1rem;
-  padding-bottom: 5rem;
-  font-size: 14px;
+/* This is copied from phila-ui-3 and edited to match the project's design */
+.table-style {
+  font-family: 'Open Sans', sans-serif;
+  width: 100%;
+  border: 0;
+  thead {
+    tr {
+      th {
+        background-clip: padding-box;
+        position: relative;
+        background-color: white;
+        color: #444;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 6px 16px;
+        line-height: 18px;
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-right-width: 0px;
+        border-bottom-width: 2px;
+        border-style: solid;
+        border-color: #444;
+        &.sortable {
+          cursor: pointer;
+          padding-right: 20px;
+          &:before,
+          &:after {
+            border-radius: 1px;
+            content: "";
+            display: block;
+            height: 0;
+            right: 8px;
+            top: 8px;
+            position: absolute;
+            width: 0;
+          }
+          &:before {
+            border-bottom-color: #444;
+          }
+          &:after {
+            border-top-color: #444;
+            margin-top: 12px;
+          }
+          &:hover {
+            &:before {
+              border-bottom-color: white;
+            }
+            &:after {
+              border-top-color: white;
+            }
+          }
+          &.sorting {
+            background-color: #0f4d90;
+            color: white;
+            &.sorting-asc {
+              &:before {
+                border-bottom-color: #444;
+              }
+              &:after {
+                border-top-color: #85b4e6;
+              }
+            }
+            &.sorting-desc {
+              &:before {
+                border-bottom-color: #85b4e6;
+              }
+              &:after {
+                border-top-color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      &:nth-of-type(even) {
+        td {
+          background-color: #ffffff;
+        }
+      }
+      td {
+        background-clip: padding-box;
+        position: relative;
+        background-color: #f0f0f0;
+        border-bottom-width: 1px;
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-right-width: 0px;
+        border-style: solid;
+        border-color: #444;
+        color: #444444;
+        font-size: 14px;
+        padding: 6px 16px;
+        line-height: 28px;
+      }
+    }
+  }
+
+  &.is-align-middle {
+    td,
+    th {
+      vertical-align: middle;
+    }
+  }
+
+  &.table-responsive {
+    width: 100%;
+    overflow: hidden;
+    overflow-x: auto;
+  }
 }
 
 </style>
