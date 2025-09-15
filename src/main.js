@@ -18,8 +18,13 @@ import { faTimes as farTimes } from '@fortawesome/pro-regular-svg-icons';
 import { faPlus as farPlus } from '@fortawesome/pro-regular-svg-icons';
 import { faMinus as farMinus } from '@fortawesome/pro-regular-svg-icons';
 import { faEnvelope as farEnvelope } from '@fortawesome/pro-regular-svg-icons';
+import { faFolder } from '@fortawesome/free-solid-svg-icons';
+import { faMoneyCheckDollar } from '@fortawesome/free-solid-svg-icons';
+import { faChartTreeMap } from '@fortawesome/pro-solid-svg-icons';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
-library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope);
+library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, faFolder, faMoneyCheckDollar, faChartTreeMap, faCaretDown, faCaretUp);
 
 // use these if running off unlinked package
 import pinboard from '@phila/pinboard';
@@ -27,6 +32,8 @@ import '../node_modules/@phila/pinboard/dist/style.css';
 // OR
 // use this if running off linked package
 // import pinboard from '../node_modules/@phila/pinboard/src/main.js';
+
+import legendControl from './general/legendControl';
 
 // data-sources
 import capitalProjects from './data-sources/capitalProjects';
@@ -73,7 +80,7 @@ let $config = {
     fuseDistance: 500,
   },
   locationInfo: {
-    siteNameField: 'project_name',
+    siteNameField: 'site_name',
     siteName: function (item) { return item.properties.site_name },
   },
   tags: {
@@ -297,6 +304,7 @@ let $config = {
       },
     },
   },
+  legendControl,
   dataSources: {
     capitalProjects,
   },
@@ -306,7 +314,27 @@ let $config = {
     type: 'circle',
     paint: {
       'circle-radius': 7,
-      'circle-color': '#9400c6',
+      'circle-color':[
+        'match',
+        ['get', 'client_dept'],
+        ' Fire',
+        '#cc3000',
+        'Free Library of Philadelphia',
+        '#f99300',
+        ' Health',
+        '#f3c613',
+        'Human Services',
+        '#58c04d',
+        'Philadephia Parks and Recreation',
+        '#3a833c',
+        'Police Department',
+        '#2176d2',
+        'Public Property',
+        '#9400c6',
+        'Multiple projects',
+        '#444444',
+        /* other */ '#000000'
+      ],
       'circle-stroke-width': 1,
       'circle-stroke-color': 'white',
     },
