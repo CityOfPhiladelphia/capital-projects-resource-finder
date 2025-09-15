@@ -362,6 +362,10 @@ const projectTeam = computed(() => {
   border-color: rgb(204,204,204);
 }
 
+.main-ec-content {
+  padding-top: 0px !important;
+}
+
 .ec-content {
   margin-right: -.25rem;
   padding-top: .75rem;
