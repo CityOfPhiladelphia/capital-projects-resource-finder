@@ -423,7 +423,6 @@ const projectTeam = computed(() => {
   thead {
     tr {
       th {
-        z-index: 10;
         background-clip: padding-box;
         position: relative;
         background-color: white;
