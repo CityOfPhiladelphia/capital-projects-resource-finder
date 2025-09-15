@@ -195,6 +195,7 @@ const projectTeam = computed(() => {
 
     <print-share-section
       :item="selectedProject"
+      :featureId="props.item._featureId"
       v-if="selectedProject"
     />
 
