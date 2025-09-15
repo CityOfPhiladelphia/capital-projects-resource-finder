@@ -15,19 +15,20 @@ const green = '#B9F2B1';
 const blue = '#0E4D92';
 const gray = '#F0F0F1';
 
-const projectStatus = props.project.project_status.toLowerCase();
+// const projectStatus = ref(props.project.project_status);//.toLowerCase());
+const projectStatus = computed(() => { return props.project.project_status.toLowerCase(); });
 
-const completeColor = projectStatus === 'complete' ? blue : gray;
+const completeColor = computed(() => { return projectStatus.value === 'complete' ? green : gray; });
 
-const planningStatus = projectStatus === 'planning' ? 'current' : (['design', 'construction', 'complete'].includes(projectStatus) ? 'past' : 'future');
-const designStatus = projectStatus === 'design' ? 'current' : (['construction', 'complete'].includes(projectStatus) ? 'past' : (projectStatus === 'planning' ? 'future' : 'past'));
-const constructionStatus = projectStatus === 'construction' ? 'current' : (projectStatus === 'complete' ? 'past' : (['planning', 'design'].includes(projectStatus) ? 'future' : 'past'));
-const completeStatus = projectStatus === 'complete' ? 'current' : 'future';
+const planningStatus = computed(() => { return projectStatus.value === 'planning' ? 'current' : (['design', 'construction', 'complete'].includes(projectStatus.value) ? 'past' : 'future'); });
+const designStatus = computed(() => { return projectStatus.value === 'design' ? 'current' : (['construction', 'complete'].includes(projectStatus.value) ? 'past' : (projectStatus.value === 'planning' ? 'future' : 'past')); });
+const constructionStatus = computed(() => { return projectStatus.value === 'construction' ? 'current' : (projectStatus.value === 'complete' ? 'past' : (['planning', 'design'].includes(projectStatus.value) ? 'future' : 'past')); });
+const completeStatus = computed(() => { return projectStatus.value === 'complete' ? 'past' : 'future'; });
 
-const planningImage = planningStatus === 'past' ? 'images/normal_u153.svg' : (planningStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
-const designImage = designStatus === 'past' ? 'images/normal_u153.svg' : (designStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
-const constructionImage = constructionStatus === 'past' ? 'images/normal_u153.svg' : (constructionStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
-const completeImage = completeStatus === 'past' ? 'images/normal_u303.svg' : (completeStatus === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg');
+const planningImage = computed(() => { return planningStatus.value === 'past' ? 'images/normal_u153.svg' : (planningStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
+const designImage = computed(() => { return designStatus.value === 'past' ? 'images/normal_u153.svg' : (designStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
+const constructionImage = computed(() => { return constructionStatus.value === 'past' ? 'images/normal_u153.svg' : (constructionStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
+const completeImage = computed(() => { return completeStatus.value === 'past' ? 'images/normal_u153.svg' : (completeStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
 
 
 </script>
@@ -36,31 +37,31 @@ const completeImage = completeStatus === 'past' ? 'images/normal_u303.svg' : (co
   <div class="status-bar">
 
     <div :class="`chevron planning ${planningStatus}`">
-      <img class="rotate" :src="publicPath + planningImage"></img>
+      <img class="rotated-image" :src="publicPath + planningImage"></img>
     </div>
     <div :class="`chevron design ${designStatus}`">
-      <img class="rotate" :src="publicPath + designImage"></img>
+      <img class="rotated-image" :src="publicPath + designImage"></img>
     </div>
     <div :class="`chevron construction ${constructionStatus}`">
-      <img class="rotate" :src="publicPath + constructionImage"></img>
+      <img class="rotated-image" :src="publicPath + constructionImage"></img>
     </div>
     <div :class="`flag complete ${completeStatus}`" :style="`background: ${completeColor}`">
-      <img class="space" :src="publicPath + completeImage"></img>
+      <img class="spaced-image" :src="publicPath + completeImage"></img>
     </div>
 
   </div>
 
   <div class="status-labels">
-    <div class="inline-block-div mr-5">
+    <div class="inline-block-div planning-div">
       Planning
     </div>
-    <div class="inline-block-div mr-5 ml-5">
+    <div class="inline-block-div design-div">
       Design
     </div>
-    <div class="inline-block-div ml-3 mr-3">
+    <div class="inline-block-div construction-div">
       Construction
     </div>
-    <div class="inline-block-div ml-4 mr-2">
+    <div class="inline-block-div complete-div">
       Complete
     </div>
   </div>
@@ -69,8 +70,35 @@ const completeImage = completeStatus === 'past' ? 'images/normal_u303.svg' : (co
 
 <style scoped>
 
-.space {
-  margin-top: .75rem;
+.past:after {
+  background: #B9F2B1;
+}
+
+.past:before {
+  background: #B9F2B1;
+}
+
+.current:after {
+  background: #0E4D92;
+}
+
+.current:before {
+  background: #0E4D92;
+}
+
+.future:after {
+  background: #F0F0F1;
+}
+
+.future:before {
+  background: #F0F0F1;
+}
+
+.inline-block-div {
+  display: inline-block;
+}
+
+.spaced-image {
   -webkit-transform: rotate(-90deg);
   -moz-transform: rotate(-90deg);
   -ms-transform: rotate(-90deg);
@@ -78,17 +106,12 @@ const completeImage = completeStatus === 'past' ? 'images/normal_u303.svg' : (co
   transform: rotate(-90deg);
 }
 
-.rotate {
-  margin-top: 1.75rem;
+.rotated-image {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   -o-transform: rotate(90deg);
   transform: rotate(90deg);
-}
-
-.inline-block-div {
-  display: inline-block;
 }
 
 .status-bar {
@@ -106,11 +129,7 @@ const completeImage = completeStatus === 'past' ? 'images/normal_u303.svg' : (co
 }
 
 .chevron {
-  margin-right: 52px;
   text-align: center;
-  padding: 12px;
-  height: 100px;
-  width: 54px;
   -webkit-transform: rotate(-90deg);
   -moz-transform: rotate(-90deg);
   -ms-transform: rotate(-90deg);
@@ -149,34 +168,7 @@ const completeImage = completeStatus === 'past' ? 'images/normal_u303.svg' : (co
   transform: skew(0deg, -45deg);
 }
 
-.past:after {
-  background: #B9F2B1;
-}
-
-.past:before {
-  background: #B9F2B1;
-}
-
-.current:after {
-  background: #0E4D92;
-}
-
-.current:before {
-  background: #0E4D92;
-}
-
-.future:after {
-  background: #F0F0F1;
-}
-
-.future:before {
-  background: #F0F0F1;
-}
-
 .flag {
-  margin-left: -16px;
-  width: 54px;
-  height: 84px;
   box-sizing: content-box;
   padding-top: 15px;
   position: relative;
@@ -199,9 +191,109 @@ const completeImage = completeStatus === 'past' ? 'images/normal_u303.svg' : (co
   bottom: -1px;
   width: 0;
   height: 0;
-  border-bottom: 28px solid white;
-  border-left: 27px solid transparent;
-  border-right: 27px solid transparent;
+}
+
+@media (min-width: 1000px) {
+
+  .chevron {
+    margin-right: 52px;
+    padding: 12px;
+    height: 100px;
+    width: 54px;
+  }
+
+  .flag {
+    margin-left: -16px;
+    width: 54px;
+    height: 84px;
+  }
+
+  .flag:after {
+    border-bottom: 28px solid white;
+    border-left: 27px solid transparent;
+    border-right: 27px solid transparent;
+  }
+
+  .spaced-image {
+    margin-top: .75rem;
+  }
+
+  .rotated-image {
+    margin-top: 1.75rem;
+  }
+
+  .planning-div {
+    margin-right: 28px;
+  }
+
+  .design-div {
+    margin-left: 28px;
+    margin-right: 22px;
+  }
+
+  .construction-div {
+    margin-left: 22px;
+    margin-right: 12px;
+  }
+
+  .complete-div {
+    margin-left: 12px;
+    margin-right: 10px;
+  }
+}
+
+
+@media (max-width: 999px) {
+
+  .chevron {
+    margin-right: 34px;
+    padding: 8px;
+    height: 72px;
+    width: 44px;
+  }
+
+  .flag {
+    margin-left: -6px;
+    width: 44px;
+    height: 64px;
+  }
+
+  .flag:after {
+    border-bottom: 22px solid white;
+    border-left: 22px solid transparent;
+    border-right: 22px solid transparent;
+  }
+
+  .spaced-image {
+    margin-top: .5rem;
+  }
+
+  .rotated-image {
+    margin-top: 1rem;
+  }
+
+  .inline-block-div {
+    font-size: 12px;
+  }
+
+  .planning-div {
+    margin-right: 18px;
+  }
+
+  .design-div {
+    margin-left: 18px;
+    margin-right: 14px;
+  }
+
+  .construction-div {
+    margin-left: 12px;
+    margin-right: 8px;
+  }
+
+  .complete-div {
+    margin-left: 10px;
+  }
+
 }
 
 </style>

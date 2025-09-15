@@ -83,7 +83,7 @@ const lastProject = computed(() => {
   font-family: 'Montserrat', sans-serif;
   background-color: white;
   cursor: pointer;
-  border-width: 0px;
+  border-width: 0px !important;
   :hover {
     background-color: #eeeeee;
   }

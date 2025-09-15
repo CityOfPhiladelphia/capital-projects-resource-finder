@@ -43,6 +43,7 @@ export default {
     "category": "Status",
     "active": "Active Projects",
     "archived": "Archived Projects",
+    "design": "Design",
     "planning": "Planning",
     "construction": "Construction",
     "complete": "Complete"
