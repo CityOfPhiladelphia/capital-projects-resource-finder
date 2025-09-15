@@ -70,8 +70,6 @@ export default {
     "district8": "District 8",
     "district9": "District 9",
     "district10": "District 10",
-<<<<<<< HEAD
-=======
   },
   "Philadephia Parks and Recreation": "Philadephia Parks and Recreation",
   "card": {
@@ -92,6 +90,5 @@ export default {
     "estimated_completion_description": "Estimated Completion",
     "estimated_completion_text": "This short description text will provide additional context to help a user interpret this table and the labels",
     "project_team_description": "Project Team",
->>>>>>> 7d5ed4c19cbd5525b2d64a0ae27effd56bf4501c
   }
 }

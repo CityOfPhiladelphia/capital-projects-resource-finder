@@ -17,11 +17,7 @@
     "@fortawesome/pro-solid-svg-icons": "^6.7.2",
     "@phila/phila-ui-core": "^1.0.18",
     "@phila/pinboard": "2.3.5",
-<<<<<<< HEAD
-    "npm": "^11.6.0",
-=======
     "accounting": "^0.4.1",
->>>>>>> 7d5ed4c19cbd5525b2d64a0ae27effd56bf4501c
     "unplugin-auto-import": "^0.18.3",
     "unplugin-vue-router": "^0.10.8"
   },
