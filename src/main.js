@@ -34,6 +34,12 @@ import capitalProjects from './data-sources/capitalProjects';
 import customGreeting from './components/customGreeting.vue';
 import expandCollapseContent from './components/ExpandCollapseContent.vue';
 
+const isArchiveProject = (dateCompleted) => {
+  const sixMonths = 15778800000; // 6 months in milliseconds
+  const completed = dateCompleted ? new Date(dateCompleted) : 0;
+  return completed && (Date.now() - completed > sixMonths);
+};
+
 const customComps = markRaw({
   'customGreeting': customGreeting,
   'expandCollapseContent': expandCollapseContent,
@@ -160,18 +166,14 @@ let $config = {
             unique_key: 'status_active',
             i18n_key: 'status.active',
             value: function (item) {
-              const today = Date.now();
-              const completed = item.properties.actual_completion ? new Date(item.properties.actual_completion) : 0;
-              return !item.properties.actual_completion || (today - completed <= 15814800000);
+              return !isArchiveProject(item.properties.actual_completion);
             }
           },
           'archived': {
             unique_key: 'status_archived',
             i18n_key: 'status.archived',
             value: function (item) {
-              const today = Date.now();
-              const completed = item.properties.actual_completion ? new Date(item.properties.actual_completion) : 0;
-              return !!item.actual_completion && (today - completed > 15814800000);
+              return isArchiveProject(item.properties.actual_completion);
             }
           }
         }
@@ -320,7 +322,7 @@ let $config = {
     },
     {
       type: "native",
-      href: "/oia/resource-finder",
+      href: "/capital-projects-resource-finder",
       text: "app.about",
     },
     {
