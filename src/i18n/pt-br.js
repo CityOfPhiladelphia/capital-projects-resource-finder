@@ -1,12 +1,12 @@
 export default{
-  "language": "Português",
+  "language": "Inglês",
   "app": {
-    "title": "Acolhendo o Community Resource Finder",
-    "subtitle": "Encontre serviços para imigrantes na Filadélfia",
-    "noResults": "Infelizmente, não há resultados para a sua busca. Ajuste os filtros que selecionou e tente novamente.",
+    "title": "Localizador de projetos de capital",
+    "subtitle": "Encontre investimentos contínuos em instalações de propriedade da cidade",
+    "noResults": "Desculpe, não há resultados para essa pesquisa. Ajuste os filtros que você selecionou e tente novamente.",
     "servicesOffered": "Serviços oferecidos",
     "searchPlaceholders": {
-      "all": "Pesquise por endereço, código postal ou palavra-chave"
+      "all": "Pesquise por endereço, CEP ou palavra-chave"
     },
     "cityOfPhiladelphia": "Cidade da Filadélfia",
     "about": "Sobre este localizador",
@@ -14,39 +14,86 @@ export default{
     "feedback": "Feedback",
     "map": "Mapa",
     "list": "Lista",
-    "viewMap": "Visualize o mapa",
-    "viewList": "Visualize a lista",
-    "viewAccessible": "Visualize a lista acessível de localizações de sites"
+    "viewMap": "Visualizar mapa",
+    "viewList": "Exibir lista",
+    "viewAccessible": "Exibir lista acessível de locais do site"
   },
   "introPage": {
     "section1Title": "Encontre serviços e apoio perto de você",
-    "p0": "A Filadélfia tem muitos recursos para imigrantes e refugiados. Você pode obter ajuda para resolver assuntos jurídicos, participar de eventos culturais, inscrever-se em aulas de inglês e muito mais. Use esta ferramenta para encontrar organizações perto de você.",
-    "p1": "Para encontrar recursos para imigrantes e refugiados:",
+    "h3_1": "Sobre o Programa Capital e nossos projetos",
+    "p1": "A cidade da Filadélfia usa fundos de capital para melhorar as instalações e serviços municipais. Esses projetos podem incluir investimentos em:",
     "ul1": {
-      "li": "Filtre pelos serviços que está procurando.",
-      "li2": "Selecione um local no mapa para obter informações.",
-      "li3": "Entre em contato com a organização por telefone ou e-mail antes de fazer uma visita."
+      "li": "Melhorias em edifícios e instalações de propriedade da cidade",
+      "li2": "Redes de tecnologia e comunicação da cidade",
+      "li3": "Veículos municipais especializados",
+      "li4": "Estradas e sistemas de transporte administrados pela cidade"
     },
-    "section2Title": "Acesso ao idioma",
-    "p2": "A maioria dos lugares oferece a maior parte de seus serviços em inglês. Outros idiomas variam por organização. Para ver os idiomas falados em uma organização, abra as informações dessa organização.",
-    "section3Title": "Assistência à imigração e fraude notarial",
-    "p3_1": "Muitos dos nossos parceiros listados aqui fornecem <a href='https://www.phila.gov/oia/resource-finder/?services=Legal%20services'>serviços jurídicos gratuitos e seguros.</a>",
-    "p3_2": "Esteja alerta para prestadores de serviços de imigração não licenciados que tiram vantagem de seus clientes. Nos Estados Unidos, tabeliões não têm autorização para darem aconselhamento jurídico, a menos que também sejam advogados credenciados. Para denunciar uma fraude ou apresentar queixa sobre um prestador, <a target='_blank' href='https://www.phila.gov/services/property-lots-housing/submit-a-service-request-with-311/'>entre em contato com 311</a>.",
-    "section4Title": "Como adicionar a sua organização à lista",
-    "p4": "O <a target='_blank' href='https://www.phila.gov/departments/office-of-immigrant-affairs/'>Gabinete de Assuntos de Imigração (OIA)</a> mantém este site. Entre em contato conosco por meio do <a target='_blank' href='mailto:OIA{'@'}phila.gov'>OIA{'@'}phila.gov</a> se você oferece serviços para imigrantes e gostaria de fazer parte desta lista."
+    "p2": "Em parceria com outras agências municipais, o Escritório do Programa de <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>Capital</a> gerencia as operações de mais de 200 projetos de capital em toda a cidade. ",
+    "h3_2": "Usando o localizador de projetos de capital",
+    "p3": "Use este localizador para localizar projetos de capital que estão ocorrendo em instalações de propriedade da cidade em toda a Filadélfia. Por exemplo, você pode encontrar projetos ativos em:",
+    "ul2": {
+      "li": "Parques e centros recreativos",
+      "li2": "Centros de saúde",
+      "li3": "Bibliotecas",
+      "li4": "Delegacias de bombeiros e polícia",
+      "li5": "Outras instalações e infraestrutura de propriedade da cidade"
+    },
+    "p4": "Você também pode encontrar projetos recentemente concluídos e arquivados (concluídos nos últimos seis meses).",
+    "p5": "Os projetos são organizados por instalação. Algumas instalações podem ter vários projetos ativos ao mesmo tempo.",
+    "h3_3": "Saiba mais",
+    "p6": "Nós atualizamos as informações [período de tempo]. Se algo estiver errado, você pode nos informar por meio do nosso formulário de <a target='_blank' href='https://www.phila.gov/feedback/'>feedback.</a>"
   },
-  "Arts & culture": "Arte e cultura",
-  "Citizenship application help": "Assistência para a solicitação de cidadania",
-  "English (ESL) classes": "Aulas de inglês como segunda língua (ESL)",
-  "Health/mental health services": "Serviços de saúde/saúde mental",
-  "Housing assistance": "Assistência com moradia",
-  "Immigrant advocacy": "Advocacia para a imigração",
-  "Immigrant focused youth programs": "Programas para jovens com foco em imigrantes",
-  "Job readiness": "Preparação para o trabalho",
-  "Legal services": "Serviços jurídicos",
-  "Refugee/asylee services": "Serviços para refugiados/solicitantes de asilo",
-  "Victim/witness support": "Apoio a vítima/testemunha",
-  "Citizenship classes": "Aulas de cidadania",
-  "Tax preparation": "Preparação de impostos",
-  "Education": "Educação"
+  "status": {
+    "category": "Status",
+    "active": "Projetos ativos",
+    "archived": "Projetos arquivados",
+    "design": "Design",
+    "planning": "Planejamento",
+    "construction": "Construção",
+    "complete": "Completo"
+  },
+  "projectCategory": {
+    "category": "Categoria do projeto",
+    "parksRecreation": "Parques e recreação",
+    "publicHealth": "Saúde pública",
+    "humanServices": "Serviços humanos",
+    "freeLibrary": "Biblioteca gratuita",
+    "fireDepartment": "Corpo de Bombeiros",
+    "policeDepartment": "Departamento de Polícia",
+    "publicProperty": "Propriedade pública",
+    "other": "Outros"
+  },
+  "councilDistrict": {
+    "category": "Distrito do Conselho",
+    "district1": "Distrito 1",
+    "district2": "Distrito 2",
+    "district3": "Distrito 3",
+    "district4": "Distrito 4",
+    "district5": "Distrito 5",
+    "district6": "Distrito 6",
+    "district7": "Distrito 7",
+    "district8": "Distrito 8",
+    "district9": "Distrito 9",
+    "district10": "Distrito 10"
+  },
+  "Philadephia Parks and Recreation": "Parques e recreação da Filadélfia",
+  "card": {
+    "category": "Categoria",
+    "district": "Distrito",
+    "budget": "Orçamento",
+    "section_description": "Descrição",
+    "description_text": "Este breve texto descritivo fornecerá um contexto de fundo sobre o projeto e deve ter mais de duas a três frases.",
+    "section_status": "Status",
+    "status_text": "Esse breve texto descritivo fornecerá contexto adicional para ajudar o usuário a interpretar esse componente de status.",
+    "current_stage": "Estágio atual",
+    "status_descriptions": {
+      "planning": "O projeto está em fase de planejamento. A opinião pública pode ser solicitada.",
+      "design": "Os desenhos ou planos do projeto são desenvolvidos. A opinião pública pode ser solicitada.",
+      "construction": "A construção está em andamento.",
+      "complete": "O projeto está concluído."
+    },
+    "estimated_completion_description": "Conclusão estimada",
+    "estimated_completion_text": "Esse breve texto descritivo fornecerá contexto adicional para ajudar o usuário a interpretar essa tabela e os rótulos.",
+    "project_team_description": "Equipe do projeto"
+  }
 }

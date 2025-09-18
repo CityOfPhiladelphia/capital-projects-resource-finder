@@ -1,10 +1,10 @@
 export default{
-  "language": "Shqiptar",
+  "language": "anglisht",
   "app": {
-    "title": "Mirësevini Gjetësin e Buri",
-    "subtitle": "Gjeni shërbime për imigrantët në Filadelfia",
-    "noResults": "Ndjesë, nuk ka rezultate për këtë kërkim. Rregulloni filtrat që keni zgjedhur dhe provoni sërish.",
-    "servicesOffered": "Shërbimet e ofruara",
+    "title": "Gjetës i projekteve kapitale",
+    "subtitle": "Gjeni investime të vazhdueshme në objektet në pronësi të qytetit",
+    "noResults": "Na vjen keq, nuk ka rezultate për këtë kërkim. Rregulloni filtrat që keni zgjedhur dhe provoni përsëri.",
+    "servicesOffered": "Shërbimet e ofruar",
     "searchPlaceholders": {
       "all": "Kërkoni sipas adresës, kodit postar ose fjalës kyçe"
     },
@@ -13,40 +13,87 @@ export default{
     "betaTag": "Beta",
     "feedback": "Reagime",
     "map": "Harta",
-    "list": "Lista",
+    "list": "Listë",
     "viewMap": "Shiko hartën",
     "viewList": "Shiko listën",
     "viewAccessible": "Shikoni listën e arritshme të vendndodhjeve të faqes"
   },
   "introPage": {
     "section1Title": "Gjeni shërbime dhe mbështetje pranë jush",
-    "p0": "Filadelfia ka shumë burime për imigrantët dhe refugjatët. Mund të përfitoni ndihmë për çështje ligjore, të merrni pjesë në ngjarje kulturore, të regjistroheni në kurse të gjuhës angleze dhe më shumë. Përdoreni këtë mjet për të gjetur organizata pranë jush.",
-    "p1": "Për të gjetur burime për imigrantët dhe refugjatët:",
+    "h3_1": "Rreth Programit të Kapitalit dhe projekteve tona",
+    "p1": "Qyteti i Filadelfias përdor fondet kapitale për të përmirësuar objektet dhe shërbimet komunale. Këto projekte mund të përfshijnë investime në:",
     "ul1": {
-      "li": "Filtroni sipas shërbimeve që po kërkoni.",
-      "li2": "Zgjidhni një vendndodhje në hartë për detaje.",
-      "li3": "Kontaktoni organizatën me telefon ose email përpara se ta vizitoni."
+      "li": "Përmirësime në ndërtesat dhe objektet në pronësi të qytetit",
+      "li2": "Teknologjia e qytetit dhe rrjetet e komunikimit",
+      "li3": "Automjete komunale të specializuara",
+      "li4": "Rrugët dhe sistemet e transportit të menaxhuara nga qyteti"
     },
-    "section2Title": "Aksesi gjuhësor",
-    "p2": "Shumica e vendndodhjeve e ofrojnë pjesën dërrmuese të shërbimeve të tyre në gjuhën angleze. Gjuhët e tjera variojnë sipas organizatës. Për të parë gjuhët që fliten në një organizatë, hapni detajet e vendndodhjes në fjalë.",
-    "section3Title": "Asistencë për imigracionin dhe mashtrimi noterial",
-    "p3_1": "Shumica e partnerëve tanë të renditur këtu ofrojnë <a href='https://www.phila.gov/oia/resource-finder/?services=Legal%20services'>shërbime ligjore të sigurta dhe pa pagesë.</a>",
-    "p3_2": "Kini kujdes nga ofruesit e palicencuar të shërbimeve të imigracionit që përfitojnë nga klientët e tyre. Në Shtetet e Bashkuara, një noteri nuk i lejohet të japë këshillë ligjore, përveçse nëse është edhe avokat i licencuar. Për të raportuar rast mashtrimi ose për të ankimuar një ofrues, <a target='_blank' href='https://www.phila.gov/services/property-lots-housing/submit-a-service-request-with-311/'>kontaktoni numrin 311</a>.",
-    "section4Title": "Shtimi i organizatës suaj në listë",
-    "p4": "Kjo faqe interneti mirëmbahet nga <a target='_blank' href='https://www.phila.gov/departments/office-of-immigrant-affairs/'>Zyra për Çështjet e Imigrantëve</a>. Na kontaktoni në <a target='_blank' href='mailto:OIA{'@'}phila.gov'>OIA{'@'}phila.gov</a> nëse ofroni shërbime për imigrantët dhe dëshironi t'ju shtojmë në këtë listë."
+    "p2": "Në partneritet me agjencitë e tjera të qytetit, Zyra <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>e Programit të Kap</a> italit menaxhon operacionet për më shumë se 200 projekte kapitale në të gjithë qytetin. ",
+    "h3_2": "Përdorimi i gjetësit të projekteve kapitale",
+    "p3": "Përdorni këtë gjetës për të gjetur projekte kapitale që zhvillohen në objektet në pronësi të Qytetit në të gjithë Filadelfia. Për shembull, mund të gjeni projekte aktive në:",
+    "ul2": {
+      "li": "Parqet dhe qendrat rekreative",
+      "li2": "Qendrat shëndetësore",
+      "li3": "Bibliotekat",
+      "li4": "Stacionet e zjarrit dhe policisë",
+      "li5": "Objekte dhe infrastruktura të tjera në pronësi të qytetit"
+    },
+    "p4": "Ju gjithashtu mund të gjeni projekte të përfunduara dhe të arkivuara së fundmi (të përfunduara brenda gjashtë muajve të fundit).",
+    "p5": "Projektet organizohen sipas objekteve. Disa objekte mund të kenë projekte të shumta aktive në të njëjtën kohë.",
+    "h3_3": "Mësoni më shumë",
+    "p6": "Ne përditësojmë informacionin [periudha kohore]. Nëse diçka nuk shkon, ju mund të na tregoni përmes formularit tonë <a target='_blank' href='https://www.phila.gov/feedback/'>të reagimit.</a>"
   },
-  "Arts & culture": "Arte dhe kulturë",
-  "Citizenship application help": "Ndihmë me aplikimin për shtetësi",
-  "English (ESL) classes": "Kurse të gjuhës angleze (ESL)",
-  "Health/mental health services": "Shërbime shëndetësore/të shëndetit mendor",
-  "Housing assistance": "Asistencë strehimi",
-  "Immigrant advocacy": "Përkrahje për imigrantët",
-  "Immigrant focused youth programs": "Programe për të rinjtë me fokus imigrantët",
-  "Job readiness": "Gatishmëria për punë",
-  "Legal services": "Shërbime ligjore",
-  "Refugee/asylee services": "Shërbime për refugjatët/azilantët",
-  "Victim/witness support": "Mbështetje për viktimat/dëshmitarët",
-  "Citizenship classes": "Klasat e qytetarisë",
-  "Tax preparation": "Përgatitja e taksave",
-  "Education": "Arsimimi"
+  "status": {
+    "category": "Statusi",
+    "active": "Projekte aktive",
+    "archived": "Projektet e Arkivuara",
+    "design": "Projektim",
+    "planning": "Planifikimi",
+    "construction": "Ndërtimi",
+    "complete": "I plotë"
+  },
+  "projectCategory": {
+    "category": "Kategoria e Projektit",
+    "parksRecreation": "Parqe dhe Rekreacion",
+    "publicHealth": "Shëndeti Publik",
+    "humanServices": "Shërbimet njerëzore",
+    "freeLibrary": "Biblioteka e lirë",
+    "fireDepartment": "Departamenti i zjarrierëve",
+    "policeDepartment": "Departamenti i Policisë",
+    "publicProperty": "Pronë publike",
+    "other": "Të tjera"
+  },
+  "councilDistrict": {
+    "category": "Qarku i Këshillit",
+    "district1": "Rrethi 1",
+    "district2": "Rrethi 2",
+    "district3": "Rrethi 3",
+    "district4": "Rrethi 4",
+    "district5": "Rrethi 5",
+    "district6": "Rrethi 6",
+    "district7": "Rrethi 7",
+    "district8": "Rrethi 8",
+    "district9": "Rrethi 9",
+    "district10": "Rrethi 10"
+  },
+  "Philadephia Parks and Recreation": "Parqet dhe rekreacionin e Philadephia",
+  "card": {
+    "category": "Kategori",
+    "district": "Rrethi",
+    "budget": "Buxheti",
+    "section_description": "Përshkrimi",
+    "description_text": "Ky tekst i shkurtër përshkrimi do të sigurojë kontekstin e sfondit në lidhje me projektin dhe duhet të jetë më i gjatë se dy deri në tre fjali në gjatësi.",
+    "section_status": "Statusi",
+    "status_text": "Ky tekst i shkurtër i përshkrimit do të sigurojë kontekst shtesë për të ndihmuar një përdorues të interpretojë këtë komponent",
+    "current_stage": "Faza aktuale",
+    "status_descriptions": {
+      "planning": "Projekti është në fazën e planifikimit. Mund të kërkohet kontributi publik.",
+      "design": "Projektet ose planet janë zhvilluar. Mund të kërkohet kontributi publik.",
+      "construction": "Ndërtimi është duke u zhvilluar.",
+      "complete": "Projekti është i përfunduar."
+    },
+    "estimated_completion_description": "Përfundimi i vlerësuar",
+    "estimated_completion_text": "Ky tekst i shkurtër përshkrimi do të sigurojë kontekst shtesë për të ndihmuar një përdorues të interpretojë këtë tabelë dhe etik",
+    "project_team_description": "Ekipi i Projektit"
+  }
 }

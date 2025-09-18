@@ -105,7 +105,11 @@ const getCounts = () => {
     class="main-greeting"
   >
       <div class="half-data-section">
-        <p v-html="t('introPage.p0')" />
+        <h3 v-html="t('introPage.h3_1')" />
+      </div>
+
+      <div class="half-data-section">
+        <p v-html="t('introPage.p1')" />
       </div>
 
       <div class="half-data-section">
@@ -117,6 +121,37 @@ const getCounts = () => {
             {{ t('introPage.ul1.' + index) }}
           </li>
         </ul>
+      </div>
+
+      <div class="half-data-section">
+        <p v-html="t('introPage.p2')" />
+      </div>
+
+      <div class="half-data-section">
+        <h3 v-html="t('introPage.h3_2')" />
+      </div>
+
+      <div class="half-data-section">
+        <p v-html="t('introPage.p3')" />
+      </div>
+
+      <div class="half-data-section">
+        <ul class="bullet-list">
+          <li
+            v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul2"
+            :key="index"
+          >
+            {{ t('introPage.ul2.' + index) }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="half-data-section">
+        <p v-html="t('introPage.p4')" />
+      </div>
+
+      <div class="half-data-section">
+        <p v-html="t('introPage.p5')" />
       </div>
 
       <div class="half-data-section">
@@ -136,21 +171,11 @@ const getCounts = () => {
       </div>
 
       <div class="half-data-section">
-        <p v-html="t('introPage.p1')" />
+        <h3 v-html="t('introPage.h3_3')" />
       </div>
 
       <div class="half-data-section">
-        <p v-html="t('introPage.p2')" />
-      </div>
-      <div class="half-data-section">
-        <ul class="bullet-list">
-          <li
-            v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul2"
-            :key="index"
-          >
-            {{ t('introPage.ul2.' + index) }}
-          </li>
-        </ul>
+        <p v-html="t('introPage.p6')" />
       </div>
 
     </div>

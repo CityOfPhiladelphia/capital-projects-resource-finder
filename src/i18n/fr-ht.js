@@ -1,52 +1,99 @@
 export default{
-  "language": "Ayisyen",
+  "language": "Anglè",
   "app": {
-    "title": "Akeyi Resous Kominote Chèche",
-    "subtitle": "Jwenn sèvis pou imigran nan Philadelphia",
-    "noResults": "Nou regrèt, pa gen okenn rezilta pou rechèch sa a. Ajiste filtè ou te chwazi yo epi eseye ankò.",
+    "title": "Chèche pwojè kapital",
+    "subtitle": "Jwenn envestisman kontinyèl nan enstalasyon ki posede vil la",
+    "noResults": "Nou regrèt, pa gen okenn rezilta pou rechèch sa. Ajiste filtè yo ou te chwazi epi eseye ankò.",
     "servicesOffered": "Sèvis yo ofri",
     "searchPlaceholders": {
-      "all": "Rechèch pa adrès, zipcode, oswa mo kle"
+      "all": "Rechèch pa adrès, kòd postal, oswa mo kle"
     },
-    "cityOfPhiladelphia": "VILLE DE PHILADELPHIE",
-    "about": "Konsènan rechèch sa a",
+    "cityOfPhiladelphia": "Vil Philadelphia",
+    "about": "Konsènan chèche sa a",
     "betaTag": "Beta",
     "feedback": "Feedback",
     "map": "Kat jeyografik",
     "list": "Lis",
-    "viewMap": "Gade kat jeyografik la",
+    "viewMap": "Gade kat jeyografik",
     "viewList": "Gade lis",
-    "viewAccessible": "Gade lis kote sit ki aksesib yo"
+    "viewAccessible": "Gade lis aksesib nan kote sit"
   },
   "introPage": {
     "section1Title": "Jwenn sèvis ak sipò toupre ou",
-    "p0": "Philadelphia gen anpil resous pou imigran ak refijye. Ou ka jwenn èd ak pwoblèm legal, ale nan evènman kiltirèl, enskri pou klas angle, ak plis ankò. Sèvi ak zouti sa a pou jwenn òganizasyon ki toupre w.",
-    "p1": "Pou jwenn resous imigran ak refijye:",
+    "h3_1": "Konsènan Pwogram Kapital la ak pwojè nou yo",
+    "p1": "Vil Philadelphia itilize lajan kapital pou amelyore enstalasyon minisipal ak sèvis yo. Pwojè sa yo ta ka gen ladan envèstisman nan:",
     "ul1": {
-      "li": "Filtre atravè sèvis w ap chèche yo.",
-      "li2": "Chwazi kote a sou kat la pou plis detay.",
-      "li3": "Kontakte òganizasyon an pa telefòn oswa imèl anvan ou vizite."
+      "li": "Amelyorasyon nan bilding ak enstalasyon ki posede vil la",
+      "li2": "Teknoloji vil ak rezo kominikasyon",
+      "li3": "Machin minisipal espesyalize",
+      "li4": "Wout ki jere nan vil ak sistèm transpò"
     },
-    "section2Title": "Aksè nan lang",
-    "p2": "Pifò kote yo ofri pi fò nan sèvis yo an angle. Lòt lang yo varye selon òganizasyon an. Pou wè lang yo pale nan yon òganizasyon, louvri detay kote sa a.",
-    "section3Title": "Asistans imigrasyon ak fwod notè",
-    "p3_1": "Anpil nan patnè nou yo ki nan lis la a bay <a href='https://www.phila.gov/oia/resource-finder/?services=Legal%20services'>sèvis legal gratis, san danje.</a>",
-    "p3_2": "Fè atansyon ak founisè sèvis imigrasyon ki pa gen lisans k ap pwofite kliyan yo. Ozetazini, yon notè pa gen dwa bay konsèy legal sof si yo se yon avoka ki gen lisans tou. Pou rapòte fwod oswa pote plent sou yon founisè, <a target='_blank' href='https://www.phila.gov/services/property-lots-housing/submit-a-service-request-with-311/'>kontakte 311</a>.",
-    "section4Title": "Ajoute òganizasyon w nan lis la",
-    "p4": "The <a target='_blank' href='https://www.phila.gov/departments/office-of-immigrant-affairs/'>Biwo Afè Imigran yo</a> opere sit entènèt sa a. Kontakte nou nan <a target='_blank' href='mailto:OIA{'@'}phila.gov'>OIA{'@'}phila.gov</a> si ou ofri sèvis imigran epi ou ta renmen ajoute nan lis sa a."
+    "p2": "An patenarya ak lòt ajans vil, Biwo Pw <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>ogram Kapital</a> la jere operasyon yo pou plis pase 200 pwojè kapital nan tout lavil la. ",
+    "h3_2": "Sèvi ak chèche pwojè kapital la",
+    "p3": "Sèvi ak chèche sa a pou lokalize pwojè kapital k ap pran plas nan enstalasyon City-posede atravè Philadelphia. Pou egzanp, ou ka jwenn pwojè aktif nan:",
+    "ul2": {
+      "li": "Pak ak sant rekreyasyon",
+      "li2": "Sant sante",
+      "li3": "Bibliyotèk",
+      "li4": "Estasyon dife ak polis",
+      "li5": "Lòt enstalasyon ak enfrastrikti ki posede vil la"
+    },
+    "p4": "Ou ka jwenn tou pwojè dènyèman ranpli ak achiv (ranpli nan sis dènye mwa yo).",
+    "p5": "Pwojè yo òganize pa etablisman. Gen kèk enstalasyon yo ka gen plizyè pwojè aktif nan yon sèl fwa.",
+    "h3_3": "Aprann plis",
+    "p6": "Nou mete ajou enfòmasyon an [peryòd tan]. Si yon bagay ki mal, ou ka fè nou konnen nan fòm fidb <a target='_blank' href='https://www.phila.gov/feedback/'>ak nou an.</a>"
   },
-  "Arts & culture": "Atizay ak Kilti",
-  "Citizenship application help": "Èd aplikasyon pou sitwayènte",
-  "English (ESL) classes": "Klas Angle (ESL)",
-  "Health/mental health services": "Sèvis sante/sante mantal",
-  "Housing assistance": "Èd pou lojman",
-  "Immigrant advocacy": "Defann Dwa Imigran yo",
-  "Immigrant focused youth programs": "Pwogram jèn ki konsantre sou imigran yo",
-  "Job readiness": "Preparasyon pou travay",
-  "Legal services": "Sèvis Legal",
-  "Refugee/asylee services": "Sèvis refijye/azil",
-  "Victim/witness support": "Sipò pou viktim/temwen",
-  "Citizenship classes": "Klas sitwayènte",
-  "Tax preparation": "Preparasyon taks",
-  "Education": "Edikasyon"
+  "status": {
+    "category": "Estati",
+    "active": "Pwojè aktif",
+    "archived": "Pwojè achiv",
+    "design": "Konsepsyon",
+    "planning": "Planifikasyon",
+    "construction": "Konstriksyon",
+    "complete": "Ranpli"
+  },
+  "projectCategory": {
+    "category": "Kategori pwojè",
+    "parksRecreation": "Pak & Rekreyasyon",
+    "publicHealth": "Sante Piblik",
+    "humanServices": "Sèvis Imèn",
+    "freeLibrary": "Bibliyotèk gratis",
+    "fireDepartment": "Depatman Ponpye",
+    "policeDepartment": "Depatman Lapolis",
+    "publicProperty": "pwopriyete piblik",
+    "other": "Lòt"
+  },
+  "councilDistrict": {
+    "category": "Distri Konsèy",
+    "district1": "Distri 1",
+    "district2": "Distri 2",
+    "district3": "Distri 3",
+    "district4": "Distri 4",
+    "district5": "Distri 5",
+    "district6": "Distri 6",
+    "district7": "Distri 7",
+    "district8": "Distri 8",
+    "district9": "Distri 9",
+    "district10": "Distri 10"
+  },
+  "Philadephia Parks and Recreation": "Pak Philadephia ak rekreyasyon",
+  "card": {
+    "category": "Kategori",
+    "district": "Distri",
+    "budget": "Bidjè",
+    "section_description": "Deskripsyon",
+    "description_text": "Sa a tèks deskripsyon kout pral bay kontèks background sou pwojè a epi yo ta dwe pi long pase de a twa fraz nan longè.",
+    "section_status": "Estati",
+    "status_text": "Tèks deskripsyon kout sa a pral bay kontèks adisyonèl ede yon itilizatè entèprete eleman estati sa a.",
+    "current_stage": "Etap aktyèl",
+    "status_descriptions": {
+      "planning": "Pwojè a se nan faz planifikasyon an. Ka mande opinyon piblik.",
+      "design": "Desen pwojè yo oswa plan yo devlope. Ka mande opinyon piblik.",
+      "construction": "Konstriksyon se sou pye.",
+      "complete": "Pwojè a se konplè."
+    },
+    "estimated_completion_description": "Estime fini",
+    "estimated_completion_text": "Tèks deskripsyon kout sa a pral bay kontèks adisyonèl ede yon itilizatè entèprete tab sa a ak etikèt yo",
+    "project_team_description": "Ekip Pwojè"
+  }
 }

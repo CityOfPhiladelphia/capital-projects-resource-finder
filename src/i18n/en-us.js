@@ -1,8 +1,8 @@
-export default {
+export default{
   "language": "English",
   "app": {
-    "title": "Capital Projects Resource Finder",
-    "subtitle": "TO DO: SUBTITLE",
+    "title": "Capital projects finder",
+    "subtitle": "Find ongoing investments in City-owned facilities",
     "noResults": "We're sorry, there are no results for that search. Adjust the filters you've selected and try again.",
     "servicesOffered": "Services offered",
     "searchPlaceholders": {
@@ -20,24 +20,28 @@ export default {
   },
   "introPage": {
     "section1Title": "",
-    "p0": "The Capital Program is the six-year plan for investing in Philadelphia's:",
+    "h3_1": "About the Capital Program and our projects",
+    "p1": "The City of Philadelphia uses capital funds to improve municipal facilities and services. These projects might include investments in:",
     "ul1": {
-      "li": "City-owned buildings and facilities",
-      "li2": "Municipal computer and communications networks",
+      "li": "Improvements to City-owned buildings and facilities",
+      "li2": "City technology and communications networkss",
       "li3": "Specialized municipal vehicles",
-      "li4": "Streets and transit system",
+      "li4": "City-managed roads and transportation systems"
     },
-    "p1": "The first-year spending plan in the Capital Program is called the Capital Budget. The City Planning Commission submits a Recommended Capital Program and Capital Budget to the mayor. The commission also reviews and makes recommendations on Capital Program and Budget amendments.",
-    "p2": "Staff works with the <a target='_blank' href='https://www.phila.gov/departments/office-of-the-director-of-finance/about/units/'>Budget and Grants Office</a> to balance the needs of more than 20 agencies and departments. Priorities are established based upon criteria such as:",
+    "p2": "In partnership with other City agencies, the <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>Capital Program Office</a> manages the operations for more than 200 capital projects citywide. ",
+    "h3_2": "Using the capital projects finder",
+    "p3": "Use this finder to locate capital projects taking place at City-owned facilities across Philadelphia. For example, you can find active projects at:",
     "ul2": {
-      "li": "The mayor's priorities",
-      "li2": "The ability to reduce racial disparities",
-      "li3": "The recommendations of the Comprehensive Plan, partner departments' plans, adopted master plans, and community plans",
-      "li4": "The need to manage City facilities to deliver effective public services",
-      "li5": "City government's fiscal policies and constraints",
-      "li6": "The ability of departments to implement projects",
-      "li7": "The ability to use capital funding from other government and private sources",
+      "li": "Parks and recreation centers",
+      "li2": "Health centers",
+      "li3": "Libraries",
+      "li4": "Fire and police stations",
+      "li5": "Other City-owned facilities and infrastructure"
     },
+    "p4": "You can also find recently completed and archived projects (completed within the last six months).",
+    "p5": "Projects are organized by facility. Some facilities may have multiple active projects at one time.",
+    "h3_3": "Learn more",
+    "p6": "We update the information [time period]. If something is wrong, you can let us know through our <a target='_blank' href='https://www.phila.gov/feedback/'>feedback form.</a>"
   },
   "status": {
     "category": "Status",
@@ -70,7 +74,7 @@ export default {
     "district7": "District 7",
     "district8": "District 8",
     "district9": "District 9",
-    "district10": "District 10",
+    "district10": "District 10"
   },
   "Philadephia Parks and Recreation": "Philadephia Parks and Recreation",
   "card": {
@@ -90,6 +94,6 @@ export default {
     },
     "estimated_completion_description": "Estimated Completion",
     "estimated_completion_text": "This short description text will provide additional context to help a user interpret this table and the labels",
-    "project_team_description": "Project Team",
+    "project_team_description": "Project Team"
   }
 }
