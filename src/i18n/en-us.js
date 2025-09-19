@@ -46,7 +46,7 @@ export default{
   "status": {
     "category": "Status",
     "active": "Active Projects",
-    "archived": "Archived Projects",
+    "archive": "View Archive",
     "design": "Design",
     "planning": "Planning",
     "construction": "Construction",
@@ -61,10 +61,11 @@ export default{
     "fireDepartment": "Fire Department",
     "policeDepartment": "Police Department",
     "publicProperty": "Public Property",
-    "other": "Other"
+    "other": "Other",
+    "multiple": "Multiple Projects"
   },
   "councilDistrict": {
-    "category": "Council District",
+    "category": "District",
     "district1": "District 1",
     "district2": "District 2",
     "district3": "District 3",

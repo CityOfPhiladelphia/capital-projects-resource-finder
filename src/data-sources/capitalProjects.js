@@ -1,5 +1,5 @@
 export default {
-  id: 'immigrant',
+  id: 'capital_projects',
   type: 'http-get',
   dependent: 'none',
   resettable: false,
@@ -162,14 +162,14 @@ export default {
         data.rows.reduce((groups, obj) => {
           const category = obj['site_name'];
           if (!category || typeof category !== 'string') return groups;
-          
+
           if (!groups.has(category)) {
             groups.set(category, []);
           }
-          
+
           groups.get(category).push(obj);
           return groups;
-        }, new Map()), 
+        }, new Map()),
         ([site_name, value]) => ({
           'site_name': site_name,
           'client_dept': value[0].client_dept,

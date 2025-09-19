@@ -5,7 +5,6 @@
 // (we might not need to use axios with new vue async tools)
 // if that is not needed, we can move this info to main.js
 
-
 import isMac from './util/is-mac';
 if (isMac()) {
   import('./assets/mac-style.scss')
@@ -28,11 +27,12 @@ import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, faFolder, faMoneyCheckDollar, faChartTreeMap, faCaretDown, faCaretUp);
 
 // use these if running off unlinked package
-import pinboard from '@phila/pinboard';
+// import pinboard from '@phila/pinboard';
+import pinboard from '../node_modules/@phila/pinboard/src/main.js';
 import '../node_modules/@phila/pinboard/dist/style.css';
 // OR
 // use this if running off linked package
-// import pinboard from '../node_modules/@phila/pinboard/src/main.js';
+
 
 import legendControl from './general/legendControl';
 
@@ -41,6 +41,12 @@ import capitalProjects from './data-sources/capitalProjects';
 
 import customGreeting from './components/customGreeting.vue';
 import expandCollapseContent from './components/ExpandCollapseContent.vue';
+import i18n from './i18n/i18n';
+
+const customComps = markRaw({
+  'customGreeting': customGreeting,
+  'expandCollapseContent': expandCollapseContent,
+});
 
 const isArchiveProject = (dateCompleted) => {
   const sixMonths = 15778800000; // 6 months in milliseconds
@@ -48,12 +54,7 @@ const isArchiveProject = (dateCompleted) => {
   return completed && (Date.now() - completed > sixMonths);
 };
 
-const customComps = markRaw({
-  'customGreeting': customGreeting,
-  'expandCollapseContent': expandCollapseContent,
-});
 
-import i18n from './i18n/i18n';
 let $config = {
   publicPath: import.meta.env.VITE_PUBLICPATH,
   i18n: i18n.i18n,
@@ -169,22 +170,44 @@ let $config = {
     columns: true,
     multipleFieldGroups: {
       status: {
-        radio: {
-          'active': {
-            unique_key: 'status_active',
-            i18n_key: 'status.active',
+        checkbox: {
+          'planning': {
+            unique_key: 'status_planning',
+            i18n_key: 'status.planning',
             value: function (item) {
-              return !isArchiveProject(item.properties.actual_completion);
+              return item.properties.project_status === i18n.status.planning;
             }
           },
-          'archived': {
-            unique_key: 'status_archived',
-            i18n_key: 'status.archived',
+          'design': {
+            unique_key: 'status_design',
+            i18n_key: 'status.design',
+            value: function (item) {
+              return item.properties.project_status === i18n.status.design;
+            }
+          },
+          'construction': {
+            unique_key: 'status_construction',
+            i18n_key: 'status.construction',
+            value: function (item) {
+              return item.properties.project_status === i18n.status.construction;
+            }
+          },
+          'complete': {
+            unique_key: 'status_complete',
+            i18n_key: 'status.complete',
+            value: function (item) {
+              return item.properties.project_status === i18n.status.complete;
+            }
+          },
+          'archive': {
+            unique_key: 'status_archive',
+            i18n_key: 'status.archive',
             value: function (item) {
               return isArchiveProject(item.properties.actual_completion);
             }
           }
-        }
+        },
+        toggleable: true
       },
       projectCategory: {
         checkbox: {
@@ -192,51 +215,58 @@ let $config = {
             unique_key: 'projectCategory_parksRecreation',
             i18n_key: 'projectCategory.parksRecreation',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Philadephia Parks and Recreation'; },
+            value: function (item) { return item.properties.client_dept == 'Philadephia Parks and Recreation'; }
           },
           'publicHealth': {
             unique_key: 'projectCategory_publicHealth',
             i18n_key: 'projectCategory.publicHealth',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Public Health'; },
+            value: function (item) { return item.properties.client_dept == 'Public Health'; }
           },
           'humanServices': {
             unique_key: 'projectCategory_humanServices',
             i18n_key: 'projectCategory.humanServices',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Human Services'; },
+            value: function (item) { return item.properties.client_dept == 'Human Services'; }
           },
           'freeLibrary': {
             unique_key: 'projectCategory_freeLibrary',
             i18n_key: 'projectCategory.freeLibrary',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Free Library'; },
+            value: function (item) { return item.properties.client_dept == 'Free Library'; }
           },
           'fireDepartment': {
             unique_key: 'projectCategory_fireDepartment',
             i18n_key: 'projectCategory.fireDepartment',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Fire Department'; },
+            value: function (item) { return item.properties.client_dept == 'Fire Department'; }
           },
           'policeDepartment': {
             unique_key: 'projectCategory_policeDepartment',
             i18n_key: 'projectCategory.policeDepartment',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Police Department'; },
+            value: function (item) { return item.properties.client_dept == 'Police Department'; }
           },
           'publicProperty': {
             unique_key: 'projectCategory_publicProperty',
             i18n_key: 'projectCategory.publicProperty',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Public Property'; },
+            value: function (item) { return item.properties.client_dept == 'Public Property'; }
           },
           'other': {
             unique_key: 'projectCategory_other',
             i18n_key: 'projectCategory.other',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept !== null; },
+            value: function (item) { return item.properties.client_dept !== null; }
           },
+          'multiple': {
+            unique_key: 'projectCategory_multiple',
+            i18n_key: 'projectCategory.multiple',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.client_dept !== null; },
+          }
         },
+        columns: 2,
       },
       councilDistrict: {
         checkbox: {
