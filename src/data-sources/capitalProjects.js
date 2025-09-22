@@ -9,7 +9,7 @@ export default {
     params: {
       q: 'select * from capital_projects_for_finder',
     },
-    success: function(data) {
+    success: function (data) {
       if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);
 
       const testArchived = data.rows.filter(r => {
@@ -158,30 +158,32 @@ export default {
         },
       );
 
-      const reorderedData = Array.from(
-        data.rows.reduce((groups, obj) => {
-          const category = obj['site_name'];
-          if (!category || typeof category !== 'string') return groups;
+      return data.rows;
 
-          if (!groups.has(category)) {
-            groups.set(category, []);
-          }
+      // const reorderedData = Array.from(
+      //   data.rows.reduce((groups, obj) => {
+      //     const category = obj['site_name'];
+      //     if (!category || typeof category !== 'string') return groups;
 
-          groups.get(category).push(obj);
-          return groups;
-        }, new Map()),
-        ([site_name, value]) => ({
-          'site_name': site_name,
-          'client_dept': value[0].client_dept,
-          'lat': value[0].lat,
-          'lon': value[0].lon,
-          projects: value
-        })
-      );
+      //     if (!groups.has(category)) {
+      //       groups.set(category, []);
+      //     }
 
-      if (import.meta.env.VITE_DEBUG) console.log('reorderedData:', reorderedData);
+      //     groups.get(category).push(obj);
+      //     return groups;
+      //   }, new Map()),
+      //   ([site_name, value]) => ({
+      //     'site_name': site_name,
+      //     'client_dept': value[0].client_dept,
+      //     'lat': value[0].lat,
+      //     'lon': value[0].lon,
+      //     projects: value
+      //   })
+      // );
 
-      return reorderedData;
+      // if (import.meta.env.VITE_DEBUG) console.log('reorderedData:', reorderedData);
+
+      // return reorderedData;
     },
   },
 };

@@ -28,10 +28,12 @@ library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, 
 
 // use these if running off unlinked package
 // import pinboard from '@phila/pinboard';
-import pinboard from '../node_modules/@phila/pinboard/src/main.js';
-import '../node_modules/@phila/pinboard/dist/style.css';
+// import '../node_modules/@phila/pinboard/dist/style.css';
+
 // OR
 // use this if running off linked package
+import pinboard from '../node_modules/@phila/pinboard/src/main.js';
+import '../node_modules/@phila/pinboard/dist/index.css';
 
 
 import legendControl from './general/legendControl';
@@ -175,39 +177,40 @@ let $config = {
             unique_key: 'status_planning',
             i18n_key: 'status.planning',
             value: function (item) {
-              return item.properties.project_status === i18n.status.planning;
+              return item.properties.project_status === i18n.i18n.data.messages.en.status.planning;
             }
           },
           'design': {
             unique_key: 'status_design',
             i18n_key: 'status.design',
             value: function (item) {
-              return item.properties.project_status === i18n.status.design;
+              return item.properties.project_status === i18n.i18n.data.messages.en.status.design;
             }
           },
           'construction': {
             unique_key: 'status_construction',
             i18n_key: 'status.construction',
             value: function (item) {
-              return item.properties.project_status === i18n.status.construction;
+              return item.properties.project_status === i18n.i18n.data.messages.en.status.construction;
             }
           },
           'complete': {
             unique_key: 'status_complete',
             i18n_key: 'status.complete',
             value: function (item) {
-              return item.properties.project_status === i18n.status.complete;
+              return item.properties.project_status === i18n.i18n.data.messages.en.status.complete;
             }
           },
           'archive': {
             unique_key: 'status_archive',
             i18n_key: 'status.archive',
             value: function (item) {
-              return isArchiveProject(item.properties.actual_completion);
+              return item.properties.actual_completion && isArchiveProject(item.properties.actual_completion);
             }
           }
         },
-        toggleable: true
+        toggleable: true,
+        toggleKey: 'status_archive'
       },
       projectCategory: {
         checkbox: {
