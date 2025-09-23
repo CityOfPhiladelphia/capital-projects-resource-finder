@@ -158,32 +158,32 @@ export default {
         },
       );
 
-      return data.rows;
+      // return data.rows;
 
-      // const reorderedData = Array.from(
-      //   data.rows.reduce((groups, obj) => {
-      //     const category = obj['site_name'];
-      //     if (!category || typeof category !== 'string') return groups;
+      const reorderedData = Array.from(
+        data.rows.reduce((groups, obj) => {
+          const category = obj['site_name'];
+          if (!category || typeof category !== 'string') return groups;
 
-      //     if (!groups.has(category)) {
-      //       groups.set(category, []);
-      //     }
+          if (!groups.has(category)) {
+            groups.set(category, []);
+          }
 
-      //     groups.get(category).push(obj);
-      //     return groups;
-      //   }, new Map()),
-      //   ([site_name, value]) => ({
-      //     'site_name': site_name,
-      //     'client_dept': value[0].client_dept,
-      //     'lat': value[0].lat,
-      //     'lon': value[0].lon,
-      //     projects: value
-      //   })
-      // );
+          groups.get(category).push(obj);
+          return groups;
+        }, new Map()),
+        ([site_name, value]) => ({
+          'site_name': site_name,
+          'client_dept': value[0].client_dept,
+          'lat': value[0].lat,
+          'lon': value[0].lon,
+          projects: value
+        })
+      );
 
-      // if (import.meta.env.VITE_DEBUG) console.log('reorderedData:', reorderedData);
+      if (import.meta.env.VITE_DEBUG) console.log('reorderedData:', reorderedData);
 
-      // return reorderedData;
+      return reorderedData;
     },
   },
 };
