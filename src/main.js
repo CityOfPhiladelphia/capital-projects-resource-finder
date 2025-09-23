@@ -209,7 +209,6 @@ let $config = {
             }
           }
         },
-        toggleable: true,
         toggleKey: 'status_archive'
       },
       projectCategory: {
