@@ -156,34 +156,36 @@ export default {
           "lat": 40.04670039069094,
           "lon": -75.10160256942602
         },
+        {
+          "cartodb_id": 45,
+          "the_geom": "0101000020E6100000F53710A880C652C02F5D4547FA054440",
+          "the_geom_webmercator": "0101000020110F0000576BF80954E45FC1F1E56EBE86965241",
+          "objectid": 45,
+          "project_number": "16381E-01-01",
+          "project_name": "Lawncrest Rec fake 5",
+          "client_dept": "Philadephia Parks and Recreation",
+          "client_category": null,
+          "site_code": "16381E",
+          "site_name": "TOTALLY FAKE ONLY ARCHIVE LOCATION ",
+          "site_address": "6000 RISING SUN AVENUE",
+          "council_district": "9",
+          "project_scope": "Site & Rec Center Improvements",
+          "inspector": "TBD",
+          "project_coordinator": "Medow",
+          "estimated_completion_season": "Winter",
+          "estimated_completion_year": "2023",
+          "estimated_completion": "Late 2023",
+          "actual_completion": '2023-12-31',
+          "project_status": "Complete",
+          "project_estimated_cost": "500",
+          "contact_email": "CPO@phila.gov",
+          "website_link": "https://www.phila.gov/programs/rebuild/",
+          "lat": 40.04670039069094,
+          "lon": -75.10160256942602
+        },
       );
 
-      // return data.rows;
-
-      const reorderedData = Array.from(
-        data.rows.reduce((groups, obj) => {
-          const category = obj['site_name'];
-          if (!category || typeof category !== 'string') return groups;
-
-          if (!groups.has(category)) {
-            groups.set(category, []);
-          }
-
-          groups.get(category).push(obj);
-          return groups;
-        }, new Map()),
-        ([site_name, value]) => ({
-          'site_name': site_name,
-          'client_dept': value[0].client_dept,
-          'lat': value[0].lat,
-          'lon': value[0].lon,
-          projects: value
-        })
-      );
-
-      if (import.meta.env.VITE_DEBUG) console.log('reorderedData:', reorderedData);
-
-      return reorderedData;
+      return data.rows;
     },
   },
 };

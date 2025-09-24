@@ -41,7 +41,7 @@ const makeValidUrl = (url) => {
   return newUrl;
 };
 
-const selectedProjectName = ref(props.item.properties.projects[0].project_name);
+const selectedProjectName = ref(props.item.projects[0].project_name);
 
 const moreIsOpen = ref(false);
 
@@ -57,11 +57,11 @@ const handleMoreClick = () => {
 };
 
 const selectedProject = computed(() => {
-  return props.item.properties.projects.find(project => project.project_name === selectedProjectName.value);
+  return props.item.projects.find(project => project.project_name === selectedProjectName.value);
 });
 
 const excessProjects = computed(() => {
-  let projects = [ ...props.item.properties.projects ];
+  let projects = [ ...props.item.projects ];
   console.log('projects:', projects);
   return projects.splice(2);
 });
@@ -109,49 +109,49 @@ const projectTeam = computed(() => {
     <button
       class="project-button column is-4 p-0"
       :class="{
-        'project-selected': !moreIsOpen && item.properties.projects[0].project_name === selectedProjectName,
-        'multiple-children': item.properties.projects.length > 1,
-        'only-child': item.properties.projects.length == 1
+        'project-selected': !moreIsOpen && item.projects[0].project_name === selectedProjectName,
+        'multiple-children': item.projects.length > 1,
+        'only-child': item.projects.length == 1
       }"
-      @click="handleProjectClick(item.properties.projects[0].project_name)"
+      @click="handleProjectClick(item.projects[0].project_name)"
     >
       <div class="has-text-centered p-1 pl-1 pr-1">
-        {{ item.properties.projects[0].project_name }}
+        {{ item.projects[0].project_name }}
       </div>
     </button>
 
     <button
-      v-if="item.properties.projects.length > 1"
+      v-if="item.projects.length > 1"
       class="project-button column is-4 p-0"
       :class="{
-        'project-selected': !moreIsOpen && item.properties.projects[1].project_name === selectedProjectName,
-        'multiple-children': item.properties.projects.length > 1,
-        'only-child': item.properties.projects.length == 1
+        'project-selected': !moreIsOpen && item.projects[1].project_name === selectedProjectName,
+        'multiple-children': item.projects.length > 1,
+        'only-child': item.projects.length == 1
       }"
-      @click="handleProjectClick(item.properties.projects[1].project_name)"
+      @click="handleProjectClick(item.projects[1].project_name)"
       >
         <div class="has-text-centered p-1 pl-1 pr-1">
-          {{ item.properties.projects[1].project_name }}
+          {{ item.projects[1].project_name }}
         </div>
     </button>
 
     <button
-      v-if="item.properties.projects.length == 3"
+      v-if="item.projects.length == 3"
       class="project-button column is-4 p-0"
       :class="{
-        'project-selected': !moreIsOpen && item.properties.projects[2].project_name === selectedProjectName,
-        'multiple-children': item.properties.projects.length > 1,
-        'only-child': item.properties.projects.length == 1
+        'project-selected': !moreIsOpen && item.projects[2].project_name === selectedProjectName,
+        'multiple-children': item.projects.length > 1,
+        'only-child': item.projects.length == 1
       }"
-      @click="handleProjectClick(item.properties.projects[2].project_name)"
+      @click="handleProjectClick(item.projects[2].project_name)"
       >
         <div class="has-text-centered p-1 pl-1 pr-1">
-          {{ item.properties.projects[2].project_name }}
+          {{ item.projects[2].project_name }}
         </div>
     </button>
 
     <button
-      v-if="item.properties.projects.length > 3 && !excessProjectSelected"
+      v-if="item.projects.length > 3 && !excessProjectSelected"
       class="project-button column is-4 p-0"
       :class="{ 'project-selected': moreIsOpen }"
       @click="handleMoreClick()"
@@ -175,10 +175,10 @@ const projectTeam = computed(() => {
         {{ selectedProjectName }}
       </div>
     </button>
-    
-    <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
-    <div v-if="item.properties.projects.length == 2"class="spacer column is-4"></div>
-    
+
+    <div v-if="item.projects.length == 1" class="spacer column is-8"></div>
+    <div v-if="item.projects.length == 2" class="spacer column is-4"></div>
+
     <div class="more-zone column is-12 p-0">
       <button-dropdown
         v-if="moreIsOpen"
@@ -263,7 +263,7 @@ const projectTeam = computed(() => {
             class="column is-11"
             v-html="'<b>'+t('card.budget')+': </b>'+ accounting.formatMoney(selectedProject.project_estimated_cost)"
           />
-            
+
         </div>
 
         <div
@@ -294,7 +294,7 @@ const projectTeam = computed(() => {
           </div>
         </div>
 
-        
+
       </div>
     </div>
 
@@ -344,7 +344,7 @@ const projectTeam = computed(() => {
         :sort-options="{ enabled: false }"
         style-class="table-style"
       />
-        
+
     </div>
 
   </div>
