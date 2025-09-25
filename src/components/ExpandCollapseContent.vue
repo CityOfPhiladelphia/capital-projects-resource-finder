@@ -25,47 +25,14 @@ const props = defineProps({
 watch(
   () => props.item,
   async newProjects => {
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXX",newProjects)
     locationProjects.value = newProjects;
+    selectedProjectName.value = newProjects.properties.projects[0].project_name;
   }
 )
 
 const locationProjects = ref(props.item);
-
-// methods
-const parseAddress = (address) => {
-  const formattedAddress = address.replace(/(Phila.+)/g, city => `<div>${city}</div>`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `<div>${lineOne}</div>`).replace(/,/, '');
-  return formattedAddress;
-};
-
-const makeValidUrl = (url) => {
-  let newUrl = window.decodeURIComponent(url);
-  newUrl = newUrl
-    .trim()
-    .replace(/\s/g, '');
-  if (/^(:\/\/)/.test(newUrl)) {
-    return `http${newUrl}`;
-  }
-  if (!/^(f|ht)tps?:\/\//i.test(newUrl)) {
-    return `http://${newUrl}`;
-  }
-  return newUrl;
-};
-
 const selectedProjectName = ref(props.item.properties.projects[0].project_name);
-
 const moreIsOpen = ref(false);
-
-const handleProjectClick = (projectName) => {
-  moreIsOpen.value = false;
-  if (import.meta.env.VITE_DEBUG) console.log('handleProjectClick projectName:', projectName);
-  selectedProjectName.value = projectName;
-};
-
-const handleMoreClick = () => {
-  if (import.meta.env.VITE_DEBUG) console.log('handleMoreClick projectName:', 'more');
-  moreIsOpen.value = true;
-};
 
 const selectedProject = computed(() => {
   return props.item.properties.projects.find(project => project.project_name === selectedProjectName.value);
@@ -111,6 +78,37 @@ const projectTeam = computed(() => {
   ];
   return { columns, rows };
 });
+
+// methods
+const parseAddress = (address) => {
+  const formattedAddress = address.replace(/(Phila.+)/g, city => `<div>${city}</div>`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `<div>${lineOne}</div>`).replace(/,/, '');
+  return formattedAddress;
+};
+
+const makeValidUrl = (url) => {
+  let newUrl = window.decodeURIComponent(url);
+  newUrl = newUrl
+    .trim()
+    .replace(/\s/g, '');
+  if (/^(:\/\/)/.test(newUrl)) {
+    return `http${newUrl}`;
+  }
+  if (!/^(f|ht)tps?:\/\//i.test(newUrl)) {
+    return `http://${newUrl}`;
+  }
+  return newUrl;
+};
+
+const handleProjectClick = (projectName) => {
+  moreIsOpen.value = false;
+  if (import.meta.env.VITE_DEBUG) console.log('handleProjectClick projectName:', projectName);
+  selectedProjectName.value = projectName;
+};
+
+const handleMoreClick = () => {
+  if (import.meta.env.VITE_DEBUG) console.log('handleMoreClick projectName:', 'more');
+  moreIsOpen.value = true;
+};
 
 </script>
 
