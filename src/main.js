@@ -33,7 +33,7 @@ library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, 
 // OR
 // use this if running off linked package
 import pinboard from '../node_modules/@phila/pinboard/src/main.js';
-// import '../node_modules/@phila/pinboard/dist/index.css';
+import '../node_modules/@phila/pinboard/dist/index.css';
 
 
 import legendControl from './general/legendControl';
@@ -51,13 +51,24 @@ const customComps = markRaw({
 });
 
 const departmentNames = [
+  'Fire',
+  'Free Library of Philadelphia',
   'Health',
-  'Philadephia Parks and Recreation',
-  'Free Library of Philadelphia', 'Fire',
   'Human Services',
+  'Philadephia Parks and Recreation',
   'Police Department',
   'Public Property'
 ];
+
+// const departmentNames = [
+//   'Parks & Recreation',
+//   'Public Health',
+//   'Human Services',
+//   'Free Library',
+//   'Fire Department',
+//   'Police Department',
+//   'Public Property',
+// ]
 
 const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
 
