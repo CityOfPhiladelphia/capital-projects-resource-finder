@@ -101,11 +101,11 @@ const projectTeam = computed(() => {
   ];
   let rows = [
     {
-      name: selectedProject.value.project_coordinator,
+      name: function(selectedProject) { if (selectedProject) return selectedProject.value.project_coordinator },
       role: 'Project Coordinator'
     },
     {
-      name: selectedProject.value.inspector,
+      name: function(selectedProject) { if (selectedProject) return selectedProject.value.inspector },
       role: 'Inspector'
     },
   ];
@@ -213,7 +213,7 @@ const projectTeam = computed(() => {
     <div class="columns top-section">
       <div class="column is-6">
         <div
-          v-if="selectedProject.site_address"
+          v-if="selectedProject && selectedProject.site_address"
           class="columns is-mobile"
         >
           <div class="column is-1">
@@ -226,7 +226,7 @@ const projectTeam = computed(() => {
         </div>
 
         <div
-          v-if="selectedProject.client_dept"
+          v-if="selectedProject && selectedProject.client_dept"
           class="columns is-mobile"
         >
           <div class="column is-1">
@@ -239,7 +239,7 @@ const projectTeam = computed(() => {
         </div>
 
         <div
-          v-if="selectedProject.website_link"
+          v-if="selectedProject && selectedProject.website_link"
           class="columns is-mobile website-div"
         >
           <div
@@ -262,7 +262,7 @@ const projectTeam = computed(() => {
       <div class="column is-6">
 
         <div
-          v-if="selectedProject.project_estimated_cost"
+          v-if="selectedProject && selectedProject.project_estimated_cost"
           class="columns is-mobile"
         >
           <div
@@ -278,7 +278,7 @@ const projectTeam = computed(() => {
         </div>
 
         <div
-          v-if="selectedProject.council_district"
+          v-if="selectedProject && selectedProject.council_district"
           class="columns is-mobile"
         >
           <div
@@ -292,7 +292,7 @@ const projectTeam = computed(() => {
         </div>
 
         <div
-          v-if="selectedProject.contact_email"
+          v-if="selectedProject && selectedProject.contact_email"
           class="columns is-mobile"
         >
           <div
@@ -330,13 +330,13 @@ const projectTeam = computed(() => {
         :project="selectedProject"
       />
 
-      <div>
+      <div v-if="selectedProject">
         {{ t('card.current_stage') }}: <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}</a>
       </div>
     </div>
 
     <div>
-      <h3>
+      <h3 v-if="selectedProject">
         {{ t('card.estimated_completion_description') }}: {{ selectedProject.estimated_completion }}
       </h3>
       <div class="columns is-multiline is-gapless">
