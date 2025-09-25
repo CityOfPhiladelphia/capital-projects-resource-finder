@@ -59,35 +59,39 @@ const departmentNames = [
   'Public Property'
 ];
 
-const isArchiveProject = (dateCompleted) => {
-  const sixMonths = 15778800000; // 6 months in milliseconds
-  const completed = dateCompleted ? new Date(dateCompleted) : 0;
-  return completed && (Date.now() - completed > sixMonths);
-};
+const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
 
-const groupData = (data) => {
-  const dataReduced = data.reduce((groups, obj) => {
-    const category = obj.properties['site_name'];
-    if (!category || typeof category !== 'string') { return groups };
-    if (!groups.has(category)) {
-      groups.set(category, []);
+const filterArchived = (locations, archiveToggle) => {
+  const filteredSites = [];
+  locations.forEach((location) => {
+    const filteredProjects = location.properties.projects.filter((project) => isArchiveProject(project) === archiveToggle)
+    if (filteredProjects.length) {
+      const locationCopy = JSON.parse(JSON.stringify(location));
+      locationCopy.properties.projects = filteredProjects;
+      filteredSites.push(locationCopy);
     }
-    groups.get(category).push(obj.properties);
-    return groups;
-  }, new Map());
+  })
+  return filteredSites;
+}
 
-  return Array.from(dataReduced,
-    ([site_name, value]) => ({
-      '_featureId': value[0]._featureId,
-      'site_name': site_name,
-      'client_dept': value[0].client_dept,
-      'lat': value[0].lat,
-      'lon': value[0].lon,
-      projects: value
-    })
-  )
-};
 
+const filterLocationProjects = (locations, selectedStatusesArray) => {
+  selectedStatusesArray = Array.from(selectedStatusesArray, (service) => service.split('_')[1])
+  const archiveFilteredLocations = filterArchived(locations, selectedStatusesArray.includes('archive'))
+
+  if (!selectedStatusesArray.includes('status')) { return archiveFilteredLocations }
+
+  const filteredSites = [];
+  archiveFilteredLocations.forEach((location) => {
+    const filteredProjects = location.properties.projects.filter((project) => selectedStatusesArray.includes(project.project_status.toLowerCase()))
+    if (filteredProjects.length) {
+      const locationCopy = JSON.parse(JSON.stringify(location));
+      locationCopy.properties.projects = filteredProjects;
+      filteredSites.push(locationCopy);
+    }
+  })
+  return filteredSites;
+}
 
 let $config = {
   publicPath: import.meta.env.VITE_PUBLICPATH,
@@ -117,7 +121,7 @@ let $config = {
   },
   locationInfo: {
     siteNameField: 'site_name',
-    siteName: function (item) { return item.site_name },
+    siteName: function (item) { return item.properties.site_name },
   },
   tags: {
     type: 'fieldValues',
@@ -202,46 +206,37 @@ let $config = {
   refine: {
     type: 'multipleFieldGroups',
     columns: true,
+    customRefine: filterLocationProjects,
     multipleFieldGroups: {
       status: {
         checkbox: {
           'planning': {
             unique_key: 'status_planning',
             i18n_key: 'status.planning',
-            value: function (item) {
-              return item.properties.project_status === i18n.i18n.data.messages.en.status.planning && !isArchiveProject(item.properties.actual_completion);
-            }
+            value: function (item) { return item.properties.projects.some((project) => project.project_status === i18n.i18n.data.messages.en.status.planning) }
           },
           'design': {
             unique_key: 'status_design',
             i18n_key: 'status.design',
-            value: function (item) {
-              return item.properties.project_status === i18n.i18n.data.messages.en.status.design && !isArchiveProject(item.properties.actual_completion);
-            }
+            value: function (item) { return item.properties.projects.some((project) => project.project_status === i18n.i18n.data.messages.en.status.design) }
           },
           'construction': {
             unique_key: 'status_construction',
             i18n_key: 'status.construction',
-            value: function (item) {
-              return item.properties.project_status === i18n.i18n.data.messages.en.status.construction && !isArchiveProject(item.properties.actual_completion);
-            }
+            value: function (item) { return item.properties.projects.some((project) => project.project_status === i18n.i18n.data.messages.en.status.construction) }
           },
           'complete': {
             unique_key: 'status_complete',
             i18n_key: 'status.complete',
-            value: function (item) {
-              return item.properties.project_status === i18n.i18n.data.messages.en.status.complete && !isArchiveProject(item.properties.actual_completion);
-            }
+            value: function (item) { return item.properties.projects.some((project) => project.project_status === i18n.i18n.data.messages.en.status.complete && !isArchiveProject(project)) }
           },
           'archive': {
             unique_key: 'status_archive',
             i18n_key: 'status.archive',
-            value: function (item) {
-              return item.properties.actual_completion && isArchiveProject(item.properties.actual_completion);
-            }
+            value: function (item) { return item.properties.projects.some((project) => isArchiveProject(project)) }
           }
         },
-        toggleKey: 'status_archive'
+        toggleKey: 'status_archive',
       },
       projectCategory: {
         checkbox: {
@@ -249,55 +244,55 @@ let $config = {
             unique_key: 'projectCategory_parksRecreation',
             i18n_key: 'projectCategory.parksRecreation',
             dependentGroups: ['status'],
-             value: function (item) { return item.properties.client_dept == 'Philadephia Parks and Recreation'; }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Philadephia Parks and Recreation') }
           },
           'publicHealth': {
             unique_key: 'projectCategory_publicHealth',
             i18n_key: 'projectCategory.publicHealth',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Public Health'; }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Health') }
           },
           'humanServices': {
             unique_key: 'projectCategory_humanServices',
             i18n_key: 'projectCategory.humanServices',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Human Services'; }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Human Services') }
           },
           'freeLibrary': {
             unique_key: 'projectCategory_freeLibrary',
             i18n_key: 'projectCategory.freeLibrary',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Free Library'; }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Free Library of Philadelphia') }
           },
           'fireDepartment': {
             unique_key: 'projectCategory_fireDepartment',
             i18n_key: 'projectCategory.fireDepartment',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Fire Department'; }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Fire') }
           },
           'policeDepartment': {
             unique_key: 'projectCategory_policeDepartment',
             i18n_key: 'projectCategory.policeDepartment',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Police Department'; }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Police Department') }
           },
           'publicProperty': {
             unique_key: 'projectCategory_publicProperty',
             i18n_key: 'projectCategory.publicProperty',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Public Property'; }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Public Property') }
           },
           'other': {
             unique_key: 'projectCategory_other',
             i18n_key: 'projectCategory.other',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept !== null; }
+            value: function (item) { return item.properties.projects.some((project) => !departmentNames.includes(project.client_dept)) }
           },
           'multiple': {
             unique_key: 'projectCategory_multiple',
             i18n_key: 'projectCategory.multiple',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept !== null; },
+            value: function (item) { return item.properties.projects.length > 1 },
           }
         },
         columns: 2,
@@ -308,61 +303,61 @@ let $config = {
             unique_key: 'councilDistrict_district1',
             i18n_key: 'councilDistrict.district1',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "1"; },
+            value: function (item) { return item.properties.projects.some((project) => project.council_district == "1") }
           },
           'district2': {
             unique_key: 'councilDistrict_district2',
             i18n_key: 'councilDistrict.district2',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "2"; },
+            value: function (item) { return item.properties.projects.some((project) => project.council_district == "2") }
           },
           'district3': {
             unique_key: 'councilDistrict_district3',
             i18n_key: 'councilDistrict.district3',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "3"; },
+            value: function (item) { return item.properties.projects.some((project) => project.council_district == "3") }
           },
           'district4': {
             unique_key: 'councilDistrict_district4',
             i18n_key: 'councilDistrict.district4',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "4"; },
+            value: function (item) { return item.properties.projects.some((project) => project.council_district == "4") }
           },
           'district5': {
             unique_key: 'councilDistrict_district5',
             i18n_key: 'councilDistrict.district5',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "5"; },
+            value: function (item) { return item.properties.projects.some((project) => project.council_district == "5") }
           },
           'district6': {
             unique_key: 'councilDistrict_district6',
             i18n_key: 'councilDistrict.district6',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "6"; },
+            value: function (item) { return item.properties.projects.some((project) => project.council_district == "6") }
           },
           'district7': {
             unique_key: 'councilDistrict_district7',
             i18n_key: 'councilDistrict.district7',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "7"; },
+            value: function (item) { return item.properties.projects.some((project) => project.council_district == "7") }
           },
           'district8': {
             unique_key: 'councilDistrict_district8',
             i18n_key: 'councilDistrict.district8',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "8"; },
+            value: function (item) { return item.properties.projects.some((project) => project.council_district == "8") }
           },
           'district9': {
             unique_key: 'councilDistrict_district9',
             i18n_key: 'councilDistrict.district9',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "9"; },
+            value: function (item) { return item.properties.projects.some((project) => project.council_district == "9") }
           },
           'district10': {
             unique_key: 'councilDistrict_district10',
             i18n_key: 'councilDistrict.district10',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "10"; },
+            value: function (item) { return item.properties.projects.some((project) => project.council_district == "10") }
           },
         },
         columns: 2
@@ -373,17 +368,13 @@ let $config = {
   dataSources: {
     capitalProjects,
   },
-  groupData: {
-    grouping: true,
-    groupBy: groupData
-  },
   mapLayer: {
     id: 'resources',
     source: 'resources',
     type: 'circle',
     paint: {
       'circle-radius': 7,
-      'circle-color':[
+      'circle-color': [
         'match',
         ['get', 'client_dept'],
         ' Fire',
