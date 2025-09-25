@@ -16,7 +16,7 @@ const blue = '#0E4D92';
 const gray = '#F0F0F1';
 
 // const projectStatus = ref(props.project.project_status);//.toLowerCase());
-const projectStatus = computed(() => { return props.project.project_status.toLowerCase(); });
+const projectStatus = computed(() => { if (props.project.project_status) return props.project.project_status.toLowerCase(); });
 
 const completeColor = computed(() => { return projectStatus.value === 'complete' ? green : gray; });
 
