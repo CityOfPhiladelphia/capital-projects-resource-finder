@@ -4,6 +4,7 @@ import PrintShareSection from './PrintShareSection.vue';
 import ButtonDropdown from './ButtonDropdown.vue';
 import StatusBar from './statusBar.vue';
 import accounting from 'accounting';
+import { ref, computed, watch } from 'vue';
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -20,6 +21,16 @@ const props = defineProps({
     default: false,
   },
 });
+
+watch(
+  () => props.item,
+  async newProjects => {
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXX",newProjects)
+    locationProjects.value = newProjects;
+  }
+)
+
+const locationProjects = ref(props.item);
 
 // methods
 const parseAddress = (address) => {
@@ -175,10 +186,10 @@ const projectTeam = computed(() => {
         {{ selectedProjectName }}
       </div>
     </button>
-    
+
     <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
     <div v-if="item.properties.projects.length == 2"class="spacer column is-4"></div>
-    
+
     <div class="more-zone column is-12 p-0">
       <button-dropdown
         v-if="moreIsOpen"
@@ -263,7 +274,7 @@ const projectTeam = computed(() => {
             class="column is-11"
             v-html="'<b>'+t('card.budget')+': </b>'+ accounting.formatMoney(selectedProject.project_estimated_cost)"
           />
-            
+
         </div>
 
         <div
@@ -294,7 +305,7 @@ const projectTeam = computed(() => {
           </div>
         </div>
 
-        
+
       </div>
     </div>
 
@@ -344,7 +355,7 @@ const projectTeam = computed(() => {
         :sort-options="{ enabled: false }"
         style-class="table-style"
       />
-        
+
     </div>
 
   </div>
