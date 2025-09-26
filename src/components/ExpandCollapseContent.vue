@@ -27,6 +27,7 @@ watch(
   async newProjects => {
     locationProjects.value = newProjects;
     selectedProjectName.value = newProjects.properties.projects[0].project_name;
+    moreIsOpen.value = false;
   }
 )
 
@@ -107,7 +108,7 @@ const handleProjectClick = (projectName) => {
 
 const handleMoreClick = () => {
   if (import.meta.env.VITE_DEBUG) console.log('handleMoreClick projectName:', 'more');
-  moreIsOpen.value = true;
+  moreIsOpen.value = !moreIsOpen.value;
 };
 
 </script>
@@ -224,7 +225,7 @@ const handleMoreClick = () => {
         </div>
 
         <div
-          v-if="selectedProject && selectedProject.client_dept"
+          v-if="selectedProject && selectedProject.client_category"
           class="columns is-mobile"
         >
           <div class="column is-1">
@@ -232,7 +233,7 @@ const handleMoreClick = () => {
           </div>
           <div
             class="column is-11"
-            v-html="'<b>'+t('card.category')+': </b>'+selectedProject.client_dept"
+            v-html="'<b>'+t('card.category')+': </b>'+selectedProject.client_category"
           />
         </div>
 
