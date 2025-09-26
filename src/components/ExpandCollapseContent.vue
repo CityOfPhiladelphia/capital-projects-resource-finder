@@ -114,7 +114,7 @@ const handleMoreClick = () => {
 </script>
 
 <template>
-  <div class="ec-content button-row columns is-mobile">
+  <div class="ec-content button-row is-multiline columns is-mobile">
 
     <button
       class="project-button column is-4 p-0"
