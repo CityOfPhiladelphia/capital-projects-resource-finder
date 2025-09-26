@@ -367,7 +367,7 @@ const handleMoreClick = () => {
 <style>
 
 .button-row {
-  height: 50px;
+  /* height: 78px; */
 }
 
 .spacer {
@@ -394,7 +394,6 @@ const handleMoreClick = () => {
   }
 
   .project-button-text {
-    box-sizing: border-box;
     overflow: hidden;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
@@ -410,6 +409,9 @@ const handleMoreClick = () => {
     border-bottom-width: 1px;
     border-style: solid;
     border-color: rgb(204,204,204);
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    height: 48px;
   }
 
   .more-button {
