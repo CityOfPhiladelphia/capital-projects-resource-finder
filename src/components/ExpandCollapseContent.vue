@@ -114,7 +114,7 @@ const handleMoreClick = () => {
 </script>
 
 <template>
-  <div class="ec-content columns is-multiline is-mobile">
+  <div class="ec-content button-row columns is-mobile">
 
     <button
       class="project-button column is-4 p-0"
@@ -208,6 +208,10 @@ const handleMoreClick = () => {
       :featureId="props.item._featureId"
       v-if="selectedProject"
     />
+
+    <div>
+      <h3>{{ selectedProject.project_name }}</h3>
+    </div>
 
     <div class="columns top-section">
       <div class="column is-6">
@@ -361,6 +365,10 @@ const handleMoreClick = () => {
 </template>
 
 <style>
+
+.button-row {
+  height: 50px;
+}
 
 .spacer {
   background-color: #eeeeee;

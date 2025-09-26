@@ -33,7 +33,7 @@ library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, 
 // OR
 // use this if running off linked package
 import pinboard from '../node_modules/@phila/pinboard/src/main.js';
-import '../node_modules/@phila/pinboard/dist/index.css';
+// import '../node_modules/@phila/pinboard/dist/index.css';
 
 
 import legendControl from './general/legendControl';
