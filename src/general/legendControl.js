@@ -53,7 +53,7 @@ export default {
         'font-size': '12px',
         'background-color': '#9400c6',
       },
-      'Multiple Categories': {
+      'Multiple Departments': {
         'width': '15px',
         'height': '15px',
         'font-size': '12px',

@@ -50,25 +50,6 @@ const customComps = markRaw({
   'expandCollapseContent': expandCollapseContent,
 });
 
-const departmentNames = [
-  'Fire Department',
-  'Free Library',
-  'Philadephia & Recreation',
-  'Police Department',
-  'Public Health',
-  'Public Property'
-];
-
-// const departmentNames = [
-//   'Parks & Recreation',
-//   'Public Health',
-//   'Human Services',
-//   'Free Library',
-//   'Fire Department',
-//   'Police Department',
-//   'Public Property',
-// ]
-
 const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
 
 const filterArchived = (locations, archiveToggle) => {
@@ -254,49 +235,49 @@ let $config = {
             unique_key: 'projectCategory_parks',
             i18n_key: 'projectCategory.parks',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'parks') }
+            value: function (item) { return item.properties.client_category === 'parks' }
           },
           'health': {
             unique_key: 'projectCategory_health',
             i18n_key: 'projectCategory.health',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'health') }
+            value: function (item) { return item.properties.client_category === 'health' }
           },
           'library': {
             unique_key: 'projectCategory_library',
             i18n_key: 'projectCategory.library',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'library') }
+            value: function (item) { return item.properties.client_category === 'library' }
           },
           'fire': {
             unique_key: 'projectCategory_fire',
             i18n_key: 'projectCategory.fire',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'fire') }
+            value: function (item) { return item.properties.client_category === 'fire' }
           },
           'police': {
             unique_key: 'projectCategory_police',
             i18n_key: 'projectCategory.police',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'police') }
+            value: function (item) { return item.properties.client_category === 'police' }
           },
           'property': {
             unique_key: 'projectCategory_property',
             i18n_key: 'projectCategory.property',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'property') }
+            value: function (item) { return item.properties.client_category === 'property' }
           },
           'other': {
             unique_key: 'projectCategory_other',
             i18n_key: 'projectCategory.other',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'other') }
+            value: function (item) { return item.properties.client_category === 'other' }
           },
           'multiple': {
             unique_key: 'projectCategory_multiple',
             i18n_key: 'projectCategory.multiple',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'multiple') }
+            value: function (item) { return item.properties.client_category === 'multiple' }
           }
         },
         columns: 2,
@@ -307,61 +288,61 @@ let $config = {
             unique_key: 'councilDistrict_district1',
             i18n_key: 'councilDistrict.district1',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.council_district.endsWith('1')) }
+            value: function (item) { return item.properties.council_district.endsWith('1') }
           },
           'district2': {
             unique_key: 'councilDistrict_district2',
             i18n_key: 'councilDistrict.district2',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.council_district.endsWith('2')) }
+            value: function (item) { return item.properties.council_district.endsWith('2') }
           },
           'district3': {
             unique_key: 'councilDistrict_district3',
             i18n_key: 'councilDistrict.district3',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.council_district.endsWith('3')) }
+            value: function (item) { return item.properties.council_district.endsWith('3') }
           },
           'district4': {
             unique_key: 'councilDistrict_district4',
             i18n_key: 'councilDistrict.district4',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.council_district.endsWith('4')) }
+            value: function (item) { return item.properties.council_district.endsWith('4') }
           },
           'district5': {
             unique_key: 'councilDistrict_district5',
             i18n_key: 'councilDistrict.district5',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.council_district.endsWith('5')) }
+            value: function (item) { return item.properties.council_district.endsWith('5') }
           },
           'district6': {
             unique_key: 'councilDistrict_district6',
             i18n_key: 'councilDistrict.district6',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.council_district.endsWith('6')) }
+            value: function (item) { return item.properties.council_district.endsWith('6') }
           },
           'district7': {
             unique_key: 'councilDistrict_district7',
             i18n_key: 'councilDistrict.district7',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.council_district.endsWith('7')) }
+            value: function (item) { return item.properties.council_district.endsWith('7') }
           },
           'district8': {
             unique_key: 'councilDistrict_district8',
             i18n_key: 'councilDistrict.district8',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.council_district.endsWith('8')) }
+            value: function (item) { return item.properties.council_district.endsWith('8') }
           },
           'district9': {
             unique_key: 'councilDistrict_district9',
             i18n_key: 'councilDistrict.district9',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.council_district.endsWith('9')) }
+            value: function (item) { return item.properties.council_district.endsWith('9') }
           },
           'district10': {
             unique_key: 'councilDistrict_district10',
             i18n_key: 'councilDistrict.district10',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.council_district.endsWith('10')) }
+            value: function (item) { return item.properties.council_district.endsWith('10') }
           },
         },
         columns: 2

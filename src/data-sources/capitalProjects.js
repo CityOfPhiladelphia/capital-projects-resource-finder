@@ -189,11 +189,37 @@ export default {
           "lat": 40.0,
           "lon": -75.2
         },
+        {
+      "cartodb_id": 2,
+      "the_geom": "0101000020E610000018455C6F53C452C020781503E7FF4340",
+      "the_geom_webmercator": "0101000020110F0000763FCB8AA1E05FC1E0DAC6DDC98F5241",
+      "objectid": 2,
+      "project_number": "16-25-7223-01\t",
+      "project_name": "Multiple Categories Test",
+      "client_dept": "Police Dept",
+      "client_category": "Police Dept",
+      "site_code": "16134E",
+      "site_name": "Bridesburg Recreation Center",
+      "site_address": "4625 RICHMOND ST",
+      "council_district": "6",
+      "project_scope": "Multiple Categories Test",
+      "inspector": "TBD",
+      "project_coordinator": "Eldidi/Elisii",
+      "estimated_completion_season": "Fall",
+      "estimated_completion_year": "2025",
+      "actual_completion": null,
+      "project_status": "Design",
+      "project_estimated_cost": "1696111.11",
+      "contact_email": "CPO@phila.gov",
+      "website_link": "https://www.phila.gov/departments/capital-program-office/",
+      "lat": 39.99923742817214,
+      "lon": -75.06759246836407,
+      "archive_date": null
+    },
       );
 
       const reorderedData = Array.from(
         data.rows.reduce((groups, obj) => {
-          //obj.client_category = normalizeClientCategory(obj.client_category);
           const category = obj['site_name'];
           if (!category || typeof category !== 'string') return groups;
 
@@ -207,6 +233,7 @@ export default {
         ([site_name, value]) => ({
           'site_name': site_name,
           'client_category': normalizeSiteCategory(value),
+          'council_district': value[0].council_district,
           'lat': value[0].lat,
           'lon': value[0].lon,
           projects: value
@@ -221,6 +248,7 @@ export default {
 
 const normalizeSiteCategory = (projects) => {
   const categories = new Set();
+  const normalizedCategories = ['parks', 'health', 'library', 'fire', 'police', 'property'];
   projects.forEach((project) => {
     if (project.client_category.toLowerCase().includes('parks')) { categories.add('parks') }
     if (project.client_category.toLowerCase().includes('health')) { categories.add('health') }
@@ -228,7 +256,9 @@ const normalizeSiteCategory = (projects) => {
     if (project.client_category.toLowerCase().includes('fire')) { categories.add('fire') }
     if (project.client_category.toLowerCase().includes('police')) { categories.add('police') }
     if (project.client_category.toLowerCase().includes('property')) { categories.add('property') }
+    if (!categories.size) { categories.add(project.client_category.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '')) }
   })
-  if (!categories.size) { categories.add('other') }
-  return categories.size === 1 ? [...categories][0] : 'multiple'
+
+  if (categories.size > 1) { return 'multiple' }
+  return normalizedCategories.includes([...categories][0]) ? [...categories][0] : 'other';
 }
