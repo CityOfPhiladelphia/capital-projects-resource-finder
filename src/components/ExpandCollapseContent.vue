@@ -125,7 +125,7 @@ const handleMoreClick = () => {
       }"
       @click="handleProjectClick(item.properties.projects[0].project_name)"
     >
-      <div class="has-text-centered p-1 pl-1 pr-1">
+      <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
         {{ item.properties.projects[0].project_name }}
       </div>
     </button>
@@ -391,6 +391,13 @@ const handleMoreClick = () => {
 
   button:nth-child(1) {
     border-left-width: 0px;
+  }
+
+  .project-button-text {
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
   }
 
   .project-button {
