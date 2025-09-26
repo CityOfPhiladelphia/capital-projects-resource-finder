@@ -114,7 +114,7 @@ const handleMoreClick = () => {
 </script>
 
 <template>
-  <div class="ec-content columns is-multiline is-mobile">
+  <div class="ec-content button-row is-multiline columns is-mobile">
 
     <button
       class="project-button column is-4 p-0"
@@ -125,7 +125,7 @@ const handleMoreClick = () => {
       }"
       @click="handleProjectClick(item.properties.projects[0].project_name)"
     >
-      <div class="has-text-centered p-1 pl-1 pr-1">
+      <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
         {{ item.properties.projects[0].project_name }}
       </div>
     </button>
@@ -140,7 +140,7 @@ const handleMoreClick = () => {
       }"
       @click="handleProjectClick(item.properties.projects[1].project_name)"
       >
-        <div class="has-text-centered p-1 pl-1 pr-1">
+        <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
           {{ item.properties.projects[1].project_name }}
         </div>
     </button>
@@ -155,7 +155,7 @@ const handleMoreClick = () => {
       }"
       @click="handleProjectClick(item.properties.projects[2].project_name)"
       >
-        <div class="has-text-centered p-1 pl-1 pr-1">
+        <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
           {{ item.properties.projects[2].project_name }}
         </div>
     </button>
@@ -167,7 +167,7 @@ const handleMoreClick = () => {
       @click="handleMoreClick()"
     >
       <div
-        class="has-text-centered p-1 pl-1 pr-1"
+        class="project-button-text has-text-centered p-1 pl-1 pr-1"
         :class="{ 'project-selected': 'more' === selectedProjectName }"
       >
         More
@@ -181,7 +181,7 @@ const handleMoreClick = () => {
       class="project-button column is-4 p-0 project-selected"
       @click="handleMoreClick()"
     >
-      <div class="has-text-centered p-1 pl-1 pr-1">
+      <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
         {{ selectedProjectName }}
       </div>
     </button>
@@ -208,6 +208,10 @@ const handleMoreClick = () => {
       :featureId="props.item._featureId"
       v-if="selectedProject"
     />
+
+    <div>
+      <h3>{{ selectedProject.project_name }}</h3>
+    </div>
 
     <div class="columns top-section">
       <div class="column is-6">
@@ -362,6 +366,10 @@ const handleMoreClick = () => {
 
 <style>
 
+.button-row {
+  /* height: 78px; */
+}
+
 .spacer {
   background-color: #eeeeee;
   border-bottom-width: 1px;
@@ -385,6 +393,12 @@ const handleMoreClick = () => {
     border-left-width: 0px;
   }
 
+  .project-button-text {
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
   .project-button {
     color: #0f4d90;
     font-size: 1rem;
@@ -395,6 +409,9 @@ const handleMoreClick = () => {
     border-bottom-width: 1px;
     border-style: solid;
     border-color: rgb(204,204,204);
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    height: 48px;
   }
 
   .more-button {
