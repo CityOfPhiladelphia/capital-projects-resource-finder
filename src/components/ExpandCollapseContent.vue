@@ -140,7 +140,7 @@ const handleMoreClick = () => {
       }"
       @click="handleProjectClick(item.properties.projects[1].project_name)"
       >
-        <div class="has-text-centered p-1 pl-1 pr-1">
+        <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
           {{ item.properties.projects[1].project_name }}
         </div>
     </button>
@@ -155,7 +155,7 @@ const handleMoreClick = () => {
       }"
       @click="handleProjectClick(item.properties.projects[2].project_name)"
       >
-        <div class="has-text-centered p-1 pl-1 pr-1">
+        <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
           {{ item.properties.projects[2].project_name }}
         </div>
     </button>
@@ -167,7 +167,7 @@ const handleMoreClick = () => {
       @click="handleMoreClick()"
     >
       <div
-        class="has-text-centered p-1 pl-1 pr-1"
+        class="project-button-text has-text-centered p-1 pl-1 pr-1"
         :class="{ 'project-selected': 'more' === selectedProjectName }"
       >
         More
@@ -181,7 +181,7 @@ const handleMoreClick = () => {
       class="project-button column is-4 p-0 project-selected"
       @click="handleMoreClick()"
     >
-      <div class="has-text-centered p-1 pl-1 pr-1">
+      <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
         {{ selectedProjectName }}
       </div>
     </button>
