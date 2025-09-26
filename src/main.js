@@ -254,49 +254,49 @@ let $config = {
             unique_key: 'projectCategory_parks',
             i18n_key: 'projectCategory.parks',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category.toLowerCase().includes('parks')) }
+            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'parks') }
           },
           'health': {
             unique_key: 'projectCategory_health',
             i18n_key: 'projectCategory.health',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category.toLowerCase().includes('health')) }
+            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'health') }
           },
           'library': {
             unique_key: 'projectCategory_library',
             i18n_key: 'projectCategory.library',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category.toLowerCase().includes('library')) }
+            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'library') }
           },
           'fire': {
             unique_key: 'projectCategory_fire',
             i18n_key: 'projectCategory.fire',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category.toLowerCase().includes('fire')) }
+            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'fire') }
           },
           'police': {
             unique_key: 'projectCategory_police',
             i18n_key: 'projectCategory.police',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category.toLowerCase().includes('police')) }
+            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'police') }
           },
           'property': {
             unique_key: 'projectCategory_property',
             i18n_key: 'projectCategory.property',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_category.toLowerCase().includes('property')) }
+            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'property') }
           },
           'other': {
             unique_key: 'projectCategory_other',
             i18n_key: 'projectCategory.other',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => !departmentNames.includes(project.client_category)) }
+            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'other') }
           },
           'multiple': {
             unique_key: 'projectCategory_multiple',
             i18n_key: 'projectCategory.multiple',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.length > 1 },
+            value: function (item) { return item.properties.projects.some((project) => project.client_category === 'multiple') }
           }
         },
         columns: 2,
@@ -380,24 +380,25 @@ let $config = {
       'circle-radius': 7,
       'circle-color': [
         'match',
-        ['get', 'client_dept'],
-        ' Fire',
+        ['get', 'client_category'],
+        'fire',
         '#cc3000',
-        'Free Library of Philadelphia',
+        'library',
         '#f99300',
-        ' Health',
-        '#f3c613',
-        'Human Services',
+        'human',
+        '#edc204',
+        'parks',
         '#58c04d',
-        'Philadephia Parks and Recreation',
+        'health',
         '#3a833c',
-        'Police Department',
+        'property',
+        '#0f4d90',
+        'police',
         '#2176d2',
-        'Public Property',
+        'other',
         '#9400c6',
-        'Multiple projects',
-        '#444444',
-        /* other */ '#000000'
+        // multiple (mapLibre requires an unlabled default value)
+        '#000000'
       ],
       'circle-stroke-width': 1,
       'circle-stroke-color': 'white',

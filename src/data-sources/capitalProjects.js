@@ -193,6 +193,7 @@ export default {
 
       const reorderedData = Array.from(
         data.rows.reduce((groups, obj) => {
+          //obj.client_category = normalizeClientCategory(obj.client_category);
           const category = obj['site_name'];
           if (!category || typeof category !== 'string') return groups;
 
@@ -205,7 +206,7 @@ export default {
         }, new Map()),
         ([site_name, value]) => ({
           'site_name': site_name,
-          'client_category': value[0].client_category,
+          'client_category': normalizeSiteCategory(value),
           'lat': value[0].lat,
           'lon': value[0].lon,
           projects: value
@@ -217,3 +218,17 @@ export default {
     },
   },
 };
+
+const normalizeSiteCategory = (projects) => {
+  const categories = new Set();
+  projects.forEach((project) => {
+    if (project.client_category.toLowerCase().includes('parks')) { categories.add('parks') }
+    if (project.client_category.toLowerCase().includes('health')) { categories.add('health') }
+    if (project.client_category.toLowerCase().includes('library')) { categories.add('library') }
+    if (project.client_category.toLowerCase().includes('fire')) { categories.add('fire') }
+    if (project.client_category.toLowerCase().includes('police')) { categories.add('police') }
+    if (project.client_category.toLowerCase().includes('property')) { categories.add('property') }
+  })
+  if (!categories.size) { categories.add('other') }
+  return categories.size === 1 ? [...categories][0] : 'multiple'
+}

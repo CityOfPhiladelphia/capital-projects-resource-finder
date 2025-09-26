@@ -62,7 +62,7 @@ export default{
     "police": "Police Department",
     "property": "Public Property",
     "other": "Other",
-    "multiple": "Multiple Projects"
+    "multiple": "Multiple Departments"
   },
   "councilDistrict": {
     "category": "District",

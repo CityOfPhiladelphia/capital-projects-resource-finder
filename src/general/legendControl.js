@@ -17,23 +17,29 @@ export default {
         'font-size': '12px',
         'background-color': '#f99300',
       },
-      'Public Health': {
-        'width': '15px',
-        'height': '15px',
-        'font-size': '12px',
-        'background-color': '#f3c613',
-      },
       'Human Services': {
         'width': '15px',
         'height': '15px',
         'font-size': '12px',
-        'background-color': '#58c04d',
+        'background-color': '#edc204',
       },
       'Parks & Recreation': {
         'width': '15px',
         'height': '15px',
         'font-size': '12px',
+        'background-color': '#58c04d',
+      },
+      'Public Health': {
+        'width': '15px',
+        'height': '15px',
+        'font-size': '12px',
         'background-color': '#3a833c',
+      },
+      'Public Property': {
+        'width': '15px',
+        'height': '15px',
+        'font-size': '12px',
+        'background-color': '#0f4d90',
       },
       'Police Department': {
         'width': '15px',
@@ -41,17 +47,17 @@ export default {
         'font-size': '12px',
         'background-color': '#2176d2',
       },
-      'Public Property': {
+      'Other': {
         'width': '15px',
         'height': '15px',
         'font-size': '12px',
         'background-color': '#9400c6',
       },
-      'Other': {
+      'Multiple Categories': {
         'width': '15px',
         'height': '15px',
         'font-size': '12px',
-        'background-color': '#444444',
+        'background-color': '#000000',
       },
     },
   },
