@@ -224,22 +224,22 @@ let $config = {
           'planning': {
             unique_key: 'status_planning',
             i18n_key: 'status.planning',
-            value: function (item) { return item.properties.projects.some((project) => project.project_status === i18n.i18n.data.messages.en.status.planning) }
+            value: function (item) { return item.properties.projects.some((project) => project.project_status.toLowerCase() === i18n.i18n.data.messages.en.status.planning.toLowerCase()) }
           },
           'design': {
             unique_key: 'status_design',
             i18n_key: 'status.design',
-            value: function (item) { return item.properties.projects.some((project) => project.project_status === i18n.i18n.data.messages.en.status.design) }
+            value: function (item) { return item.properties.projects.some((project) => project.project_status.toLowerCase() === i18n.i18n.data.messages.en.status.design.toLowerCase()) }
           },
           'construction': {
             unique_key: 'status_construction',
             i18n_key: 'status.construction',
-            value: function (item) { return item.properties.projects.some((project) => project.project_status === i18n.i18n.data.messages.en.status.construction) }
+            value: function (item) { return item.properties.projects.some((project) => project.project_status.toLowerCase() === i18n.i18n.data.messages.en.status.construction.toLowerCase()) }
           },
           'complete': {
             unique_key: 'status_complete',
             i18n_key: 'status.complete',
-            value: function (item) { return item.properties.projects.some((project) => project.project_status === i18n.i18n.data.messages.en.status.complete && !isArchiveProject(project)) }
+            value: function (item) { return item.properties.projects.some((project) => project.project_status.toLowerCase() === i18n.i18n.data.messages.en.status.complete.toLowerCase() && !isArchiveProject(project)) }
           },
           'archive': {
             unique_key: 'status_archive',
@@ -251,47 +251,47 @@ let $config = {
       },
       projectCategory: {
         checkbox: {
-          'parksRecreation': {
-            unique_key: 'projectCategory_parksRecreation',
-            i18n_key: 'projectCategory.parksRecreation',
+          'parks': {
+            unique_key: 'projectCategory_parks',
+            i18n_key: 'projectCategory.parks',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Philadephia Parks and Recreation') }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept.trim().toLowerCase().split(' ').some((word) => word === 'parks')) }
           },
-          'publicHealth': {
-            unique_key: 'projectCategory_publicHealth',
-            i18n_key: 'projectCategory.publicHealth',
+          'health': {
+            unique_key: 'projectCategory_health',
+            i18n_key: 'projectCategory.health',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Health') }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept.trim().toLowerCase().split(' ').some((word) => word === 'health')) }
           },
-          'humanServices': {
-            unique_key: 'projectCategory_humanServices',
-            i18n_key: 'projectCategory.humanServices',
+          'human': {
+            unique_key: 'projectCategory_human',
+            i18n_key: 'projectCategory.human',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Human Services') }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept.trim().toLowerCase().split(' ').some((word) => word === 'human')) }
           },
-          'freeLibrary': {
-            unique_key: 'projectCategory_freeLibrary',
-            i18n_key: 'projectCategory.freeLibrary',
+          'library': {
+            unique_key: 'projectCategory_library',
+            i18n_key: 'projectCategory.library',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Free Library of Philadelphia') }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept.trim().toLowerCase().split(' ').some((word) => word === 'library')) }
           },
-          'fireDepartment': {
-            unique_key: 'projectCategory_fireDepartment',
-            i18n_key: 'projectCategory.fireDepartment',
+          'fire': {
+            unique_key: 'projectCategory_fire',
+            i18n_key: 'projectCategory.fire',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Fire') }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept.trim().toLowerCase().split(' ').some((word) => word === 'fire')) }
           },
-          'policeDepartment': {
-            unique_key: 'projectCategory_policeDepartment',
-            i18n_key: 'projectCategory.policeDepartment',
+          'police': {
+            unique_key: 'projectCategory_police',
+            i18n_key: 'projectCategory.police',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Police Department') }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept.trim().toLowerCase().split(' ').some((word) => word === 'police')) }
           },
-          'publicProperty': {
-            unique_key: 'projectCategory_publicProperty',
-            i18n_key: 'projectCategory.publicProperty',
+          'property': {
+            unique_key: 'projectCategory_property',
+            i18n_key: 'projectCategory.property',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.projects.some((project) => project.client_dept === 'Public Property') }
+            value: function (item) { return item.properties.projects.some((project) => project.client_dept.trim().toLowerCase().split(' ').some((word) => word === 'property')) }
           },
           'other': {
             unique_key: 'projectCategory_other',

@@ -161,9 +161,35 @@ export default {
           "lat": 40.04670039069094,
           "lon": -75.10160256942602
         },
+        {
+          "cartodb_id": 44,
+          "the_geom": "0101000020E6100000F53710A880C652C02F5D4547FA054440",
+          "the_geom_webmercator": "0101000020110F0000576BF80954E45FC1F1E56EBE86965241",
+          "objectid": 44,
+          "project_number": "16381E-01-01",
+          "project_name": "FAKE PROJECT",
+          "client_dept": "FAKE DEPT",
+          "client_category": null,
+          "site_code": "16381E",
+          "site_name": "FAKE SITE",
+          "site_address": "6000 RISING SUN AVENUE",
+          "council_district": "9",
+          "project_scope": "Site & Rec Center Improvements",
+          "inspector": "TBD",
+          "project_coordinator": "Medow",
+          "estimated_completion_season": "Winter",
+          "estimated_completion_year": "2023",
+          "estimated_completion": "Late 2023",
+          "actual_completion": '2023-12-31',
+          "archive_date": '2024-06-31',
+          "project_status": "Complete",
+          "project_estimated_cost": "500",
+          "contact_email": "CPO@phila.gov",
+          "website_link": "https://www.phila.gov/programs/rebuild/",
+          "lat": 40.0,
+          "lon": -75.2
+        },
       );
-
-      // return data.rows;
 
       const reorderedData = Array.from(
         data.rows.reduce((groups, obj) => {
@@ -187,7 +213,6 @@ export default {
       );
 
       if (import.meta.env.VITE_DEBUG) console.log('reorderedData:', reorderedData);
-
       return reorderedData;
     },
   },
