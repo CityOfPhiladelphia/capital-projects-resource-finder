@@ -235,49 +235,49 @@ let $config = {
             unique_key: 'projectCategory_parks',
             i18n_key: 'projectCategory.parks',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_category === 'parks' }
+            value: function (item) { return item.properties.site_category === 'parks' }
           },
           'health': {
             unique_key: 'projectCategory_health',
             i18n_key: 'projectCategory.health',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_category === 'health' }
+            value: function (item) { return item.properties.site_category === 'health' }
           },
           'library': {
             unique_key: 'projectCategory_library',
             i18n_key: 'projectCategory.library',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_category === 'library' }
+            value: function (item) { return item.properties.site_category === 'library' }
           },
           'fire': {
             unique_key: 'projectCategory_fire',
             i18n_key: 'projectCategory.fire',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_category === 'fire' }
+            value: function (item) { return item.properties.site_category === 'fire' }
           },
           'police': {
             unique_key: 'projectCategory_police',
             i18n_key: 'projectCategory.police',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_category === 'police' }
+            value: function (item) { return item.properties.site_category === 'police' }
           },
           'property': {
             unique_key: 'projectCategory_property',
             i18n_key: 'projectCategory.property',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_category === 'property' }
+            value: function (item) { return item.properties.site_category === 'property' }
           },
           'other': {
             unique_key: 'projectCategory_other',
             i18n_key: 'projectCategory.other',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_category === 'other' }
+            value: function (item) { return item.properties.site_category === 'other' }
           },
           'multiple': {
             unique_key: 'projectCategory_multiple',
             i18n_key: 'projectCategory.multiple',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_category === 'multiple' }
+            value: function (item) { return item.properties.site_category === 'multiple' }
           }
         },
         columns: 2,
@@ -361,7 +361,7 @@ let $config = {
       'circle-radius': 7,
       'circle-color': [
         'match',
-        ['get', 'client_category'],
+        ['get', 'site_category'],
         'fire',
         '#cc3000',
         'library',

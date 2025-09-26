@@ -232,7 +232,7 @@ export default {
         }, new Map()),
         ([site_name, value]) => ({
           'site_name': site_name,
-          'client_category': normalizeSiteCategory(value),
+          'site_category': normalizeSiteCategory(value),
           'council_district': value[0].council_district,
           'lat': value[0].lat,
           'lon': value[0].lon,
