@@ -372,7 +372,6 @@ const estimatedCompletion = computed(() => {
       </h4>
 
     </div>
-    
 
     <div>
       <h3>
