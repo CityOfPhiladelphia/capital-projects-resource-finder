@@ -1,3 +1,5 @@
+// 'background-color' properties set here are refrenced in the main.js config object in order to set the colors of the dots on the map
+
 export default {
   legend: {
     options: {
