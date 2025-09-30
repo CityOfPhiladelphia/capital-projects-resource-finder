@@ -52,6 +52,14 @@ export default{
     "construction": "Construction",
     "complete": "Complete"
   },
+  "status_description": {
+    "active": "These projects are currently underway at City-owned facilities.",
+    "archive": "These projects were completed within the last six months.",
+    "planning": "The project is in the planning phase. Public input may be requested.",
+    "design": "The project designs or plans are developed. Public input may be requested.",
+    "construction": "Construction is underway.",
+    "complete": "The project is complete."
+  },
   "projectCategory": {
     "category": "Project Category",
     "parks": "Parks & Recreation",
@@ -83,7 +91,7 @@ export default{
     "district": "District",
     "budget": "Budget",
     "section_description": "Description",
-    "description_text": "This short description text will provide background context about the project and should be longer than two to three sentences in length.",
+    "improvements_include": "Improvements include:",
     "section_status": "Status",
     "status_text": "This short description text will provide additional context to help a user interpret this status component.",
     "current_stage": "Current Stage",
