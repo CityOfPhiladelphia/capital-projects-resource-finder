@@ -27,13 +27,13 @@ import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, faFolder, faMoneyCheckDollar, faChartTreeMap, faCaretDown, faCaretUp);
 
 // use these if running off unlinked package
-import pinboard from '@phila/pinboard';
-import '../node_modules/@phila/pinboard/dist/style.css';
+// import pinboard from '@phila/pinboard';
+// import '../node_modules/@phila/pinboard/dist/style.css';
 
 // OR
 // use this if running off linked package
-// import pinboard from '../node_modules/@phila/pinboard/src/main.js';
-// import '../node_modules/@phila/pinboard/dist/index.css';
+import pinboard from '../node_modules/@phila/pinboard/src/main.js';
+import '../node_modules/@phila/pinboard/dist/index.css';
 
 
 import legendControl from './general/legendControl';
@@ -65,16 +65,20 @@ const filterArchived = (locations, archiveToggle) => {
   return filteredSites;
 }
 
-
-const filterLocationProjects = (locations, selectedStatusesArray) => {
-  selectedStatusesArray = Array.from(selectedStatusesArray, (service) => service.split('_')[1])
+const filterLocationProjects = (locations, selectedServicesArray) => {
+  const refineGroups = new Set();
+  const selectedStatusesArray = Array.from(selectedServicesArray, (service) => {
+    const splitService = service.split('_');
+    refineGroups.add(splitService[0]);
+    return splitService[1];
+  })
   const archiveFilteredLocations = filterArchived(locations, selectedStatusesArray.includes('archive'))
 
-  if (!selectedStatusesArray.includes('status')) { return archiveFilteredLocations }
+  if (![...refineGroups].includes('status')) { return archiveFilteredLocations }
 
   const filteredSites = [];
   archiveFilteredLocations.forEach((location) => {
-    const filteredProjects = location.properties.projects.filter((project) => selectedStatusesArray.includes(project.project_status.toLowerCase()))
+    const filteredProjects = location.properties.projects.filter((project) => selectedStatusesArray.includes(project.project_status.toLowerCase()));
     if (filteredProjects.length) {
       const locationCopy = JSON.parse(JSON.stringify(location));
       locationCopy.properties.projects = filteredProjects;
