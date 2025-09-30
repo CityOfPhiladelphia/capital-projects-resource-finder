@@ -65,6 +65,7 @@ const filterArchived = (locations, archiveToggle) => {
   return filteredSites;
 }
 
+
 const filterLocationProjects = (locations, selectedServicesArray) => {
   const refineGroups = new Set();
   const selectedStatusesArray = Array.from(selectedServicesArray, (service) => {
@@ -73,8 +74,7 @@ const filterLocationProjects = (locations, selectedServicesArray) => {
     return splitService[1];
   })
   const archiveFilteredLocations = filterArchived(locations, selectedStatusesArray.includes('archive'))
-
-  if (![...refineGroups].includes('status')) { return archiveFilteredLocations }
+  if (![...refineGroups].includes('status') || selectedStatusesArray.includes('archive')) { return archiveFilteredLocations }
 
   const filteredSites = [];
   archiveFilteredLocations.forEach((location) => {
