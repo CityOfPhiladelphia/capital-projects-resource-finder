@@ -27,12 +27,12 @@ import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, faFolder, faMoneyCheckDollar, faChartTreeMap, faCaretDown, faCaretUp);
 
 // use these if running off unlinked package
-// import pinboard from '@phila/pinboard';
-// import '../node_modules/@phila/pinboard/dist/style.css';
+import pinboard from '@phila/pinboard';
+import '../node_modules/@phila/pinboard/dist/style.css';
 
 // OR
 // use this if running off linked package
-import pinboard from '../node_modules/@phila/pinboard/src/main.js';
+// import pinboard from '../node_modules/@phila/pinboard/src/main.js';
 // import '../node_modules/@phila/pinboard/dist/index.css';
 
 
@@ -84,7 +84,7 @@ const filterLocationProjects = (locations, selectedStatusesArray) => {
   return filteredSites;
 }
 
-let $config = {
+const $config = {
   publicPath: import.meta.env.VITE_PUBLICPATH,
   i18n: i18n.i18n,
   app: {
@@ -363,23 +363,23 @@ let $config = {
         'match',
         ['get', 'site_category'],
         'fire',
-        '#cc3000',
+        legendControl.legend.data['Fire Department']['background-color'],
         'library',
-        '#f99300',
+        legendControl.legend.data['Free Library']['background-color'],
         'human',
-        '#edc204',
+        legendControl.legend.data['Human Services']['background-color'],
         'parks',
-        '#58c04d',
+        legendControl.legend.data['Parks & Recreation']['background-color'],
         'health',
-        '#3a833c',
+        legendControl.legend.data['Public Health']['background-color'],
         'property',
-        '#0f4d90',
+        legendControl.legend.data['Public Property']['background-color'],
         'police',
-        '#2176d2',
+        legendControl.legend.data['Police Department']['background-color'],
         'other',
-        '#9400c6',
+        legendControl.legend.data['Other']['background-color'],
         // multiple (mapLibre requires an unlabled default value)
-        '#000000'
+        legendControl.legend.data['Multiple Departments']['background-color']
       ],
       'circle-stroke-width': 1,
       'circle-stroke-color': 'white',
