@@ -69,7 +69,7 @@ const filterLocationProjects = (locations, selectedServicesArray) => {
   const refineGroups = new Set();
   const selectedStatusesArray = Array.from(selectedServicesArray, (service) => {
     const splitService = service.split('_');
-    refineGroups.add(splitService[0]);
+    refineGroups.add(splitService[0])
     return splitService[1];
   })
   const archiveFilteredLocations = filterArchived(locations, selectedStatusesArray.includes('archive'))
@@ -78,7 +78,7 @@ const filterLocationProjects = (locations, selectedServicesArray) => {
 
   const filteredSites = [];
   archiveFilteredLocations.forEach((location) => {
-    const filteredProjects = location.properties.projects.filter((project) => selectedStatusesArray.includes(project.project_status.toLowerCase()));
+    const filteredProjects = location.properties.projects.filter((project) => selectedStatusesArray.includes(project.project_status.toLowerCase()))
     if (filteredProjects.length) {
       const locationCopy = JSON.parse(JSON.stringify(location));
       locationCopy.properties.projects = filteredProjects;
