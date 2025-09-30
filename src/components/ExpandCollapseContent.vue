@@ -112,6 +112,23 @@ const handleMoreClick = () => {
   moreIsOpen.value = !moreIsOpen.value;
 };
 
+const estimatedCompletion = computed(() => {
+  if (!selectedProject.value) return 'N/A';
+  const season = selectedProject.value.estimated_completion_season;
+  const year = selectedProject.value.estimated_completion_year;
+  if (season && year && season !== year) {
+    return `${season} ${year}`;
+  } else if (season && year && season === year) {
+    return `${season}`;
+  } else if (season && !year) {
+    return `${season}`;
+  } else if (!season && year) {
+    return `${year}`;
+  } else {
+    return 'N/A';
+  }
+});
+
 </script>
 
 <template>
@@ -214,7 +231,7 @@ const handleMoreClick = () => {
     />
 
     <div>
-      <h3>{{ selectedProject.project_name }}</h3>
+      <h2 class="project-name">{{ selectedProject.project_name }}</h2>
     </div>
 
     <div class="columns top-section">
@@ -320,36 +337,42 @@ const handleMoreClick = () => {
       <h3>
         {{ t('card.section_description') }}
       </h3>
-      <div class="columns is-multiline is-gapless">
-        {{  t('card.description_text') }}
+      <div>
+        {{  t('card.improvements_include') }}
+        <ul
+          v-if="selectedProject && selectedProject.project_scope"
+          :style="'list-style-type: disc; margin-left: 20px;'"
+        >
+          <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index">
+            {{ improvement }}
+          </li>
+        </ul>
       </div>
     </div>
 
-    <div>
+    <div v-if="selectedProject">
       <h3>
         {{ t('card.section_status') }}
       </h3>
-      <div class="columns is-multiline is-gapless mb-0">
-        {{  t('card.status_text') }}
-      </div>
+      <h4 class="card-h4">
+        {{  t('card.current_stage') }}
+      </h4>
 
       <status-bar
         :project="selectedProject"
       />
 
-      <div v-if="selectedProject">
-        {{ t('card.current_stage') }}: <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}</a>
+      <div class="mb-4">
+        <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}: </a>
+        <span>{{ t('status_description.' + selectedProject.project_status.toLowerCase()) }}</span>
       </div>
-    </div>
+    
+      <h4 class="card-h4">
+        {{ t('card.estimated_completion_description') }}: {{ estimatedCompletion }}
+      </h4>
 
-    <div>
-      <h3 v-if="selectedProject">
-        {{ t('card.estimated_completion_description') }}: {{ selectedProject.estimated_completion }}
-      </h3>
-      <div class="columns is-multiline is-gapless">
-        {{  t('card.description_text') }}
-      </div>
     </div>
+    
 
     <div>
       <h3>
@@ -370,10 +393,6 @@ const handleMoreClick = () => {
 
 <style>
 
-.button-row {
-  /* height: 78px; */
-}
-
 .spacer {
   background-color: #eeeeee;
   border-bottom-width: 1px;
@@ -386,6 +405,28 @@ const handleMoreClick = () => {
 
 .main-ec-content {
   padding-top: 0px !important;
+
+  .project-name {
+    font-family: "Montserrat-SemiBold", "Montserrat SemiBold", "Montserrat", sans-serif !important;
+    font-size: 28px !important;
+    font-weight: 650 !important;
+    color: #444444 !important;
+    text-align: left !important;
+    line-height: 30px !important;
+  }
+
+  .section-header {
+    font-family: "Montserrat-SemiBold", "Montserrat SemiBold", "Montserrat", sans-serif !important;
+    font-size: 24px !important;
+    font-weight: 650 !important;
+    line-height: 30px !important;
+  }
+
+  .card-h4 {
+    font-family: "Open Sans Semibold", "Open Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
 }
 
 .ec-content {
