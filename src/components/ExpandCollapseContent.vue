@@ -5,6 +5,7 @@ import ButtonDropdown from './ButtonDropdown.vue';
 import StatusBar from './statusBar.vue';
 import accounting from 'accounting';
 import { ref, computed, watch } from 'vue';
+import { format } from 'date-fns';
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -367,8 +368,17 @@ const estimatedCompletion = computed(() => {
         <span>{{ t('status_description.' + selectedProject.project_status.toLowerCase()) }}</span>
       </div>
     
-      <h4 class="card-h4">
-        {{ t('card.estimated_completion_description') }}: {{ estimatedCompletion }}
+      <h4
+        v-if="selectedProject.project_status !== 'Complete'"
+        class="card-h4"
+      >
+        {{ t('card.estimated_completion') }}: {{ estimatedCompletion }}
+      </h4>
+      <h4
+        v-if="selectedProject.project_status === 'Complete'"
+        class="card-h4"
+      >
+        {{ t('card.completed') }}: {{ format(selectedProject.actual_completion, 'MMMM d, yyyy') }}
       </h4>
 
     </div>

@@ -101,8 +101,8 @@ export default{
       "construction": "Construction is underway.",
       "complete": "The project is complete."
     },
-    "estimated_completion_description": "Estimated Completion",
-    "estimated_completion_text": "This short description text will provide additional context to help a user interpret this table and the labels",
+    "completed": "Completed",
+    "estimated_completion": "Estimated Completion",
     "project_team_description": "Project Team"
   }
 }
