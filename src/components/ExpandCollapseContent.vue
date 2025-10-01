@@ -345,7 +345,7 @@ const actualCompletionDate = computed(() => {
       </div>
     </div>
 
-    <div v-if="selectedProject" class="mb-6">
+    <div v-if="selectedProject" class="mb-4">
 
       <status-bar
         :project="selectedProject"
@@ -376,7 +376,6 @@ const actualCompletionDate = computed(() => {
       </div>
 
     </div>
-
 
     <div>
       <h4 class="card-h4 mb-4">{{ t('card.project_team_description') }}</h4>
@@ -424,7 +423,7 @@ const actualCompletionDate = computed(() => {
 
   .card-h4 {
     font-family: "Open Sans Semibold", "Open Sans", sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
   }
 }
