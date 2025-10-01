@@ -65,8 +65,48 @@ const filterArchived = (locations, archiveToggle) => {
   return filteredSites;
 }
 
+const getProjectStatusBitArray = (locations) => {
+  const bufferLength = Math.ceil(locations.length / 32);
 
-const filterLocationProjects = (locations, selectedServicesArray) => {
+  const bufferToggleOff = new ArrayBuffer(bufferLength);
+  const viewToggleOff = new DataView(bufferToggleOff);
+  let bitsToSet_toggleOff = 0;
+
+  const bufferToggleOn = new ArrayBuffer(bufferLength);
+  const viewToggleOn = new DataView(bufferToggleOn);
+  let bitsToSet_toggleOn = 0;
+
+  let offset = 0;
+  let exp = 0;
+
+  locations.forEach((location, i) => {
+    exp = i % 32;
+    bitsToSet_toggleOff |= location.properties.projects.some((project) => !isArchiveProject(project)) ? 1 << exp : 0;
+    bitsToSet_toggleOn |= location.properties.projects.some((project) => isArchiveProject(project)) ? 1 << exp : 0;
+
+    const setBitsTrigger = (exp === 31);
+    if (setBitsTrigger) {
+      viewToggleOff.setUint32(offset, bitsToSet_toggleOff);
+      viewToggleOn.setUint32(offset, bitsToSet_toggleOn);
+      bitsToSet_toggleOff = 0;
+      bitsToSet_toggleOn = 0;
+    }
+    offset += setBitsTrigger ? 1 : 0;
+  })
+
+  if (offset && exp !== 31) {
+    viewToggleOff.setUint32(offset, bitsToSet_toggleOff);
+    viewToggleOn.setUint32(offset, bitsToSet_toggleOn);
+  }
+
+  return {
+    toggleOff: bufferToggleOff,
+    toggleOn: bufferToggleOn
+  }
+}
+
+// filterLocationProjects function gets passed to Pinboard to refine the projects at sites according to their archived status, or (inclusive) based on their project status
+const statusToggleRefine = (locations, selectedServicesArray) => {
   const refineGroups = new Set();
   const selectedStatusesArray = Array.from(selectedServicesArray, (service) => {
     const splitService = service.split('_');
@@ -201,9 +241,11 @@ const $config = {
   refine: {
     type: 'multipleFieldGroups',
     columns: true,
-    customRefine: filterLocationProjects,
     multipleFieldGroups: {
       status: {
+        toggleKey: 'status_archive',
+        toggleRefine: statusToggleRefine,
+        toggleCount: getProjectStatusBitArray,
         checkbox: {
           'planning': {
             unique_key: 'status_planning',
@@ -230,8 +272,7 @@ const $config = {
             i18n_key: 'status.archive',
             value: function (item) { return item.properties.projects.some((project) => isArchiveProject(project)) }
           }
-        },
-        toggleKey: 'status_archive',
+        }
       },
       projectCategory: {
         checkbox: {
@@ -284,7 +325,7 @@ const $config = {
             value: function (item) { return item.properties.site_category === 'multiple' }
           }
         },
-        columns: 2,
+        columns: 2
       },
       councilDistrict: {
         checkbox: {
