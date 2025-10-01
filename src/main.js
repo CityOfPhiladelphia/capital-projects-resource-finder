@@ -26,14 +26,12 @@ import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
 library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, faFolder, faMoneyCheckDollar, faChartTreeMap, faCaretDown, faCaretUp);
 
-// use these if running off unlinked package
-// import pinboard from '@phila/pinboard';
-// import '../node_modules/@phila/pinboard/dist/style.css';
-
-// OR
-// use this if running off linked package
-import pinboard from '../node_modules/@phila/pinboard/src/main.js';
+// use this if running off unlinked package
+import pinboard from '@phila/pinboard';
 import '../node_modules/@phila/pinboard/dist/index.css';
+// OR
+// use these if running off linked package
+// import pinboard from '../node_modules/@phila/pinboard/src/main.js';
 
 
 import legendControl from './general/legendControl';
