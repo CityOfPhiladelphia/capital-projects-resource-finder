@@ -130,6 +130,17 @@ const estimatedCompletion = computed(() => {
   }
 });
 
+const actualCompletionDate = computed(() => {
+  if (!selectedProject.value || !selectedProject.value.actual_completion) return 'No date provided';
+  let value;
+  try {
+    value = format(selectedProject.value.actual_completion, 'MMMM d, yyyy');
+  } catch (error) {
+    value = 'No date provided';
+  }
+  return value;
+});
+
 </script>
 
 <template>
@@ -378,7 +389,7 @@ const estimatedCompletion = computed(() => {
         v-if="selectedProject.project_status === 'Complete'"
         class="card-h4"
       >
-        {{ t('card.completed') }}: {{ format(selectedProject.actual_completion, 'MMMM d, yyyy') }}
+        {{ t('card.completed') }}: {{ actualCompletionDate }}
       </h4>
 
     </div>
