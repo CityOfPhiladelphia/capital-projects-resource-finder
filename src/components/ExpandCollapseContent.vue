@@ -5,6 +5,7 @@ import ButtonDropdown from './ButtonDropdown.vue';
 import StatusBar from './statusBar.vue';
 import accounting from 'accounting';
 import { ref, computed, watch } from 'vue';
+import { format } from 'date-fns';
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -40,6 +41,7 @@ const selectedProject = computed(() => {
 });
 
 const excessProjects = computed(() => {
+  if (props.item.properties.projects.length <= 3) return [];
   let projects = [ ...props.item.properties.projects ];
   console.log('projects:', projects);
   return projects.splice(2);
@@ -111,10 +113,30 @@ const handleMoreClick = () => {
   moreIsOpen.value = !moreIsOpen.value;
 };
 
+const estimatedCompletion = computed(() => {
+  if (!selectedProject.value) return 'N/A';
+  const season = selectedProject.value.estimated_completion_season;
+  const year = selectedProject.value.estimated_completion_year;
+  if (season && year && season !== year) {
+    return `${season} ${year}`;
+  } else if (season && year && season === year) {
+    return `${season}`;
+  } else if (season && !year) {
+    return `${season}`;
+  } else if (!season && year) {
+    return `${year}`;
+  } else {
+    return 'N/A';
+  }
+});
+
 </script>
 
 <template>
-  <div class="ec-content button-row is-multiline columns is-mobile">
+  <div
+    v-if="props.item.properties.projects.length > 1"
+    class="ec-content button-row is-multiline columns is-mobile"
+  >
 
     <button
       class="project-button column is-4 p-0"
@@ -125,7 +147,7 @@ const handleMoreClick = () => {
       }"
       @click="handleProjectClick(item.properties.projects[0].project_name)"
     >
-      <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
+      <div class="project-button-text has-text-centered pl-1 pr-1">
         {{ item.properties.projects[0].project_name }}
       </div>
     </button>
@@ -140,7 +162,7 @@ const handleMoreClick = () => {
       }"
       @click="handleProjectClick(item.properties.projects[1].project_name)"
       >
-        <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
+        <div class="project-button-text has-text-centered pl-1 pr-1">
           {{ item.properties.projects[1].project_name }}
         </div>
     </button>
@@ -155,7 +177,7 @@ const handleMoreClick = () => {
       }"
       @click="handleProjectClick(item.properties.projects[2].project_name)"
       >
-        <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
+        <div class="project-button-text has-text-centered pl-1 pr-1">
           {{ item.properties.projects[2].project_name }}
         </div>
     </button>
@@ -167,7 +189,7 @@ const handleMoreClick = () => {
       @click="handleMoreClick()"
     >
       <div
-        class="project-button-text has-text-centered p-1 pl-1 pr-1"
+        class="project-button-text has-text-centered pl-1 pr-1"
         :class="{ 'project-selected': 'more' === selectedProjectName }"
       >
         More
@@ -181,7 +203,7 @@ const handleMoreClick = () => {
       class="project-button column is-4 p-0 project-selected"
       @click="handleMoreClick()"
     >
-      <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
+      <div class="project-button-text has-text-centered pl-1 pr-1">
         {{ selectedProjectName }}
       </div>
     </button>
@@ -210,7 +232,7 @@ const handleMoreClick = () => {
     />
 
     <div>
-      <h3>{{ selectedProject.project_name }}</h3>
+      <h2 class="project-name">{{ selectedProject.project_name }}</h2>
     </div>
 
     <div class="columns top-section">
@@ -316,35 +338,49 @@ const handleMoreClick = () => {
       <h3>
         {{ t('card.section_description') }}
       </h3>
-      <div class="columns is-multiline is-gapless">
-        {{  t('card.description_text') }}
+      <div>
+        {{  t('card.improvements_include') }}
+        <ul
+          v-if="selectedProject && selectedProject.project_scope"
+          :style="'list-style-type: disc; margin-left: 20px;'"
+        >
+          <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index">
+            {{ improvement }}
+          </li>
+        </ul>
       </div>
     </div>
 
-    <div>
+    <div v-if="selectedProject">
       <h3>
         {{ t('card.section_status') }}
       </h3>
-      <div class="columns is-multiline is-gapless mb-0">
-        {{  t('card.status_text') }}
-      </div>
+      <h4 class="card-h4">
+        {{  t('card.current_stage') }}
+      </h4>
 
       <status-bar
         :project="selectedProject"
       />
 
-      <div v-if="selectedProject">
-        {{ t('card.current_stage') }}: <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}</a>
+      <div class="mb-4">
+        <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}: </a>
+        <span>{{ t('status_description.' + selectedProject.project_status.toLowerCase()) }}</span>
       </div>
-    </div>
+    
+      <h4
+        v-if="selectedProject.project_status !== 'Complete'"
+        class="card-h4"
+      >
+        {{ t('card.estimated_completion') }}: {{ estimatedCompletion }}
+      </h4>
+      <h4
+        v-if="selectedProject.project_status === 'Complete'"
+        class="card-h4"
+      >
+        {{ t('card.completed') }}: {{ format(selectedProject.actual_completion, 'MMMM d, yyyy') }}
+      </h4>
 
-    <div>
-      <h3 v-if="selectedProject">
-        {{ t('card.estimated_completion_description') }}: {{ selectedProject.estimated_completion }}
-      </h3>
-      <div class="columns is-multiline is-gapless">
-        {{  t('card.description_text') }}
-      </div>
     </div>
 
     <div>
@@ -366,10 +402,6 @@ const handleMoreClick = () => {
 
 <style>
 
-.button-row {
-  /* height: 78px; */
-}
-
 .spacer {
   background-color: #eeeeee;
   border-bottom-width: 1px;
@@ -382,6 +414,28 @@ const handleMoreClick = () => {
 
 .main-ec-content {
   padding-top: 0px !important;
+
+  .project-name {
+    font-family: "Montserrat-SemiBold", "Montserrat SemiBold", "Montserrat", sans-serif !important;
+    font-size: 28px !important;
+    font-weight: 650 !important;
+    color: #444444 !important;
+    text-align: left !important;
+    line-height: 30px !important;
+  }
+
+  .section-header {
+    font-family: "Montserrat-SemiBold", "Montserrat SemiBold", "Montserrat", sans-serif !important;
+    font-size: 24px !important;
+    font-weight: 650 !important;
+    line-height: 30px !important;
+  }
+
+  .card-h4 {
+    font-family: "Open Sans Semibold", "Open Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
 }
 
 .ec-content {
