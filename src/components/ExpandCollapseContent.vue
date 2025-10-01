@@ -345,12 +345,19 @@ const actualCompletionDate = computed(() => {
       </div>
     </div>
 
-    <div>
-      <h3>
-        {{ t('card.section_description') }}
-      </h3>
-      <div>
-        {{  t('card.improvements_include') }}
+    <div v-if="selectedProject" class="mb-6">
+
+      <status-bar
+        :project="selectedProject"
+      />
+
+      <div class="mb-2">
+        <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}: </a>
+        <span>{{ t('status_description.' + selectedProject.project_status.toLowerCase()) }}</span>
+      </div>
+
+      <div class="mb-2">
+        <b>{{  t('card.improvements_include') }}</b>
         <ul
           v-if="selectedProject && selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'"
@@ -360,52 +367,25 @@ const actualCompletionDate = computed(() => {
           </li>
         </ul>
       </div>
-    </div>
-
-    <div v-if="selectedProject">
-      <h3>
-        {{ t('card.section_status') }}
-      </h3>
-      <h4 class="card-h4">
-        {{  t('card.current_stage') }}
-      </h4>
-
-      <status-bar
-        :project="selectedProject"
-      />
-
-      <div class="mb-4">
-        <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}: </a>
-        <span>{{ t('status_description.' + selectedProject.project_status.toLowerCase()) }}</span>
-      </div>
     
-      <h4
-        v-if="selectedProject.project_status !== 'Complete'"
-        class="card-h4"
-      >
-        {{ t('card.estimated_completion') }}: {{ estimatedCompletion }}
-      </h4>
-      <h4
-        v-if="selectedProject.project_status === 'Complete'"
-        class="card-h4"
-      >
-        {{ t('card.completed') }}: {{ actualCompletionDate }}
-      </h4>
+      <div v-if="selectedProject.project_status !== 'Complete'">
+        <b>{{ t('card.estimated_completion') }}:</b> {{ estimatedCompletion }}
+      </div>
+      <div v-if="selectedProject.project_status === 'Complete'">
+        <b>{{ t('card.completed') }}:</b> {{ actualCompletionDate }}
+      </div>
 
     </div>
+
 
     <div>
-      <h3>
-        {{ t('card.project_team_description') }}
-      </h3>
-
+      <h4 class="card-h4 mb-4">{{ t('card.project_team_description') }}</h4>
       <vue-good-table
         :columns="projectTeam.columns"
         :rows="projectTeam.rows"
         :sort-options="{ enabled: false }"
         style-class="table-style"
       />
-
     </div>
 
   </div>
