@@ -3,7 +3,7 @@ name: Testing caching with npm and push
 on:
   push:
     branches:
-      - vue3-pinboard
+      - feature/simple-card
 
 jobs:
   build:
