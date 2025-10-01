@@ -5,7 +5,6 @@
 // (we might not need to use axios with new vue async tools)
 // if that is not needed, we can move this info to main.js
 
-
 import isMac from './util/is-mac';
 if (isMac()) {
   import('./assets/mac-style.scss')
@@ -27,12 +26,13 @@ import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
 library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, faFolder, faMoneyCheckDollar, faChartTreeMap, faCaretDown, faCaretUp);
 
-// use these if running off unlinked package
+// use this if running off unlinked package
 import pinboard from '@phila/pinboard';
-import '../node_modules/@phila/pinboard/dist/style.css';
+import '../node_modules/@phila/pinboard/dist/index.css';
 // OR
-// use this if running off linked package
+// use these if running off linked package
 // import pinboard from '../node_modules/@phila/pinboard/src/main.js';
+
 
 import legendControl from './general/legendControl';
 
@@ -41,20 +41,52 @@ import capitalProjects from './data-sources/capitalProjects';
 
 import customGreeting from './components/customGreeting.vue';
 import expandCollapseContent from './components/ExpandCollapseContent.vue';
-
-const isArchiveProject = (dateCompleted) => {
-  const sixMonths = 15778800000; // 6 months in milliseconds
-  const completed = dateCompleted ? new Date(dateCompleted) : 0;
-  return completed && (Date.now() - completed > sixMonths);
-};
+import i18n from './i18n/i18n';
 
 const customComps = markRaw({
   'customGreeting': customGreeting,
   'expandCollapseContent': expandCollapseContent,
 });
 
-import i18n from './i18n/i18n';
-let $config = {
+const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
+
+const filterArchived = (locations, archiveToggle) => {
+  const filteredSites = [];
+  locations.forEach((location) => {
+    const filteredProjects = location.properties.projects.filter((project) => isArchiveProject(project) === archiveToggle)
+    if (filteredProjects.length) {
+      const locationCopy = JSON.parse(JSON.stringify(location));
+      locationCopy.properties.projects = filteredProjects;
+      filteredSites.push(locationCopy);
+    }
+  })
+  return filteredSites;
+}
+
+
+const filterLocationProjects = (locations, selectedServicesArray) => {
+  const refineGroups = new Set();
+  const selectedStatusesArray = Array.from(selectedServicesArray, (service) => {
+    const splitService = service.split('_');
+    refineGroups.add(splitService[0])
+    return splitService[1];
+  })
+  const archiveFilteredLocations = filterArchived(locations, selectedStatusesArray.includes('archive'))
+  if (![...refineGroups].includes('status') || selectedStatusesArray.includes('archive')) { return archiveFilteredLocations }
+
+  const filteredSites = [];
+  archiveFilteredLocations.forEach((location) => {
+    const filteredProjects = location.properties.projects.filter((project) => selectedStatusesArray.includes(project.project_status.toLowerCase()))
+    if (filteredProjects.length) {
+      const locationCopy = JSON.parse(JSON.stringify(location));
+      locationCopy.properties.projects = filteredProjects;
+      filteredSites.push(locationCopy);
+    }
+  })
+  return filteredSites;
+}
+
+const $config = {
   publicPath: import.meta.env.VITE_PUBLICPATH,
   i18n: i18n.i18n,
   app: {
@@ -167,76 +199,90 @@ let $config = {
   refine: {
     type: 'multipleFieldGroups',
     columns: true,
+    customRefine: filterLocationProjects,
     multipleFieldGroups: {
       status: {
-        radio: {
-          'active': {
-            unique_key: 'status_active',
-            i18n_key: 'status.active',
-            value: function (item) {
-              return !isArchiveProject(item.properties.actual_completion);
-            }
+        checkbox: {
+          'planning': {
+            unique_key: 'status_planning',
+            i18n_key: 'status.planning',
+            value: function (item) { return item.properties.projects.some((project) => project.project_status.toLowerCase() === 'planning') }
           },
-          'archived': {
-            unique_key: 'status_archived',
-            i18n_key: 'status.archived',
-            value: function (item) {
-              return isArchiveProject(item.properties.actual_completion);
-            }
+          'design': {
+            unique_key: 'status_design',
+            i18n_key: 'status.design',
+            value: function (item) { return item.properties.projects.some((project) => project.project_status.toLowerCase() === 'design') }
+          },
+          'construction': {
+            unique_key: 'status_construction',
+            i18n_key: 'status.construction',
+            value: function (item) { return item.properties.projects.some((project) => project.project_status.toLowerCase() === 'construction') }
+          },
+          'complete': {
+            unique_key: 'status_complete',
+            i18n_key: 'status.complete',
+            value: function (item) { return item.properties.projects.some((project) => project.project_status.toLowerCase() === 'complete' && !isArchiveProject(project)) }
+          },
+          'archive': {
+            unique_key: 'status_archive',
+            i18n_key: 'status.archive',
+            value: function (item) { return item.properties.projects.some((project) => isArchiveProject(project)) }
           }
-        }
+        },
+        toggleKey: 'status_archive',
       },
       projectCategory: {
         checkbox: {
-          'parksRecreation': {
-            unique_key: 'projectCategory_parksRecreation',
-            i18n_key: 'projectCategory.parksRecreation',
+          'parks': {
+            unique_key: 'projectCategory_parks',
+            i18n_key: 'projectCategory.parks',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Philadephia Parks and Recreation'; },
+            value: function (item) { return item.properties.site_category === 'parks' }
           },
-          'publicHealth': {
-            unique_key: 'projectCategory_publicHealth',
-            i18n_key: 'projectCategory.publicHealth',
+          'health': {
+            unique_key: 'projectCategory_health',
+            i18n_key: 'projectCategory.health',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Public Health'; },
+            value: function (item) { return item.properties.site_category === 'health' }
           },
-          'humanServices': {
-            unique_key: 'projectCategory_humanServices',
-            i18n_key: 'projectCategory.humanServices',
+          'library': {
+            unique_key: 'projectCategory_library',
+            i18n_key: 'projectCategory.library',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Human Services'; },
+            value: function (item) { return item.properties.site_category === 'library' }
           },
-          'freeLibrary': {
-            unique_key: 'projectCategory_freeLibrary',
-            i18n_key: 'projectCategory.freeLibrary',
+          'fire': {
+            unique_key: 'projectCategory_fire',
+            i18n_key: 'projectCategory.fire',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Free Library'; },
+            value: function (item) { return item.properties.site_category === 'fire' }
           },
-          'fireDepartment': {
-            unique_key: 'projectCategory_fireDepartment',
-            i18n_key: 'projectCategory.fireDepartment',
+          'police': {
+            unique_key: 'projectCategory_police',
+            i18n_key: 'projectCategory.police',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Fire Department'; },
+            value: function (item) { return item.properties.site_category === 'police' }
           },
-          'policeDepartment': {
-            unique_key: 'projectCategory_policeDepartment',
-            i18n_key: 'projectCategory.policeDepartment',
+          'property': {
+            unique_key: 'projectCategory_property',
+            i18n_key: 'projectCategory.property',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Police Department'; },
-          },
-          'publicProperty': {
-            unique_key: 'projectCategory_publicProperty',
-            i18n_key: 'projectCategory.publicProperty',
-            dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept == 'Public Property'; },
+            value: function (item) { return item.properties.site_category === 'property' }
           },
           'other': {
             unique_key: 'projectCategory_other',
             i18n_key: 'projectCategory.other',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.client_dept !== null; },
+            value: function (item) { return item.properties.site_category === 'other' }
           },
+          'multiple': {
+            unique_key: 'projectCategory_multiple',
+            i18n_key: 'projectCategory.multiple',
+            dependentGroups: ['status'],
+            value: function (item) { return item.properties.site_category === 'multiple' }
+          }
         },
+        columns: 2,
       },
       councilDistrict: {
         checkbox: {
@@ -244,61 +290,61 @@ let $config = {
             unique_key: 'councilDistrict_district1',
             i18n_key: 'councilDistrict.district1',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "1"; },
+            value: function (item) { return item.properties.council_district.endsWith('1') }
           },
           'district2': {
             unique_key: 'councilDistrict_district2',
             i18n_key: 'councilDistrict.district2',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "2"; },
+            value: function (item) { return item.properties.council_district.endsWith('2') }
           },
           'district3': {
             unique_key: 'councilDistrict_district3',
             i18n_key: 'councilDistrict.district3',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "3"; },
+            value: function (item) { return item.properties.council_district.endsWith('3') }
           },
           'district4': {
             unique_key: 'councilDistrict_district4',
             i18n_key: 'councilDistrict.district4',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "4"; },
+            value: function (item) { return item.properties.council_district.endsWith('4') }
           },
           'district5': {
             unique_key: 'councilDistrict_district5',
             i18n_key: 'councilDistrict.district5',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "5"; },
+            value: function (item) { return item.properties.council_district.endsWith('5') }
           },
           'district6': {
             unique_key: 'councilDistrict_district6',
             i18n_key: 'councilDistrict.district6',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "6"; },
+            value: function (item) { return item.properties.council_district.endsWith('6') }
           },
           'district7': {
             unique_key: 'councilDistrict_district7',
             i18n_key: 'councilDistrict.district7',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "7"; },
+            value: function (item) { return item.properties.council_district.endsWith('7') }
           },
           'district8': {
             unique_key: 'councilDistrict_district8',
             i18n_key: 'councilDistrict.district8',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "8"; },
+            value: function (item) { return item.properties.council_district.endsWith('8') }
           },
           'district9': {
             unique_key: 'councilDistrict_district9',
             i18n_key: 'councilDistrict.district9',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "9"; },
+            value: function (item) { return item.properties.council_district.endsWith('9') }
           },
           'district10': {
             unique_key: 'councilDistrict_district10',
             i18n_key: 'councilDistrict.district10',
             dependentGroups: ['status'],
-            value: function (item) { return item.properties.council_district == "10"; },
+            value: function (item) { return item.properties.council_district.endsWith('10') }
           },
         },
         columns: 2
@@ -315,26 +361,27 @@ let $config = {
     type: 'circle',
     paint: {
       'circle-radius': 7,
-      'circle-color':[
+      'circle-color': [
         'match',
-        ['get', 'client_dept'],
-        ' Fire',
-        '#cc3000',
-        'Free Library of Philadelphia',
-        '#f99300',
-        ' Health',
-        '#f3c613',
-        'Human Services',
-        '#58c04d',
-        'Philadephia Parks and Recreation',
-        '#3a833c',
-        'Police Department',
-        '#2176d2',
-        'Public Property',
-        '#9400c6',
-        'Multiple projects',
-        '#444444',
-        /* other */ '#000000'
+        ['get', 'site_category'],
+        'fire',
+        legendControl.legend.data['Fire Department']['background-color'],
+        'library',
+        legendControl.legend.data['Free Library']['background-color'],
+        'human',
+        legendControl.legend.data['Human Services']['background-color'],
+        'parks',
+        legendControl.legend.data['Parks & Recreation']['background-color'],
+        'health',
+        legendControl.legend.data['Public Health']['background-color'],
+        'property',
+        legendControl.legend.data['Public Property']['background-color'],
+        'police',
+        legendControl.legend.data['Police Department']['background-color'],
+        'other',
+        legendControl.legend.data['Other']['background-color'],
+        // multiple (mapLibre requires an unlabled default value)
+        legendControl.legend.data['Multiple Departments']['background-color']
       ],
       'circle-stroke-width': 1,
       'circle-stroke-color': 'white',

@@ -46,7 +46,7 @@ export default{
   "status": {
     "category": "Status",
     "active": "Active Projects",
-    "archived": "Archived Projects",
+    "archive": "View Archive",
     "design": "Design",
     "planning": "Planning",
     "construction": "Construction",
@@ -54,17 +54,18 @@ export default{
   },
   "projectCategory": {
     "category": "Project Category",
-    "parksRecreation": "Parks & Recreation",
-    "publicHealth": "Public Health",
-    "humanServices": "Human Services",
-    "freeLibrary": "Free Library",
-    "fireDepartment": "Fire Department",
-    "policeDepartment": "Police Department",
-    "publicProperty": "Public Property",
-    "other": "Other"
+    "parks": "Parks & Recreation",
+    "health": "Public Health",
+    "human": "Human Services",
+    "library": "Free Library",
+    "fire": "Fire Department",
+    "police": "Police Department",
+    "property": "Public Property",
+    "other": "Other",
+    "multiple": "Multiple Departments"
   },
   "councilDistrict": {
-    "category": "Council District",
+    "category": "District",
     "district1": "District 1",
     "district2": "District 2",
     "district3": "District 3",

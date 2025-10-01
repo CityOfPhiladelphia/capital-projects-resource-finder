@@ -4,6 +4,7 @@ import PrintShareSection from './PrintShareSection.vue';
 import ButtonDropdown from './ButtonDropdown.vue';
 import StatusBar from './statusBar.vue';
 import accounting from 'accounting';
+import { ref, computed, watch } from 'vue';
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -21,40 +22,18 @@ const props = defineProps({
   },
 });
 
-// methods
-const parseAddress = (address) => {
-  const formattedAddress = address.replace(/(Phila.+)/g, city => `<div>${city}</div>`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `<div>${lineOne}</div>`).replace(/,/, '');
-  return formattedAddress;
-};
-
-const makeValidUrl = (url) => {
-  let newUrl = window.decodeURIComponent(url);
-  newUrl = newUrl
-    .trim()
-    .replace(/\s/g, '');
-  if (/^(:\/\/)/.test(newUrl)) {
-    return `http${newUrl}`;
+watch(
+  () => props.item,
+  async newProjects => {
+    locationProjects.value = newProjects;
+    selectedProjectName.value = newProjects.properties.projects[0].project_name;
+    moreIsOpen.value = false;
   }
-  if (!/^(f|ht)tps?:\/\//i.test(newUrl)) {
-    return `http://${newUrl}`;
-  }
-  return newUrl;
-};
+)
 
+const locationProjects = ref(props.item);
 const selectedProjectName = ref(props.item.properties.projects[0].project_name);
-
 const moreIsOpen = ref(false);
-
-const handleProjectClick = (projectName) => {
-  moreIsOpen.value = false;
-  if (import.meta.env.VITE_DEBUG) console.log('handleProjectClick projectName:', projectName);
-  selectedProjectName.value = projectName;
-};
-
-const handleMoreClick = () => {
-  if (import.meta.env.VITE_DEBUG) console.log('handleMoreClick projectName:', 'more');
-  moreIsOpen.value = true;
-};
 
 const selectedProject = computed(() => {
   return props.item.properties.projects.find(project => project.project_name === selectedProjectName.value);
@@ -90,21 +69,52 @@ const projectTeam = computed(() => {
   ];
   let rows = [
     {
-      name: selectedProject.value.project_coordinator,
+      name: function(selectedProject) { if (selectedProject) return selectedProject.value.project_coordinator },
       role: 'Project Coordinator'
     },
     {
-      name: selectedProject.value.inspector,
+      name: function(selectedProject) { if (selectedProject) return selectedProject.value.inspector },
       role: 'Inspector'
     },
   ];
   return { columns, rows };
 });
 
+// methods
+const parseAddress = (address) => {
+  const formattedAddress = address.replace(/(Phila.+)/g, city => `<div>${city}</div>`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `<div>${lineOne}</div>`).replace(/,/, '');
+  return formattedAddress;
+};
+
+const makeValidUrl = (url) => {
+  let newUrl = window.decodeURIComponent(url);
+  newUrl = newUrl
+    .trim()
+    .replace(/\s/g, '');
+  if (/^(:\/\/)/.test(newUrl)) {
+    return `http${newUrl}`;
+  }
+  if (!/^(f|ht)tps?:\/\//i.test(newUrl)) {
+    return `http://${newUrl}`;
+  }
+  return newUrl;
+};
+
+const handleProjectClick = (projectName) => {
+  moreIsOpen.value = false;
+  if (import.meta.env.VITE_DEBUG) console.log('handleProjectClick projectName:', projectName);
+  selectedProjectName.value = projectName;
+};
+
+const handleMoreClick = () => {
+  if (import.meta.env.VITE_DEBUG) console.log('handleMoreClick projectName:', 'more');
+  moreIsOpen.value = !moreIsOpen.value;
+};
+
 </script>
 
 <template>
-  <div class="ec-content columns is-multiline is-mobile">
+  <div class="ec-content button-row is-multiline columns is-mobile">
 
     <button
       class="project-button column is-4 p-0"
@@ -115,7 +125,7 @@ const projectTeam = computed(() => {
       }"
       @click="handleProjectClick(item.properties.projects[0].project_name)"
     >
-      <div class="has-text-centered p-1 pl-1 pr-1">
+      <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
         {{ item.properties.projects[0].project_name }}
       </div>
     </button>
@@ -130,7 +140,7 @@ const projectTeam = computed(() => {
       }"
       @click="handleProjectClick(item.properties.projects[1].project_name)"
       >
-        <div class="has-text-centered p-1 pl-1 pr-1">
+        <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
           {{ item.properties.projects[1].project_name }}
         </div>
     </button>
@@ -145,7 +155,7 @@ const projectTeam = computed(() => {
       }"
       @click="handleProjectClick(item.properties.projects[2].project_name)"
       >
-        <div class="has-text-centered p-1 pl-1 pr-1">
+        <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
           {{ item.properties.projects[2].project_name }}
         </div>
     </button>
@@ -157,7 +167,7 @@ const projectTeam = computed(() => {
       @click="handleMoreClick()"
     >
       <div
-        class="has-text-centered p-1 pl-1 pr-1"
+        class="project-button-text has-text-centered p-1 pl-1 pr-1"
         :class="{ 'project-selected': 'more' === selectedProjectName }"
       >
         More
@@ -171,14 +181,14 @@ const projectTeam = computed(() => {
       class="project-button column is-4 p-0 project-selected"
       @click="handleMoreClick()"
     >
-      <div class="has-text-centered p-1 pl-1 pr-1">
+      <div class="project-button-text has-text-centered p-1 pl-1 pr-1">
         {{ selectedProjectName }}
       </div>
     </button>
-    
+
     <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
-    <div v-if="item.properties.projects.length == 2"class="spacer column is-4"></div>
-    
+    <div v-if="item.properties.projects.length == 2" class="spacer column is-4"></div>
+
     <div class="more-zone column is-12 p-0">
       <button-dropdown
         v-if="moreIsOpen"
@@ -199,10 +209,14 @@ const projectTeam = computed(() => {
       v-if="selectedProject"
     />
 
+    <div>
+      <h3>{{ selectedProject.project_name }}</h3>
+    </div>
+
     <div class="columns top-section">
       <div class="column is-6">
         <div
-          v-if="selectedProject.site_address"
+          v-if="selectedProject && selectedProject.site_address"
           class="columns is-mobile"
         >
           <div class="column is-1">
@@ -215,7 +229,7 @@ const projectTeam = computed(() => {
         </div>
 
         <div
-          v-if="selectedProject.client_dept"
+          v-if="selectedProject && selectedProject.client_category"
           class="columns is-mobile"
         >
           <div class="column is-1">
@@ -223,12 +237,12 @@ const projectTeam = computed(() => {
           </div>
           <div
             class="column is-11"
-            v-html="'<b>'+t('card.category')+': </b>'+selectedProject.client_dept"
+            v-html="'<b>'+t('card.category')+': </b>'+selectedProject.client_category"
           />
         </div>
 
         <div
-          v-if="selectedProject.website_link"
+          v-if="selectedProject && selectedProject.website_link"
           class="columns is-mobile website-div"
         >
           <div
@@ -251,7 +265,7 @@ const projectTeam = computed(() => {
       <div class="column is-6">
 
         <div
-          v-if="selectedProject.project_estimated_cost"
+          v-if="selectedProject && selectedProject.project_estimated_cost"
           class="columns is-mobile"
         >
           <div
@@ -263,11 +277,11 @@ const projectTeam = computed(() => {
             class="column is-11"
             v-html="'<b>'+t('card.budget')+': </b>'+ accounting.formatMoney(selectedProject.project_estimated_cost)"
           />
-            
+
         </div>
 
         <div
-          v-if="selectedProject.council_district"
+          v-if="selectedProject && selectedProject.council_district"
           class="columns is-mobile"
         >
           <div
@@ -281,7 +295,7 @@ const projectTeam = computed(() => {
         </div>
 
         <div
-          v-if="selectedProject.contact_email"
+          v-if="selectedProject && selectedProject.contact_email"
           class="columns is-mobile"
         >
           <div
@@ -294,7 +308,7 @@ const projectTeam = computed(() => {
           </div>
         </div>
 
-        
+
       </div>
     </div>
 
@@ -319,13 +333,13 @@ const projectTeam = computed(() => {
         :project="selectedProject"
       />
 
-      <div>
+      <div v-if="selectedProject">
         {{ t('card.current_stage') }}: <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}</a>
       </div>
     </div>
 
     <div>
-      <h3>
+      <h3 v-if="selectedProject">
         {{ t('card.estimated_completion_description') }}: {{ selectedProject.estimated_completion }}
       </h3>
       <div class="columns is-multiline is-gapless">
@@ -344,13 +358,17 @@ const projectTeam = computed(() => {
         :sort-options="{ enabled: false }"
         style-class="table-style"
       />
-        
+
     </div>
 
   </div>
 </template>
 
 <style>
+
+.button-row {
+  /* height: 78px; */
+}
 
 .spacer {
   background-color: #eeeeee;
@@ -375,6 +393,12 @@ const projectTeam = computed(() => {
     border-left-width: 0px;
   }
 
+  .project-button-text {
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
   .project-button {
     color: #0f4d90;
     font-size: 1rem;
@@ -385,6 +409,9 @@ const projectTeam = computed(() => {
     border-bottom-width: 1px;
     border-style: solid;
     border-color: rgb(204,204,204);
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    height: 48px;
   }
 
   .more-button {

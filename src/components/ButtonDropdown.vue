@@ -37,7 +37,7 @@ const lastProject = computed(() => {
       :class="{ 'is-selected': project.project_name == props.selectedProject }"
       @click="$emit('clickedProject', project.project_name)"
     >
-      <div class="button-div-1 has-text-centered p-1 pl-1 pr-1">
+      <div class="button-div-1 has-text-centered pl-1 pr-1">
         <div class="button-div-2">
           {{ project.project_name }}
         </div>
@@ -49,7 +49,7 @@ const lastProject = computed(() => {
       :class="{ 'is-selected': lastProject.project_name == props.selectedProject }"
       @click="$emit('clickedProject', lastProject.project_name)"
     >
-      <div class="button-div-1 has-text-centered p-1 pl-1 pr-1">
+      <div class="button-div-1 has-text-centered pl-1 pr-1">
         <div class="button-div-3">
           {{ lastProject.project_name }}
         </div>
@@ -102,25 +102,28 @@ const lastProject = computed(() => {
   font-family: 'Montserrat', sans-serif;
   cursor: pointer;
   border-width: 0px;
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
-  padding-left: 16px !important;
-  padding-right: 16px !important;
+  justify-content: center;
 }
 
 .button-div-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-left-width: 0px;
   border-bottom-width: 1px;
   border-right-width: 0px;
   border-top-width: 0px;
   border-style: solid;
   border-color: rgb(204,204,204);
-  padding: 4px;
+  height: 48px;
 }
 
 .button-div-3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-width: 0px;
-  padding: 4px;
+  height: 48px;
 }
 
 
