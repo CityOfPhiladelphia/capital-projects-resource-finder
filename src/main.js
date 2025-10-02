@@ -29,9 +29,11 @@ library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, 
 // use this if running off unlinked package
 import pinboard from '@phila/pinboard';
 import '../node_modules/@phila/pinboard/dist/index.css';
+
 // OR
 // use these if running off linked package
-// import pinboard from '../node_modules/@phila/pinboard/src/main.js';
+// import pinboard from '../../vue3-pinboard/dist';
+// import '../node_modules/@phila/pinboard/dist/index.css';
 
 
 import legendControl from './general/legendControl';
@@ -439,7 +441,7 @@ const $config = {
     },
     {
       type: "native",
-      href: "/capital-projects-resource-finder",
+      href: "/",
       text: "app.about",
     },
     {

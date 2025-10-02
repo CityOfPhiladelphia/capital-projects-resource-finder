@@ -1,7 +1,7 @@
 export default{
   "language": "English",
   "app": {
-    "title": "Capital projects finder",
+    "title": "Capital Projects Resource Finder",
     "subtitle": "Find ongoing investments in City-owned facilities",
     "noResults": "We're sorry, there are no results for that search. Adjust the filters you've selected and try again.",
     "servicesOffered": "Services offered",
@@ -29,7 +29,7 @@ export default{
       "li4": "City-managed roads and transportation systems"
     },
     "p2": "In partnership with other City agencies, the <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>Capital Program Office</a> manages the operations for more than 200 capital projects citywide. ",
-    "h3_2": "Using the capital projects finder",
+    "h3_2": "Using the Capital Projects Resource Finder",
     "p3": "Use this finder to locate capital projects taking place at City-owned facilities across Philadelphia. For example, you can find active projects at:",
     "ul2": {
       "li": "Parks and recreation centers",
