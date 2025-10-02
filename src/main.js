@@ -66,7 +66,7 @@ const filterArchived = (locations, archiveToggle) => {
 }
 
 const getProjectStatusBitArray = (locations) => {
-  const bufferLength = Math.ceil(locations.length / 32);
+  const bufferLength = Math.ceil(locations.length / 8);
 
   const bufferToggleOff = new ArrayBuffer(bufferLength);
   const viewToggleOff = new DataView(bufferToggleOff);
@@ -80,23 +80,23 @@ const getProjectStatusBitArray = (locations) => {
   let exp = 0;
 
   locations.forEach((location, i) => {
-    exp = i % 32;
+    exp = i % 8;
     bitsToSet_toggleOff |= location.properties.projects.some((project) => !isArchiveProject(project)) ? 1 << exp : 0;
     bitsToSet_toggleOn |= location.properties.projects.some((project) => isArchiveProject(project)) ? 1 << exp : 0;
 
-    const setBitsTrigger = (exp === 31);
+    const setBitsTrigger = (exp === 7);
     if (setBitsTrigger) {
-      viewToggleOff.setUint32(offset, bitsToSet_toggleOff);
-      viewToggleOn.setUint32(offset, bitsToSet_toggleOn);
+      viewToggleOff.setUint8(offset, bitsToSet_toggleOff);
+      viewToggleOn.setUint8(offset, bitsToSet_toggleOn);
       bitsToSet_toggleOff = 0;
       bitsToSet_toggleOn = 0;
     }
     offset += setBitsTrigger ? 1 : 0;
   })
 
-  if (offset && exp !== 31) {
-    viewToggleOff.setUint32(offset, bitsToSet_toggleOff);
-    viewToggleOn.setUint32(offset, bitsToSet_toggleOn);
+  if (offset && exp !== 7) {
+    viewToggleOff.setUint8(offset, bitsToSet_toggleOff);
+    viewToggleOn.setUint8(offset, bitsToSet_toggleOn);
   }
 
   return {
@@ -243,9 +243,6 @@ const $config = {
     columns: true,
     multipleFieldGroups: {
       status: {
-        toggleKey: 'status_archive',
-        toggleRefine: statusToggleRefine,
-        toggleCount: getProjectStatusBitArray,
         checkbox: {
           'planning': {
             unique_key: 'status_planning',
@@ -272,7 +269,10 @@ const $config = {
             i18n_key: 'status.archive',
             value: function (item) { return item.properties.projects.some((project) => isArchiveProject(project)) }
           }
-        }
+        },
+        toggleKey: 'status_archive',
+        toggleRefine: statusToggleRefine,
+        toggleCount: getProjectStatusBitArray,
       },
       projectCategory: {
         checkbox: {
