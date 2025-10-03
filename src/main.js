@@ -32,6 +32,7 @@ import '../node_modules/@phila/pinboard/dist/index.css';
 
 // OR
 // use these if running off linked package
+// import pinboard from '../node_modules/@phila/pinboard/src/main.js';
 // import pinboard from '../../vue3-pinboard/dist';
 // import '../node_modules/@phila/pinboard/dist/index.css';
 
