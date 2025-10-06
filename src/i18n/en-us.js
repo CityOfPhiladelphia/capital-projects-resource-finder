@@ -47,6 +47,7 @@ export default{
     "category": "Status",
     "active": "Active Projects",
     "archive": "View Archive",
+    "archiveAlt": "Archived",
     "design": "Design",
     "planning": "Planning",
     "construction": "Construction",
@@ -73,7 +74,7 @@ export default{
     "multiple": "Multiple Departments"
   },
   "councilDistrict": {
-    "category": "District",
+    "category": "Council District",
     "district1": "District 1",
     "district2": "District 2",
     "district3": "District 3",
