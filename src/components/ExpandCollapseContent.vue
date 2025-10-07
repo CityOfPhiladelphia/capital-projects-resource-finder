@@ -10,6 +10,11 @@ import { format } from 'date-fns';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
+// checks if the project's archive_date is in the past. !!project.archive_date protects against null values
+// new Date(project.archive_date) < new Date() returns true if project.archive_date is null, !!project.archive_date prevents such cases being marked as archived
+const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
+
+// PROPS
 const props = defineProps({
   item: {
     type: Object,
@@ -21,27 +26,35 @@ const props = defineProps({
   }
 });
 
+// REFS
+//const locationProjects = ref(props.item.properties.projects);
+const selectedProjectName = ref(props.item.properties.projects[0].project_name);
+const moreIsOpen = ref(false);
+const archiveActive = ref(isArchiveProject(props.item.properties.projects[0]))
+
+// WATCHERS
 watch(
   () => props.item,
   async newProjects => {
-    locationProjects.value = newProjects;
+    //locationProjects.value = newProjects.properties.projects;
     selectedProjectName.value = newProjects.properties.projects[0].project_name;
     moreIsOpen.value = false;
+    archiveActive.value = isArchiveProject(newProjects.properties.projects[0]);
   }
 )
 
-const locationProjects = ref(props.item);
-const selectedProjectName = ref(props.item.properties.projects[0].project_name);
-const moreIsOpen = ref(false);
-
+// COMPUTED PROPERTIES
 const selectedProject = computed(() => {
   return props.item.properties.projects.find(project => project.project_name === selectedProjectName.value);
 });
 
+const archiveMessage = computed(() => {
+  return archiveActive.value ? t('card.archived_on') + ' ' + selectedProject.value.archive_date.replace(/-/g, '/') + '. ' + t('card.archive_message') : '';
+})
+
 const excessProjects = computed(() => {
   if (props.item.properties.projects.length <= 3) return [];
   let projects = [...props.item.properties.projects];
-  console.log('projects:', projects);
   return projects.splice(2);
 });
 
@@ -80,7 +93,35 @@ const projectTeam = computed(() => {
   return { columns, rows };
 });
 
-// methods
+const estimatedCompletion = computed(() => {
+  if (!selectedProject.value) return 'N/A';
+  const season = selectedProject.value.estimated_completion_season;
+  const year = selectedProject.value.estimated_completion_year;
+  if (season && year && season !== year) {
+    return `${season} ${year}`;
+  } else if (season && year && season === year) {
+    return `${season}`;
+  } else if (season && !year) {
+    return `${season}`;
+  } else if (!season && year) {
+    return `${year}`;
+  } else {
+    return 'N/A';
+  }
+});
+
+const actualCompletionDate = computed(() => {
+  if (!selectedProject.value || !selectedProject.value.actual_completion) return 'No date provided';
+  let value;
+  try {
+    value = format(selectedProject.value.actual_completion, 'MMMM d, yyyy');
+  } catch (error) {
+    value = 'No date provided';
+  }
+  return value;
+});
+
+// METHODS
 const parseAddress = (address) => {
   const formattedAddress = address.replace(/(Phila.+)/g, city => `<div>${city}</div>`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `<div>${lineOne}</div>`).replace(/,/, '');
   return formattedAddress;
@@ -110,34 +151,6 @@ const handleMoreClick = () => {
   if (import.meta.env.VITE_DEBUG) console.log('handleMoreClick projectName:', 'more');
   moreIsOpen.value = !moreIsOpen.value;
 };
-
-const estimatedCompletion = computed(() => {
-  if (!selectedProject.value) return 'N/A';
-  const season = selectedProject.value.estimated_completion_season;
-  const year = selectedProject.value.estimated_completion_year;
-  if (season && year && season !== year) {
-    return `${season} ${year}`;
-  } else if (season && year && season === year) {
-    return `${season}`;
-  } else if (season && !year) {
-    return `${season}`;
-  } else if (!season && year) {
-    return `${year}`;
-  } else {
-    return 'N/A';
-  }
-});
-
-const actualCompletionDate = computed(() => {
-  if (!selectedProject.value || !selectedProject.value.actual_completion) return 'No date provided';
-  let value;
-  try {
-    value = format(selectedProject.value.actual_completion, 'MMMM d, yyyy');
-  } catch (error) {
-    value = 'No date provided';
-  }
-  return value;
-});
 
 </script>
 
@@ -206,6 +219,8 @@ const actualCompletionDate = computed(() => {
 
     <print-share-section :item="selectedProject" :featureId="props.item._featureId" v-if="selectedProject" />
 
+    <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive"/>
+
     <div>
       <h2 class="project-name">{{ selectedProject.project_name }}</h2>
     </div>
@@ -236,7 +251,6 @@ const actualCompletionDate = computed(() => {
             </a>
           </div>
         </div>
-
       </div>
 
       <div class="column is-6">
@@ -360,6 +374,11 @@ const actualCompletionDate = computed(() => {
     font-weight: 600;
   }
 }
+
+.is-archive {
+    margin-top: 6px;
+    margin-bottom: 14px !important;
+  }
 
 .ec-content {
   margin-right: -.25rem;

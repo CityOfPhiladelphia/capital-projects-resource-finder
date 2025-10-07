@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
     server: {
       fs: {
         allow: [
-          searchForWorkspaceRoot(process.cwd()),
+          searchForWorkspaceRoot(process.cwd())
         ]
       }
     },
