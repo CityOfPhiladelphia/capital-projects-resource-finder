@@ -95,15 +95,15 @@ export default{
     "improvements_include": "Improvements include:",
     "section_status": "Status",
     "status_text": "This short description text will provide additional context to help a user interpret this status component.",
-    "current_stage": "Current Stage",
-    "status_descriptions": {
-      "planning": "The project is in the planning phase. Public input may be requested.",
-      "design": "The project designs or plans are developed. Public input may be requested.",
-      "construction": "Construction is underway.",
-      "complete": "The project is complete."
+    "current_stage": "Current stage",
+    "status_description": {
+      "planning": "We're defining the project needs and scope. Public input may be requested.",
+      "design": "We're developing the project designs or plans. Public input may be requested.",
+      "construction": "We've started construction. Depending on the type of work, travel may be impacted in the area.",
+      "complete": "The project is complete. We may continue to share updates about the finished work."
     },
     "completed": "Completed",
-    "estimated_completion": "Estimated Completion",
-    "project_team_description": "Project Team"
+    "estimated_completion": "Estimated completion",
+    "project_team_description": "Project team"
   }
 }

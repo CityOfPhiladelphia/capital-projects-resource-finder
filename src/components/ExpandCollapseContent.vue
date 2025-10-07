@@ -291,23 +291,21 @@ const actualCompletionDate = computed(() => {
       <h3>
         {{ t('card.section_status') }}
       </h3>
-      <h4 class="card-h4">
-        {{ t('card.current_stage') }}
-      </h4>
 
       <status-bar :project="selectedProject" />
 
-      <div class="mb-4">
-        <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}: </a>
-        <span>{{ t('status_description.' + selectedProject.project_status.toLowerCase()) }}</span>
+      <div>
+        <b>{{ t('card.current_stage') }}: </b>
+        <span>{{ t('status.' + selectedProject.project_status.toLowerCase()) }} - </span>
+        <span>{{ t('card.status_description.' + selectedProject.project_status.toLowerCase()) }}</span>
       </div>
 
-      <h4 v-if="selectedProject.project_status !== 'Complete'" class="card-h4">
-        {{ t('card.estimated_completion') }}: {{ estimatedCompletion }}
-      </h4>
-      <h4 v-if="selectedProject.project_status === 'Complete'" class="card-h4">
-        {{ t('card.completed') }}: {{ actualCompletionDate }}
-      </h4>
+      <div v-if="selectedProject.project_status !== 'Complete'">
+        <b>{{ t('card.estimated_completion') }}:</b> {{ estimatedCompletion }}
+      </div>
+      <div v-if="selectedProject.project_status === 'Complete'">
+        <b>{{ t('card.completed') }}:</b> {{ actualCompletionDate }}
+      </div>
 
     </div>
 
@@ -316,8 +314,12 @@ const actualCompletionDate = computed(() => {
         {{ t('card.project_team_description') }}
       </h3>
 
-      <vue-good-table :columns="projectTeam.columns" :rows="projectTeam.rows" :sort-options="{ enabled: false }"
-        style-class="table-style" />
+      <!-- <vue-good-table :columns="projectTeam.columns" :rows="projectTeam.rows" :sort-options="{ enabled: false }"
+        style-class="table-style" /> -->
+      <ul :style="'list-style-type: disc; margin-left: 20px;'">
+        <li><b>Project coordinator:</b> {{ selectedProject.project_coordinator }}</li>
+        <li><b>Inspector:</b> {{ selectedProject.inspector }}</li>
+      </ul>
 
     </div>
 
@@ -336,7 +338,7 @@ const actualCompletionDate = computed(() => {
 }
 
 .main-ec-content {
-  padding-top: 0px !important;
+  padding-top: 12px !important;
 
   .project-name {
     font-family: "Montserrat-SemiBold", "Montserrat SemiBold", "Montserrat", sans-serif !important;
@@ -362,6 +364,7 @@ const actualCompletionDate = computed(() => {
 }
 
 .ec-content {
+  margin-bottom: 0px !important;
   margin-right: -.25rem;
   padding-top: .75rem;
   font-size: 14px;
