@@ -91,7 +91,7 @@ export default{
     "category": "Category",
     "district": "District",
     "budget": "Budget",
-    "section_description": "Description",
+    "section_description": "Project description",
     "improvements_include": "Improvements include:",
     "section_status": "Status",
     "status_text": "This short description text will provide additional context to help a user interpret this status component.",
