@@ -232,7 +232,7 @@ const actualCompletionDate = computed(() => {
           </div>
           <div class="column is-11">
             <a target="_blank" :href="makeValidUrl(selectedProject.website_link)">
-              {{ selectedProject.website_link }}
+              Project website
             </a>
           </div>
         </div>
