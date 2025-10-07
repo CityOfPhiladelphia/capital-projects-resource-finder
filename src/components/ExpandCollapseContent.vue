@@ -13,14 +13,12 @@ const { t } = useI18n();
 const props = defineProps({
   item: {
     type: Object,
-    default: function(){
-      return {};
-    },
+    default: () => {}
   },
   isMobile: {
     type: Boolean,
     default: false,
-  },
+  }
 });
 
 watch(
@@ -42,7 +40,7 @@ const selectedProject = computed(() => {
 
 const excessProjects = computed(() => {
   if (props.item.properties.projects.length <= 3) return [];
-  let projects = [ ...props.item.properties.projects ];
+  let projects = [...props.item.properties.projects];
   console.log('projects:', projects);
   return projects.splice(2);
 });
@@ -71,11 +69,11 @@ const projectTeam = computed(() => {
   ];
   let rows = [
     {
-      name: function(selectedProject) { if (selectedProject) return selectedProject.value.project_coordinator },
+      name: function (selectedProject) { if (selectedProject) return selectedProject.value.project_coordinator },
       role: 'Project Coordinator'
     },
     {
-      name: function(selectedProject) { if (selectedProject) return selectedProject.value.inspector },
+      name: function (selectedProject) { if (selectedProject) return selectedProject.value.inspector },
       role: 'Inspector'
     },
   ];
@@ -144,76 +142,50 @@ const actualCompletionDate = computed(() => {
 </script>
 
 <template>
-  <div
-    v-if="props.item.properties.projects.length > 1"
-    class="ec-content button-row is-multiline columns is-mobile"
-  >
+  <div v-if="props.item.properties.projects.length > 1" class="ec-content button-row is-multiline columns is-mobile">
 
-    <button
-      class="project-button column is-4 p-0"
-      :class="{
-        'project-selected': !moreIsOpen && item.properties.projects[0].project_name === selectedProjectName,
-        'multiple-children': item.properties.projects.length > 1,
-        'only-child': item.properties.projects.length == 1
-      }"
-      @click="handleProjectClick(item.properties.projects[0].project_name)"
-    >
+    <button class="project-button column is-4 p-0" :class="{
+      'project-selected': !moreIsOpen && item.properties.projects[0].project_name === selectedProjectName,
+      'multiple-children': item.properties.projects.length > 1,
+      'only-child': item.properties.projects.length == 1
+    }" @click="handleProjectClick(item.properties.projects[0].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         {{ item.properties.projects[0].project_name }}
       </div>
     </button>
 
-    <button
-      v-if="item.properties.projects.length > 1"
-      class="project-button column is-4 p-0"
-      :class="{
-        'project-selected': !moreIsOpen && item.properties.projects[1].project_name === selectedProjectName,
-        'multiple-children': item.properties.projects.length > 1,
-        'only-child': item.properties.projects.length == 1
-      }"
-      @click="handleProjectClick(item.properties.projects[1].project_name)"
-      >
-        <div class="project-button-text has-text-centered pl-1 pr-1">
-          {{ item.properties.projects[1].project_name }}
-        </div>
+    <button v-if="item.properties.projects.length > 1" class="project-button column is-4 p-0" :class="{
+      'project-selected': !moreIsOpen && item.properties.projects[1].project_name === selectedProjectName,
+      'multiple-children': item.properties.projects.length > 1,
+      'only-child': item.properties.projects.length == 1
+    }" @click="handleProjectClick(item.properties.projects[1].project_name)">
+      <div class="project-button-text has-text-centered pl-1 pr-1">
+        {{ item.properties.projects[1].project_name }}
+      </div>
     </button>
 
-    <button
-      v-if="item.properties.projects.length == 3"
-      class="project-button column is-4 p-0"
-      :class="{
-        'project-selected': !moreIsOpen && item.properties.projects[2].project_name === selectedProjectName,
-        'multiple-children': item.properties.projects.length > 1,
-        'only-child': item.properties.projects.length == 1
-      }"
-      @click="handleProjectClick(item.properties.projects[2].project_name)"
-      >
-        <div class="project-button-text has-text-centered pl-1 pr-1">
-          {{ item.properties.projects[2].project_name }}
-        </div>
+    <button v-if="item.properties.projects.length == 3" class="project-button column is-4 p-0" :class="{
+      'project-selected': !moreIsOpen && item.properties.projects[2].project_name === selectedProjectName,
+      'multiple-children': item.properties.projects.length > 1,
+      'only-child': item.properties.projects.length == 1
+    }" @click="handleProjectClick(item.properties.projects[2].project_name)">
+      <div class="project-button-text has-text-centered pl-1 pr-1">
+        {{ item.properties.projects[2].project_name }}
+      </div>
     </button>
 
-    <button
-      v-if="item.properties.projects.length > 3 && !excessProjectSelected"
-      class="project-button column is-4 p-0"
-      :class="{ 'project-selected': moreIsOpen }"
-      @click="handleMoreClick()"
-    >
-      <div
-        class="project-button-text has-text-centered pl-1 pr-1"
-        :class="{ 'project-selected': 'more' === selectedProjectName }"
-      >
+    <button v-if="item.properties.projects.length > 3 && !excessProjectSelected" class="project-button column is-4 p-0"
+      :class="{ 'project-selected': moreIsOpen }" @click="handleMoreClick()">
+      <div class="project-button-text has-text-centered pl-1 pr-1"
+        :class="{ 'project-selected': 'more' === selectedProjectName }">
         More
         <font-awesome-icon v-if="!moreIsOpen" icon="caret-down" />
         <font-awesome-icon v-if="moreIsOpen" icon="caret-up" />
       </div>
     </button>
 
-    <button
-      v-if="excessProjectSelected"
-      class="project-button column is-4 p-0 project-selected"
-      @click="handleMoreClick()"
-    >
+    <button v-if="excessProjectSelected" class="project-button column is-4 p-0 project-selected"
+      @click="handleMoreClick()">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         {{ selectedProjectName }}
       </div>
@@ -223,12 +195,8 @@ const actualCompletionDate = computed(() => {
     <div v-if="item.properties.projects.length == 2" class="spacer column is-4"></div>
 
     <div class="more-zone column is-12 p-0">
-      <button-dropdown
-        v-if="moreIsOpen"
-        :projects="excessProjects"
-        :selectedProject="selectedProjectName"
-        @clicked-project="handleProjectClick"
-      >
+      <button-dropdown v-if="moreIsOpen" :projects="excessProjects" :selectedProject="selectedProjectName"
+        @clicked-project="handleProjectClick">
       </button-dropdown>
     </div>
 
@@ -236,11 +204,7 @@ const actualCompletionDate = computed(() => {
 
   <div class='main-ec-content'>
 
-    <print-share-section
-      :item="selectedProject"
-      :featureId="props.item._featureId"
-      v-if="selectedProject"
-    />
+    <print-share-section :item="selectedProject" :featureId="props.item._featureId" v-if="selectedProject" />
 
     <div>
       <h2 class="project-name">{{ selectedProject.project_name }}</h2>
@@ -248,46 +212,26 @@ const actualCompletionDate = computed(() => {
 
     <div class="columns top-section">
       <div class="column is-6">
-        <div
-          v-if="selectedProject && selectedProject.site_address"
-          class="columns is-mobile"
-        >
+        <div v-if="selectedProject && selectedProject.site_address" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="map-marker-alt" />
           </div>
-          <div
-            class="column is-11"
-            v-html="parseAddress(selectedProject.site_address)"
-          />
+          <div class="column is-11" v-html="parseAddress(selectedProject.site_address)" />
         </div>
 
-        <div
-          v-if="selectedProject && selectedProject.client_category"
-          class="columns is-mobile"
-        >
+        <div v-if="selectedProject && selectedProject.client_category" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="folder" />
           </div>
-          <div
-            class="column is-11"
-            v-html="'<b>'+t('card.category')+': </b>'+selectedProject.client_category"
-          />
+          <div class="column is-11" v-html="'<b>' + t('card.category') + ': </b>' + selectedProject.client_category" />
         </div>
 
-        <div
-          v-if="selectedProject && selectedProject.website_link"
-          class="columns is-mobile website-div"
-        >
-          <div
-            class="column is-1"
-          >
+        <div v-if="selectedProject && selectedProject.website_link" class="columns is-mobile website-div">
+          <div class="column is-1">
             <font-awesome-icon icon="globe" />
           </div>
           <div class="column is-11">
-            <a
-              target="_blank"
-              :href="makeValidUrl(selectedProject.website_link)"
-            >
+            <a target="_blank" :href="makeValidUrl(selectedProject.website_link)">
               {{ selectedProject.website_link }}
             </a>
           </div>
@@ -297,29 +241,17 @@ const actualCompletionDate = computed(() => {
 
       <div class="column is-6">
 
-        <div
-          v-if="selectedProject && selectedProject.project_estimated_cost"
-          class="columns is-mobile"
-        >
-          <div
-            class="column is-1"
-          >
+        <div v-if="selectedProject && selectedProject.project_estimated_cost" class="columns is-mobile">
+          <div class="column is-1">
             <font-awesome-icon icon="money-check-dollar" />
           </div>
-          <div
-            class="column is-11"
-            v-html="'<b>'+t('card.budget')+': </b>'+ accounting.formatMoney(selectedProject.project_estimated_cost)"
-          />
+          <div class="column is-11"
+            v-html="'<b>' + t('card.budget') + ': </b>' + accounting.formatMoney(selectedProject.project_estimated_cost)" />
 
         </div>
 
-        <div
-          v-if="selectedProject && selectedProject.council_district"
-          class="columns is-mobile"
-        >
-          <div
-            class="column is-1"
-          >
+        <div v-if="selectedProject && selectedProject.council_district" class="columns is-mobile">
+          <div class="column is-1">
             <font-awesome-icon icon="chart-tree-map" />
           </div>
           <div class="column is-11">
@@ -327,13 +259,8 @@ const actualCompletionDate = computed(() => {
           </div>
         </div>
 
-        <div
-          v-if="selectedProject && selectedProject.contact_email"
-          class="columns is-mobile"
-        >
-          <div
-            class="column is-1"
-          >
+        <div v-if="selectedProject && selectedProject.contact_email" class="columns is-mobile">
+          <div class="column is-1">
             <font-awesome-icon icon="envelope" />
           </div>
           <div class="column is-11">
@@ -350,11 +277,9 @@ const actualCompletionDate = computed(() => {
         {{ t('card.section_description') }}
       </h3>
       <div>
-        {{  t('card.improvements_include') }}
-        <ul
-          v-if="selectedProject && selectedProject.project_scope"
-          :style="'list-style-type: disc; margin-left: 20px;'"
-        >
+        {{ t('card.improvements_include') }}
+        <ul v-if="selectedProject && selectedProject.project_scope"
+          :style="'list-style-type: disc; margin-left: 20px;'">
           <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index">
             {{ improvement }}
           </li>
@@ -366,31 +291,21 @@ const actualCompletionDate = computed(() => {
       <h3>
         {{ t('card.section_status') }}
       </h3>
-      <h4 class="card-h4">
-        {{  t('card.current_stage') }}
-      </h4>
 
-      <status-bar
-        :project="selectedProject"
-      />
+      <status-bar :project="selectedProject" />
 
-      <div class="mb-4">
-        <a>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}: </a>
-        <span>{{ t('status_description.' + selectedProject.project_status.toLowerCase()) }}</span>
+      <div>
+        <b>{{ t('card.current_stage') }}: </b>
+        <span>{{ t('status.' + selectedProject.project_status.toLowerCase()) }} - </span>
+        <span>{{ t('card.status_description.' + selectedProject.project_status.toLowerCase()) }}</span>
       </div>
-    
-      <h4
-        v-if="selectedProject.project_status !== 'Complete'"
-        class="card-h4"
-      >
-        {{ t('card.estimated_completion') }}: {{ estimatedCompletion }}
-      </h4>
-      <h4
-        v-if="selectedProject.project_status === 'Complete'"
-        class="card-h4"
-      >
-        {{ t('card.completed') }}: {{ actualCompletionDate }}
-      </h4>
+
+      <div v-if="selectedProject.project_status !== 'Complete'">
+        <b>{{ t('card.estimated_completion') }}:</b> {{ estimatedCompletion }}
+      </div>
+      <div v-if="selectedProject.project_status === 'Complete'">
+        <b>{{ t('card.completed') }}:</b> {{ actualCompletionDate }}
+      </div>
 
     </div>
 
@@ -399,12 +314,12 @@ const actualCompletionDate = computed(() => {
         {{ t('card.project_team_description') }}
       </h3>
 
-      <vue-good-table
-        :columns="projectTeam.columns"
-        :rows="projectTeam.rows"
-        :sort-options="{ enabled: false }"
-        style-class="table-style"
-      />
+      <!-- <vue-good-table :columns="projectTeam.columns" :rows="projectTeam.rows" :sort-options="{ enabled: false }"
+        style-class="table-style" /> -->
+      <ul :style="'list-style-type: disc; margin-left: 20px;'">
+        <li><b>Project coordinator:</b> {{ selectedProject.project_coordinator }}</li>
+        <li><b>Inspector:</b> {{ selectedProject.inspector }}</li>
+      </ul>
 
     </div>
 
@@ -412,7 +327,6 @@ const actualCompletionDate = computed(() => {
 </template>
 
 <style>
-
 .spacer {
   background-color: #eeeeee;
   border-bottom-width: 1px;
@@ -420,11 +334,11 @@ const actualCompletionDate = computed(() => {
   border-left-width: 0px;
   border-right-width: 0px;
   border-style: solid;
-  border-color: rgb(204,204,204);
+  border-color: rgb(204, 204, 204);
 }
 
 .main-ec-content {
-  padding-top: 0px !important;
+  padding-top: 12px !important;
 
   .project-name {
     font-family: "Montserrat-SemiBold", "Montserrat SemiBold", "Montserrat", sans-serif !important;
@@ -450,6 +364,7 @@ const actualCompletionDate = computed(() => {
 }
 
 .ec-content {
+  margin-bottom: 0px !important;
   margin-right: -.25rem;
   padding-top: .75rem;
   font-size: 14px;
@@ -473,7 +388,7 @@ const actualCompletionDate = computed(() => {
     border: 0px;
     border-bottom-width: 1px;
     border-style: solid;
-    border-color: rgb(204,204,204);
+    border-color: rgb(204, 204, 204);
     padding-left: 10px !important;
     padding-right: 10px !important;
     height: 48px;
@@ -489,7 +404,7 @@ const actualCompletionDate = computed(() => {
     border: 0px;
     border-bottom-width: 1px;
     border-style: solid;
-    border-color: rgb(204,204,204);
+    border-color: rgb(204, 204, 204);
   }
 
   .more-zone {
@@ -517,6 +432,7 @@ const actualCompletionDate = computed(() => {
   font-family: 'Open Sans', sans-serif;
   width: 100%;
   border: 0;
+
   thead {
     tr {
       th {
@@ -534,9 +450,11 @@ const actualCompletionDate = computed(() => {
         border-bottom-width: 2px;
         border-style: solid;
         border-color: #444;
+
         &.sortable {
           cursor: pointer;
           padding-right: 20px;
+
           &:before,
           &:after {
             border-radius: 1px;
@@ -548,36 +466,45 @@ const actualCompletionDate = computed(() => {
             position: absolute;
             width: 0;
           }
+
           &:before {
             border-bottom-color: #444;
           }
+
           &:after {
             border-top-color: #444;
             margin-top: 12px;
           }
+
           &:hover {
             &:before {
               border-bottom-color: white;
             }
+
             &:after {
               border-top-color: white;
             }
           }
+
           &.sorting {
             background-color: #0f4d90;
             color: white;
+
             &.sorting-asc {
               &:before {
                 border-bottom-color: #444;
               }
+
               &:after {
                 border-top-color: #85b4e6;
               }
             }
+
             &.sorting-desc {
               &:before {
                 border-bottom-color: #85b4e6;
               }
+
               &:after {
                 border-top-color: white;
               }
@@ -587,6 +514,7 @@ const actualCompletionDate = computed(() => {
       }
     }
   }
+
   tbody {
     tr {
       &:nth-of-type(even) {
@@ -594,6 +522,7 @@ const actualCompletionDate = computed(() => {
           background-color: #ffffff;
         }
       }
+
       td {
         background-clip: padding-box;
         position: relative;
@@ -613,6 +542,7 @@ const actualCompletionDate = computed(() => {
   }
 
   &.is-align-middle {
+
     td,
     th {
       vertical-align: middle;
@@ -625,5 +555,4 @@ const actualCompletionDate = computed(() => {
     overflow-x: auto;
   }
 }
-
 </style>

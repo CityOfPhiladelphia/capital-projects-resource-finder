@@ -104,7 +104,7 @@ const getCounts = () => {
   <div
     class="main-greeting"
   >
-    
+
     <div class="half-data-section">
       <h3 v-html="t('introPage.h3_2')" />
     </div>

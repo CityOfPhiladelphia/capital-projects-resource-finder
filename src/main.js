@@ -55,6 +55,11 @@ const customComps = markRaw({
 // FUNCTION UTILITIES TO PASS TO PINBOARD TO CUSTOMIZE ITS BEHAVIOR FOR THE CAP FINDER'S REFINE
 //
 
+// called by filterArchived and getProjectStatusBitArray
+// checks if the project's archive_date is in the past. !!project.archive_date protects against null values
+// new Date(project.archive_date) < new Date() returns true if project.archive_date is null, !!project.archive_date prevents such cases being marked as archived
+const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
+
 // filterLocationProjects function gets passed to Pinboard to refine the projects at sites according to their archived status, or (inclusive) based on their project status
 const statusToggleRefine = (locations, selectedServicesArray) => {
   // entries from the selectedServicesArray are split into their refine group and value
@@ -103,11 +108,6 @@ const filterArchived = (locations, archiveToggle) => {
   })
   return filteredSites;
 }
-
-// called by filterArchived and getProjectStatusBitArray
-// checks if the project's archive_date is in the past. !!project.archive_date protects against null values
-// new Date(project.archive_date) < new Date() returns true if project.archive_date is null, !!project.archive_date prevents such cases being marked as archived
-const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
 
 // function for getting the counts of locations to return based on the status toggle
 // data structure is a bit array, where each set bit corresponds to a site having an archived or active status project at it
@@ -422,6 +422,15 @@ const $config = {
   legendControl,
   dataSources: {
     capitalProjects,
+  },
+  altBoxText: {
+    status_archive: "status_archiveAlt"
+  },
+  toggleTags: {
+    status_archive: {
+      tagText: 'status_archiveAlt',
+      color: '#0F4D90',
+    }
   },
   mapLayer: {
     id: 'resources',

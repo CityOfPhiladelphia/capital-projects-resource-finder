@@ -1,3 +1,29 @@
+// gives each site a standard category value
+// goes through each project at a site and checks for a department title's keyword after shifting the project's client_category to lowercase
+// keyword checks and lowercase will allow for some amount of variation of formatting and spelling in the data still being recognized as the same department
+// eg. 'parks & rec' and 'Parks and Recreation' will both reduce to 'parks'
+// matched keywords are added to a Set to ensure no duplicates
+// client_categories that do no match a keyword are stipped of all special characters and added to the set in all lowercase to give the best chance of matching other non-keyword departments
+// if the size of the Set is greater than 1, returns 'multiple' for multiple client_categories having projects at the site
+// otherwise if the item in the set is the keyword categories, it returns that item
+// unreccognized client_categories get returned as 'other'
+const normalizeSiteCategory = (projects) => {
+  const categories = new Set();
+  const normalizedCategories = ['parks', 'health', 'library', 'fire', 'police', 'property'];
+  projects.forEach((project) => {
+    if (project.client_category.toLowerCase().includes('parks')) { categories.add('parks') }
+    if (project.client_category.toLowerCase().includes('health')) { categories.add('health') }
+    if (project.client_category.toLowerCase().includes('library')) { categories.add('library') }
+    if (project.client_category.toLowerCase().includes('fire')) { categories.add('fire') }
+    if (project.client_category.toLowerCase().includes('police')) { categories.add('police') }
+    if (project.client_category.toLowerCase().includes('property')) { categories.add('property') }
+    if (!categories.size) { categories.add(project.client_category.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '')) }
+  })
+
+  if (categories.size > 1) { return 'multiple' }
+  return normalizedCategories.includes([...categories][0]) ? [...categories][0] : 'other';
+}
+
 export default {
   id: 'capital_projects',
   type: 'http-get',
@@ -297,31 +323,5 @@ export default {
       if (import.meta.env.VITE_DEBUG) console.log('reorderedData:', reorderedData);
       return reorderedData;
     },
-  },
+  }
 };
-
-// gives each site a standard category value
-// goes through each project at a site and checks for a department title's keyword after shifting the project's client_category to lowercase
-// keyword checks and lowercase will allow for some amount of variation of formatting and spelling in the data still being recognized as the same department
-// eg. 'parks & rec' and 'Parks and Recreation' will both reduce to 'parks'
-// matched keywords are added to a Set to ensure no duplicates
-// client_categories that do no match a keyword are stipped of all special characters and added to the set in all lowercase to give the best chance of matching other non-keyword departments
-// if the size of the Set is greater than 1, returns 'multiple' for multiple client_categories having projects at the site
-// otherwise if the item in the set is the keyword categories, it returns that item
-// unreccognized client_categories get returned as 'other'
-const normalizeSiteCategory = (projects) => {
-  const categories = new Set();
-  const normalizedCategories = ['parks', 'health', 'library', 'fire', 'police', 'property'];
-  projects.forEach((project) => {
-    if (project.client_category.toLowerCase().includes('parks')) { categories.add('parks') }
-    if (project.client_category.toLowerCase().includes('health')) { categories.add('health') }
-    if (project.client_category.toLowerCase().includes('library')) { categories.add('library') }
-    if (project.client_category.toLowerCase().includes('fire')) { categories.add('fire') }
-    if (project.client_category.toLowerCase().includes('police')) { categories.add('police') }
-    if (project.client_category.toLowerCase().includes('property')) { categories.add('property') }
-    if (!categories.size) { categories.add(project.client_category.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '')) }
-  })
-
-  if (categories.size > 1) { return 'multiple' }
-  return normalizedCategories.includes([...categories][0]) ? [...categories][0] : 'other';
-}

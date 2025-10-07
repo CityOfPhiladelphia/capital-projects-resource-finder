@@ -170,7 +170,6 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 
 .flag {
   box-sizing: content-box;
-  padding-top: 15px;
   position: relative;
   color: white;
   font-size: 11px;
@@ -204,6 +203,7 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 
   .flag {
     margin-left: -16px;
+    padding-top: 10px;
     width: 54px;
     height: 84px;
   }
@@ -254,6 +254,7 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 
   .flag {
     margin-left: -6px;
+    padding-top: 15px;
     width: 44px;
     height: 64px;
   }
