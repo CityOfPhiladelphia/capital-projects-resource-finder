@@ -1,8 +1,3 @@
-// called by filterArchived and getProjectStatusBitArray
-// checks if the project's archive_date is in the past. !!project.archive_date protects against null values
-// new Date(project.archive_date) < new Date() returns true if project.archive_date is null, !!project.archive_date prevents such cases being marked as archived
-const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
-
 // gives each site a standard category value
 // goes through each project at a site and checks for a department title's keyword after shifting the project's client_category to lowercase
 // keyword checks and lowercase will allow for some amount of variation of formatting and spelling in the data still being recognized as the same department
@@ -319,7 +314,6 @@ export default {
           'site_name': site_name,
           'site_category': normalizeSiteCategory(value),
           'council_district': value[0].council_district,
-          'has_archived': value.some((project) => isArchiveProject(project)),
           'lat': value[0].lat,
           'lon': value[0].lon,
           projects: value
@@ -329,6 +323,5 @@ export default {
       if (import.meta.env.VITE_DEBUG) console.log('reorderedData:', reorderedData);
       return reorderedData;
     },
-  },
-  isArchiveProject: isArchiveProject,
+  }
 };

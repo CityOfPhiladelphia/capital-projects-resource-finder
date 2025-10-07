@@ -55,6 +55,11 @@ const customComps = markRaw({
 // FUNCTION UTILITIES TO PASS TO PINBOARD TO CUSTOMIZE ITS BEHAVIOR FOR THE CAP FINDER'S REFINE
 //
 
+// called by filterArchived and getProjectStatusBitArray
+// checks if the project's archive_date is in the past. !!project.archive_date protects against null values
+// new Date(project.archive_date) < new Date() returns true if project.archive_date is null, !!project.archive_date prevents such cases being marked as archived
+const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
+
 // filterLocationProjects function gets passed to Pinboard to refine the projects at sites according to their archived status, or (inclusive) based on their project status
 const statusToggleRefine = (locations, selectedServicesArray) => {
   // entries from the selectedServicesArray are split into their refine group and value
@@ -94,7 +99,7 @@ const statusToggleRefine = (locations, selectedServicesArray) => {
 const filterArchived = (locations, archiveToggle) => {
   const filteredSites = [];
   locations.forEach((location) => {
-    const filteredProjects = location.properties.projects.filter((project) => capitalProjects.isArchiveProject(project) === archiveToggle)
+    const filteredProjects = location.properties.projects.filter((project) => isArchiveProject(project) === archiveToggle)
     if (filteredProjects.length) {
       const locationCopy = JSON.parse(JSON.stringify(location));
       locationCopy.properties.projects = filteredProjects;
@@ -123,8 +128,8 @@ const getProjectStatusBitArray = (locations) => {
   // do the same to set bits for non-archived
   // both are required since a single site may have a mix of archived and active projects
   locations.forEach((location, i) => {
-    bitsToSet_toggleOff |= location.properties.projects.some((project) => !capitalProjects.isArchiveProject(project)) ? setBit : 0;
-    bitsToSet_toggleOn |= location.properties.projects.some((project) => capitalProjects.isArchiveProject(project)) ? setBit : 0;
+    bitsToSet_toggleOff |= location.properties.projects.some((project) => !isArchiveProject(project)) ? setBit : 0;
+    bitsToSet_toggleOn |= location.properties.projects.some((project) => isArchiveProject(project)) ? setBit : 0;
     setBit <<= 1; // shift setBit to the left: 00000010 <<= 00000001
 
     // on 8th iteration, push bits to buffers and reset accumulators and setBit
@@ -282,12 +287,12 @@ const $config = {
           'complete': {
             unique_key: 'status_complete',
             i18n_key: 'status.complete',
-            value: function (item) { return item.properties.projects.some((project) => project.project_status.toLowerCase() === 'complete' && !capitalProjects.isArchiveProject(project)) }
+            value: function (item) { return item.properties.projects.some((project) => project.project_status.toLowerCase() === 'complete' && !isArchiveProject(project)) }
           },
           'archive': {
             unique_key: 'status_archive',
             i18n_key: 'status.archive',
-            value: function (item) { return item.properties.projects.some((project) => capitalProjects.isArchiveProject(project)) }
+            value: function (item) { return item.properties.projects.some((project) => isArchiveProject(project)) }
           }
         },
         toggleKey: 'status_archive',
