@@ -19,7 +19,7 @@ export default {
         'font-size': '12px',
         'background-color': '#f99300',
       },
-      'Human Services': {
+      'Public Health': {
         'width': '15px',
         'height': '15px',
         'font-size': '12px',
@@ -31,23 +31,17 @@ export default {
         'font-size': '12px',
         'background-color': '#58c04d',
       },
-      'Public Health': {
+      'Police Department': {
         'width': '15px',
         'height': '15px',
         'font-size': '12px',
-        'background-color': '#3a833c',
+        'background-color': '#2176d2',
       },
       'Public Property': {
         'width': '15px',
         'height': '15px',
         'font-size': '12px',
         'background-color': '#0f4d90',
-      },
-      'Police Department': {
-        'width': '15px',
-        'height': '15px',
-        'font-size': '12px',
-        'background-color': '#2176d2',
       },
       'Other': {
         'width': '15px',
