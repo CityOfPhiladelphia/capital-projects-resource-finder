@@ -280,7 +280,7 @@ const trimProjectName = (project_name) => {
           <div class="column is-1">
             <font-awesome-icon icon="chart-tree-map" />
           </div>
-          <div class="column is-11" v-html="'<b>' + t('card.district') + ': </b>' + selectedProject.council_district" />
+          <div class="column is-11" v-html="'<b>' + t('card.district') + ': </b>' + selectedProject.council_district.replace(/[^0-9]/g, '')" />
         </div>
 
         <div v-if="selectedProject && selectedProject.contact_email" class="columns is-mobile">
