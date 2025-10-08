@@ -154,8 +154,8 @@ const normalizeProjectCategory = (client_category) => {
   const categories = new Set();
   const normalizedCategories = ['parks', 'health', 'library', 'fire', 'police', 'property'];
   normalizedCategories.forEach((normalizedCategory) => {
-      if (client_category.toLowerCase().includes(normalizedCategory)) { categories.add(normalizedCategory) }
-    })
+    if (client_category.toLowerCase().includes(normalizedCategory)) { categories.add(normalizedCategory) }
+  })
   if (categories.size > 1) { return t('projectCategory.multiple') }
   return categories.size ? t('projectCategory.' + [...categories][0]) : client_category;
 }
@@ -179,7 +179,8 @@ const trimProjectName = (project_name) => {
       'only-child': item.properties.projects.length == 1
     }" @click="handleProjectClick(item.properties.projects[0].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ trimProjectName(item.properties.projects[0].project_name) }}
+        <!-- {{ trimProjectName(item.properties.projects[0].project_name) }} -->
+        {{ item.properties.projects[0].project_name }}
       </div>
     </button>
 
@@ -189,7 +190,8 @@ const trimProjectName = (project_name) => {
       'only-child': item.properties.projects.length == 1
     }" @click="handleProjectClick(item.properties.projects[1].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ trimProjectName(item.properties.projects[1].project_name) }}
+        <!-- {{ trimProjectName(item.properties.projects[1].project_name) }} -->
+        {{ item.properties.projects[1].project_name }}
       </div>
     </button>
 
@@ -199,7 +201,8 @@ const trimProjectName = (project_name) => {
       'only-child': item.properties.projects.length == 1
     }" @click="handleProjectClick(item.properties.projects[2].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ trimProjectName(item.properties.projects[2].project_name) }}
+        <!-- {{ trimProjectName(item.properties.projects[2].project_name) }} -->
+        {{ item.properties.projects[2].project_name }}
       </div>
     </button>
 
@@ -280,7 +283,8 @@ const trimProjectName = (project_name) => {
           <div class="column is-1">
             <font-awesome-icon icon="chart-tree-map" />
           </div>
-          <div class="column is-11" v-html="'<b>' + t('card.district') + ': </b>' + selectedProject.council_district.replace(/[^0-9]/g, '')" />
+          <div class="column is-11"
+            v-html="'<b>' + t('card.district') + ': </b>' + selectedProject.council_district.replace(/[^0-9]/g, '')" />
         </div>
 
         <div v-if="selectedProject && selectedProject.contact_email" class="columns is-mobile">
