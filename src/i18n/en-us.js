@@ -1,7 +1,7 @@
 export default{
   "language": "English",
   "app": {
-    "title": "Capital Projects Resource Finder",
+    "title": "Capital projects finder",
     "subtitle": "Find ongoing investments in City-owned facilities",
     "noResults": "We're sorry, there are no results for that search. Adjust the filters you've selected and try again.",
     "servicesOffered": "Services offered",
