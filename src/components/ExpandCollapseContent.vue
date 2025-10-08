@@ -308,7 +308,7 @@ const trimProjectName = (project_name) => {
         {{ t('card.improvements_include') }}
         <ul v-if="selectedProject && selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'">
-          <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index">
+          <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index" class="impr-item">
             {{ improvement }}
           </li>
         </ul>
@@ -463,6 +463,10 @@ const trimProjectName = (project_name) => {
     border-left-width: 0px;
     border-right-width: 1px;
   }
+}
+
+li {
+  margin-left: 0.939rem;
 }
 
 #completion-info {

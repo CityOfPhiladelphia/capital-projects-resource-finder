@@ -94,7 +94,7 @@ export default{
     "budget": "Budget",
     "contact": "Contact",
     "section_description": "Project description",
-    "improvements_include": "Improvements Include:",
+    "improvements_include": "Improvements include:",
     "section_status": "Status",
     "status_text": "This short description text will provide additional context to help a user interpret this status component.",
     "current_stage": "Current stage",
