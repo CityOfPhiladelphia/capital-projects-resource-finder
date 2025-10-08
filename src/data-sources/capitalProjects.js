@@ -223,7 +223,7 @@ export default {
           "project_number": "16-25-7223-01\t",
           "project_name": "Multiple Categories Test",
           "client_dept": "Police Dept",
-          "client_category": "Police Dept",
+          "client_category": "Police Dept Fire Dept",
           "site_code": "16134E",
           "site_name": "Bridesburg Recreation Center",
           "site_address": "4625 RICHMOND ST",

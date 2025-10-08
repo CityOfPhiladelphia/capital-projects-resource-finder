@@ -18,7 +18,7 @@ const isArchiveProject = (project) => { return !!project.archive_date && (new Da
 const props = defineProps({
   item: {
     type: Object,
-    default: () => {}
+    default: () => { }
   },
   isMobile: {
     type: Boolean,
@@ -152,6 +152,20 @@ const handleMoreClick = () => {
   moreIsOpen.value = !moreIsOpen.value;
 };
 
+const normalizeProjectCategory = (client_category) => {
+  const categories = new Set();
+  const normalizedCategories = ['parks', 'health', 'library', 'fire', 'police', 'property'];
+  if (client_category.toLowerCase().includes('parks')) { categories.add('parks') }
+  if (client_category.toLowerCase().includes('health')) { categories.add('health') }
+  if (client_category.toLowerCase().includes('library')) { categories.add('library') }
+  if (client_category.toLowerCase().includes('fire')) { categories.add('fire') }
+  if (client_category.toLowerCase().includes('police')) { categories.add('police') }
+  if (client_category.toLowerCase().includes('property')) { categories.add('property') }
+  if (!categories.size) { categories.add(client_category.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '')) }
+  if (categories.size > 1) { return 'projectCategory.multiple' }
+  return normalizedCategories.includes([...categories][0]) ? 'projectCategory.' + [...categories][0] : 'projectCategory.other';
+}
+
 </script>
 
 <template>
@@ -219,7 +233,7 @@ const handleMoreClick = () => {
 
     <print-share-section :item="selectedProject" :featureId="props.item._featureId" v-if="selectedProject" />
 
-    <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive"/>
+    <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive" />
 
     <div>
       <h2 class="project-name">{{ selectedProject.project_name }}</h2>
@@ -238,7 +252,8 @@ const handleMoreClick = () => {
           <div class="column is-1">
             <font-awesome-icon icon="folder" />
           </div>
-          <div class="column is-11" v-html="'<b>' + t('card.category') + ': </b>' + selectedProject.client_category" />
+          <div class="column is-11"
+            v-html="'<b>' + t('card.category') + ': </b>' + t(normalizeProjectCategory(selectedProject.client_category))" />
         </div>
 
         <div v-if="selectedProject && selectedProject.website_link" class="columns is-mobile website-div">
@@ -308,17 +323,21 @@ const handleMoreClick = () => {
 
       <status-bar :project="selectedProject" />
 
-      <div>
-        <b>{{ t('card.current_stage') }}: </b>
-        <span>{{ t('status.' + selectedProject.project_status.toLowerCase()) }} - </span>
-        <span>{{ t('card.status_description.' + selectedProject.project_status.toLowerCase()) }}</span>
+      <div id="status-info">
+        <h1>
+          <b>{{ t('card.current_stage') }}: </b>
+          <span>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}</span>
+        </h1>
+        <h1>{{ t('card.status_description.' + selectedProject.project_status.toLowerCase()) }}</h1>
       </div>
 
-      <div v-if="selectedProject.project_status !== 'Complete'">
-        <b>{{ t('card.estimated_completion') }}:</b> {{ estimatedCompletion }}
-      </div>
-      <div v-if="selectedProject.project_status === 'Complete'">
-        <b>{{ t('card.completed') }}:</b> {{ actualCompletionDate }}
+      <div id="completion-info">
+        <div v-if="selectedProject.project_status !== 'Complete'">
+          <b>{{ t('card.estimated_completion') }}:</b> {{ estimatedCompletion }}
+        </div>
+        <div v-if="selectedProject.project_status === 'Complete'">
+          <b>{{ t('card.completed') }}:</b> {{ actualCompletionDate }}
+        </div>
       </div>
 
     </div>
@@ -341,6 +360,10 @@ const handleMoreClick = () => {
 </template>
 
 <style>
+#completion-info {
+  margin-top: 0.313rem;
+}
+
 .spacer {
   background-color: #eeeeee;
   border-bottom-width: 1px;
@@ -378,9 +401,9 @@ const handleMoreClick = () => {
 }
 
 .is-archive {
-    margin-top: 6px;
-    margin-bottom: 14px !important;
-  }
+  margin-top: 6px;
+  margin-bottom: 14px !important;
+}
 
 .ec-content {
   margin-bottom: 0px !important;
