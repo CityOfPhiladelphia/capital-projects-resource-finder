@@ -106,8 +106,12 @@ export default{
     },
     "completed": "Completed",
     "estimated_completion": "Estimated Completion",
-    "project_team_description": "Project Team",
     "archived_on": "This project was archived on",
-    "archive_message": "Projects are archived six months after completion."
+    "archive_message": "Projects are archived six months after completion.",
+    "project": {
+      "team": "Project Team",
+      "coordinator": "Project Coordinator",
+      "inspector": "Inspector"
+    }
   }
 }

@@ -167,9 +167,7 @@ const normalizeProjectCategory = (client_category) => {
 const trimProjectName = (project_name) => {
   let project_copy = project_name;
   props.item.properties.site_name.toLowerCase().split(' ').forEach((word) => {
-    if (!project_copy.toLowerCase().split(word)[0]) {
-      project_copy = project_copy.slice(word.length).trim()
-    }
+    if (!project_copy.toLowerCase().split(word)[0]) { project_copy = project_copy.slice(word.length).trim() }
   })
   return project_copy.length < project_name.length ? project_copy : project_name;
 }
@@ -218,23 +216,6 @@ const trimProjectName = (project_name) => {
         <font-awesome-icon v-if="moreIsOpen" icon="caret-up" />
       </div>
     </button>
-
-    <!-- <button v-if="item.properties.projects.length > 3 && !excessProjectSelected" class="project-button column is-4 p-0"
-      :class="{ 'project-selected': moreIsOpen }" @click="handleMoreClick()">
-      <div class="project-button-text has-text-centered pl-1 pr-1"
-        :class="{ 'project-selected': 'more' === selectedProjectName }">
-        More
-        <font-awesome-icon v-if="!moreIsOpen" icon="caret-down" />
-        <font-awesome-icon v-if="moreIsOpen" icon="caret-up" />
-      </div>
-    </button> -->
-
-    <!-- <button v-if="excessProjectSelected" class="project-button column is-4 p-0 project-selected"
-      @click="handleMoreClick()">
-      <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ selectedProjectName }}
-      </div>
-    </button> -->
 
     <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
     <div v-if="item.properties.projects.length == 2" class="spacer column is-4"></div>
@@ -363,14 +344,14 @@ const trimProjectName = (project_name) => {
 
     <div>
       <h3>
-        {{ t('card.project_team_description') }}
+        {{ t('card.project.team') }}
       </h3>
 
       <!-- <vue-good-table :columns="projectTeam.columns" :rows="projectTeam.rows" :sort-options="{ enabled: false }"
         style-class="table-style" /> -->
       <ul :style="'list-style-type: disc; margin-left: 20px;'">
-        <li><b>Project coordinator:</b> {{ selectedProject.project_coordinator }}</li>
-        <li><b>Inspector:</b> {{ selectedProject.inspector }}</li>
+        <li><b>{{ t('card.project.coordinator') }}:</b> {{ selectedProject.project_coordinator }}</li>
+        <li><b>{{ t('card.project.inspector') }}:</b> {{ selectedProject.inspector }}</li>
       </ul>
 
     </div>
