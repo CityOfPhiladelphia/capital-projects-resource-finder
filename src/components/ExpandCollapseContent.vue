@@ -27,7 +27,6 @@ const props = defineProps({
 });
 
 // REFS
-//const locationProjects = ref(props.item.properties.projects);
 const selectedProjectName = ref(props.item.properties.projects[0].project_name);
 const moreIsOpen = ref(false);
 const archiveActive = ref(isArchiveProject(props.item.properties.projects[0]))
@@ -36,7 +35,6 @@ const archiveActive = ref(isArchiveProject(props.item.properties.projects[0]))
 watch(
   () => props.item,
   async newProjects => {
-    //locationProjects.value = newProjects.properties.projects;
     selectedProjectName.value = newProjects.properties.projects[0].project_name;
     moreIsOpen.value = false;
     archiveActive.value = isArchiveProject(newProjects.properties.projects[0]);
@@ -123,7 +121,7 @@ const actualCompletionDate = computed(() => {
 
 // METHODS
 const parseAddress = (address) => {
-  const formattedAddress = address.replace(/(Phila.+)/g, city => `<div>${city}</div>`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `<div>${lineOne}</div>`).replace(/,/, '');
+  const formattedAddress = address.replace(/(Phila.+)/g, city => `${city}`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `${lineOne}`).replace(/,/, '');
   return formattedAddress;
 };
 
@@ -166,6 +164,16 @@ const normalizeProjectCategory = (client_category) => {
   return normalizedCategories.includes([...categories][0]) ? 'projectCategory.' + [...categories][0] : 'projectCategory.other';
 }
 
+const trimProjectName = (project_name) => {
+  let project_copy = project_name;
+  props.item.properties.site_name.toLowerCase().split(' ').forEach((word) => {
+    if (!project_copy.toLowerCase().split(word)[0]) {
+      project_copy = project_copy.slice(word.length).trim()
+    }
+  })
+  return project_copy.length < project_name.length ? project_copy : project_name;
+}
+
 </script>
 
 <template>
@@ -177,7 +185,7 @@ const normalizeProjectCategory = (client_category) => {
       'only-child': item.properties.projects.length == 1
     }" @click="handleProjectClick(item.properties.projects[0].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ item.properties.projects[0].project_name }}
+        {{ trimProjectName(item.properties.projects[0].project_name) }}
       </div>
     </button>
 
@@ -187,7 +195,7 @@ const normalizeProjectCategory = (client_category) => {
       'only-child': item.properties.projects.length == 1
     }" @click="handleProjectClick(item.properties.projects[1].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ item.properties.projects[1].project_name }}
+        {{ trimProjectName(item.properties.projects[1].project_name) }}
       </div>
     </button>
 
@@ -197,12 +205,12 @@ const normalizeProjectCategory = (client_category) => {
       'only-child': item.properties.projects.length == 1
     }" @click="handleProjectClick(item.properties.projects[2].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ item.properties.projects[2].project_name }}
+        {{ trimProjectName(item.properties.projects[2].project_name) }}
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length > 3 && !excessProjectSelected" class="project-button column is-4 p-0"
-      :class="{ 'project-selected': moreIsOpen }" @click="handleMoreClick()">
+    <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0"
+      :class="{ 'project-selected': excessProjectSelected }" @click="handleMoreClick()">
       <div class="project-button-text has-text-centered pl-1 pr-1"
         :class="{ 'project-selected': 'more' === selectedProjectName }">
         More
@@ -211,12 +219,22 @@ const normalizeProjectCategory = (client_category) => {
       </div>
     </button>
 
-    <button v-if="excessProjectSelected" class="project-button column is-4 p-0 project-selected"
+    <!-- <button v-if="item.properties.projects.length > 3 && !excessProjectSelected" class="project-button column is-4 p-0"
+      :class="{ 'project-selected': moreIsOpen }" @click="handleMoreClick()">
+      <div class="project-button-text has-text-centered pl-1 pr-1"
+        :class="{ 'project-selected': 'more' === selectedProjectName }">
+        More
+        <font-awesome-icon v-if="!moreIsOpen" icon="caret-down" />
+        <font-awesome-icon v-if="moreIsOpen" icon="caret-up" />
+      </div>
+    </button> -->
+
+    <!-- <button v-if="excessProjectSelected" class="project-button column is-4 p-0 project-selected"
       @click="handleMoreClick()">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         {{ selectedProjectName }}
       </div>
-    </button>
+    </button> -->
 
     <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
     <div v-if="item.properties.projects.length == 2" class="spacer column is-4"></div>
@@ -245,7 +263,9 @@ const normalizeProjectCategory = (client_category) => {
           <div class="column is-1">
             <font-awesome-icon icon="map-marker-alt" />
           </div>
-          <div class="column is-11" v-html="parseAddress(selectedProject.site_address)" />
+          <div class="column is-11">
+            <b>{{ t('card.address') }}: </b> {{ parseAddress(selectedProject.site_address) }}
+          </div>
         </div>
 
         <div v-if="selectedProject && selectedProject.client_category" class="columns is-mobile">
@@ -283,9 +303,7 @@ const normalizeProjectCategory = (client_category) => {
           <div class="column is-1">
             <font-awesome-icon icon="chart-tree-map" />
           </div>
-          <div class="column is-11">
-            {{ t('card.district') }} {{ selectedProject.council_district }}
-          </div>
+          <div class="column is-11" v-html="'<b>' + t('card.district') + ': </b>' + selectedProject.council_district" />
         </div>
 
         <div v-if="selectedProject && selectedProject.contact_email" class="columns is-mobile">
@@ -293,6 +311,7 @@ const normalizeProjectCategory = (client_category) => {
             <font-awesome-icon icon="envelope" />
           </div>
           <div class="column is-11">
+            <b>{{ t('card.contact') }}: </b>
             <a :href="`mailto:${selectedProject.contact_email}`">{{ selectedProject.contact_email }}</a>
           </div>
         </div>
