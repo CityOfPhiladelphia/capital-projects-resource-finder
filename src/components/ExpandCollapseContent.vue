@@ -153,15 +153,11 @@ const handleMoreClick = () => {
 const normalizeProjectCategory = (client_category) => {
   const categories = new Set();
   const normalizedCategories = ['parks', 'health', 'library', 'fire', 'police', 'property'];
-  if (client_category.toLowerCase().includes('parks')) { categories.add('parks') }
-  if (client_category.toLowerCase().includes('health')) { categories.add('health') }
-  if (client_category.toLowerCase().includes('library')) { categories.add('library') }
-  if (client_category.toLowerCase().includes('fire')) { categories.add('fire') }
-  if (client_category.toLowerCase().includes('police')) { categories.add('police') }
-  if (client_category.toLowerCase().includes('property')) { categories.add('property') }
-  if (!categories.size) { categories.add(client_category.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '')) }
-  if (categories.size > 1) { return 'projectCategory.multiple' }
-  return normalizedCategories.includes([...categories][0]) ? 'projectCategory.' + [...categories][0] : 'projectCategory.other';
+  normalizedCategories.forEach((normalizedCategory) => {
+      if (client_category.toLowerCase().includes(normalizedCategory)) { categories.add(normalizedCategory) }
+    })
+  if (categories.size > 1) { return t('projectCategory.multiple') }
+  return categories.size ? t('projectCategory.' + [...categories][0]) : client_category;
 }
 
 const trimProjectName = (project_name) => {
@@ -254,7 +250,7 @@ const trimProjectName = (project_name) => {
             <font-awesome-icon icon="folder" />
           </div>
           <div class="column is-11"
-            v-html="'<b>' + t('card.category') + ': </b>' + t(normalizeProjectCategory(selectedProject.client_category))" />
+            v-html="'<b>' + t('card.category') + ': </b>' + normalizeProjectCategory(selectedProject.client_category)" />
         </div>
 
         <div v-if="selectedProject && selectedProject.website_link" class="columns is-mobile website-div">

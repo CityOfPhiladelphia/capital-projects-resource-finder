@@ -11,15 +11,14 @@ const normalizeSiteCategory = (projects) => {
   const categories = new Set();
   const normalizedCategories = ['parks', 'health', 'library', 'fire', 'police', 'property'];
   projects.forEach((project) => {
-    if (project.client_category.toLowerCase().includes('parks')) { categories.add('parks') }
-    if (project.client_category.toLowerCase().includes('health')) { categories.add('health') }
-    if (project.client_category.toLowerCase().includes('library')) { categories.add('library') }
-    if (project.client_category.toLowerCase().includes('fire')) { categories.add('fire') }
-    if (project.client_category.toLowerCase().includes('police')) { categories.add('police') }
-    if (project.client_category.toLowerCase().includes('property')) { categories.add('property') }
-    if (!categories.size) { categories.add(project.client_category.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '')) }
+    let matchedAny = false;
+    normalizedCategories.forEach((normalizedCategory) => {
+      const matchedThis = project.client_category.toLowerCase().includes(normalizedCategory);
+      if (matchedThis) { categories.add(normalizedCategory) }
+      matchedAny |= matchedThis;
+    })
+    if (!matchedAny) { categories.add(project.client_category.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '')) }
   })
-
   if (categories.size > 1) { return 'multiple' }
   return normalizedCategories.includes([...categories][0]) ? [...categories][0] : 'other';
 }
