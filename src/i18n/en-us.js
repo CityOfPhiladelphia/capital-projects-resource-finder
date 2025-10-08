@@ -1,7 +1,7 @@
 export default{
   "language": "English",
   "app": {
-    "title": "Capital Projects Resource Finder",
+    "title": "Capital projects finder",
     "subtitle": "Find ongoing investments in City-owned facilities",
     "noResults": "We're sorry, there are no results for that search. Adjust the filters you've selected and try again.",
     "servicesOffered": "Services offered",
@@ -88,9 +88,11 @@ export default{
   },
   "Philadephia Parks and Recreation": "Philadephia Parks and Recreation",
   "card": {
+    "address": "Address",
     "category": "Category",
-    "district": "District",
+    "district": "Council District",
     "budget": "Budget",
+    "contact": "Contact",
     "section_description": "Project description",
     "improvements_include": "Improvements include:",
     "section_status": "Status",
@@ -103,9 +105,13 @@ export default{
       "complete": "The project is complete. We may continue to share updates about the finished work."
     },
     "completed": "Completed",
-    "estimated_completion": "Estimated Completion",
-    "project_team_description": "Project Team",
+    "estimated_completion": "Estimated completion",
     "archived_on": "This project was archived on",
-    "archive_message": "Projects are archived six months after completion."
+    "archive_message": "Projects are archived six months after completion.",
+    "project": {
+      "team": "Project team",
+      "coordinator": "Project Coordinator",
+      "inspector": "Inspector"
+    }
   }
 }

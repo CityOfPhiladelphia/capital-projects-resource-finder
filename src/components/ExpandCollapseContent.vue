@@ -18,7 +18,7 @@ const isArchiveProject = (project) => { return !!project.archive_date && (new Da
 const props = defineProps({
   item: {
     type: Object,
-    default: () => {}
+    default: () => { }
   },
   isMobile: {
     type: Boolean,
@@ -27,7 +27,6 @@ const props = defineProps({
 });
 
 // REFS
-//const locationProjects = ref(props.item.properties.projects);
 const selectedProjectName = ref(props.item.properties.projects[0].project_name);
 const moreIsOpen = ref(false);
 const archiveActive = ref(isArchiveProject(props.item.properties.projects[0]))
@@ -36,7 +35,6 @@ const archiveActive = ref(isArchiveProject(props.item.properties.projects[0]))
 watch(
   () => props.item,
   async newProjects => {
-    //locationProjects.value = newProjects.properties.projects;
     selectedProjectName.value = newProjects.properties.projects[0].project_name;
     moreIsOpen.value = false;
     archiveActive.value = isArchiveProject(newProjects.properties.projects[0]);
@@ -123,7 +121,7 @@ const actualCompletionDate = computed(() => {
 
 // METHODS
 const parseAddress = (address) => {
-  const formattedAddress = address.replace(/(Phila.+)/g, city => `<div>${city}</div>`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `<div>${lineOne}</div>`).replace(/,/, '');
+  const formattedAddress = address.replace(/(Phila.+)/g, city => `${city}`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `${lineOne}`).replace(/,/, '');
   return formattedAddress;
 };
 
@@ -152,6 +150,24 @@ const handleMoreClick = () => {
   moreIsOpen.value = !moreIsOpen.value;
 };
 
+const normalizeProjectCategory = (client_category) => {
+  const categories = new Set();
+  const normalizedCategories = ['parks', 'health', 'library', 'fire', 'police', 'property'];
+  normalizedCategories.forEach((normalizedCategory) => {
+    if (client_category.toLowerCase().includes(normalizedCategory)) { categories.add(normalizedCategory) }
+  })
+  if (categories.size > 1) { return t('projectCategory.multiple') }
+  return categories.size ? t('projectCategory.' + [...categories][0]) : client_category;
+}
+
+const trimProjectName = (project_name) => {
+  let project_copy = project_name;
+  props.item.properties.site_name.toLowerCase().split(' ').forEach((word) => {
+    if (!project_copy.toLowerCase().split(word)[0]) { project_copy = project_copy.slice(word.length).trim() }
+  })
+  return project_copy.length < project_name.length ? project_copy : project_name;
+}
+
 </script>
 
 <template>
@@ -163,6 +179,7 @@ const handleMoreClick = () => {
       'only-child': item.properties.projects.length == 1
     }" @click="handleProjectClick(item.properties.projects[0].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
+        <!-- {{ trimProjectName(item.properties.projects[0].project_name) }} -->
         {{ item.properties.projects[0].project_name }}
       </div>
     </button>
@@ -173,6 +190,7 @@ const handleMoreClick = () => {
       'only-child': item.properties.projects.length == 1
     }" @click="handleProjectClick(item.properties.projects[1].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
+        <!-- {{ trimProjectName(item.properties.projects[1].project_name) }} -->
         {{ item.properties.projects[1].project_name }}
       </div>
     </button>
@@ -183,24 +201,17 @@ const handleMoreClick = () => {
       'only-child': item.properties.projects.length == 1
     }" @click="handleProjectClick(item.properties.projects[2].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
+        <!-- {{ trimProjectName(item.properties.projects[2].project_name) }} -->
         {{ item.properties.projects[2].project_name }}
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length > 3 && !excessProjectSelected" class="project-button column is-4 p-0"
-      :class="{ 'project-selected': moreIsOpen }" @click="handleMoreClick()">
-      <div class="project-button-text has-text-centered pl-1 pr-1"
-        :class="{ 'project-selected': 'more' === selectedProjectName }">
+    <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0"
+      :class="{ 'project-selected': excessProjectSelected }" @click="handleMoreClick()">
+      <div class="project-button-text has-text-centered pl-1 pr-1">
         More
         <font-awesome-icon v-if="!moreIsOpen" icon="caret-down" />
         <font-awesome-icon v-if="moreIsOpen" icon="caret-up" />
-      </div>
-    </button>
-
-    <button v-if="excessProjectSelected" class="project-button column is-4 p-0 project-selected"
-      @click="handleMoreClick()">
-      <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ selectedProjectName }}
       </div>
     </button>
 
@@ -219,7 +230,7 @@ const handleMoreClick = () => {
 
     <print-share-section :item="selectedProject" :featureId="props.item._featureId" v-if="selectedProject" />
 
-    <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive"/>
+    <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive" />
 
     <div>
       <h2 class="project-name">{{ selectedProject.project_name }}</h2>
@@ -231,14 +242,17 @@ const handleMoreClick = () => {
           <div class="column is-1">
             <font-awesome-icon icon="map-marker-alt" />
           </div>
-          <div class="column is-11" v-html="parseAddress(selectedProject.site_address)" />
+          <div class="column is-11">
+            <b>{{ t('card.address') }}: </b> {{ parseAddress(selectedProject.site_address) }}
+          </div>
         </div>
 
         <div v-if="selectedProject && selectedProject.client_category" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="folder" />
           </div>
-          <div class="column is-11" v-html="'<b>' + t('card.category') + ': </b>' + selectedProject.client_category" />
+          <div class="column is-11"
+            v-html="'<b>' + t('card.category') + ': </b>' + normalizeProjectCategory(selectedProject.client_category)" />
         </div>
 
         <div v-if="selectedProject && selectedProject.website_link" class="columns is-mobile website-div">
@@ -268,9 +282,8 @@ const handleMoreClick = () => {
           <div class="column is-1">
             <font-awesome-icon icon="chart-tree-map" />
           </div>
-          <div class="column is-11">
-            {{ t('card.district') }} {{ selectedProject.council_district }}
-          </div>
+          <div class="column is-11"
+            v-html="'<b>' + t('card.district') + ': </b>' + selectedProject.council_district.replace(/[^0-9]/g, '')" />
         </div>
 
         <div v-if="selectedProject && selectedProject.contact_email" class="columns is-mobile">
@@ -278,6 +291,7 @@ const handleMoreClick = () => {
             <font-awesome-icon icon="envelope" />
           </div>
           <div class="column is-11">
+            <b>{{ t('card.contact') }}: </b>
             <a :href="`mailto:${selectedProject.contact_email}`">{{ selectedProject.contact_email }}</a>
           </div>
         </div>
@@ -294,7 +308,7 @@ const handleMoreClick = () => {
         {{ t('card.improvements_include') }}
         <ul v-if="selectedProject && selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'">
-          <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index">
+          <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index" class="impr-item">
             {{ improvement }}
           </li>
         </ul>
@@ -308,31 +322,35 @@ const handleMoreClick = () => {
 
       <status-bar :project="selectedProject" />
 
-      <div>
-        <b>{{ t('card.current_stage') }}: </b>
-        <span>{{ t('status.' + selectedProject.project_status.toLowerCase()) }} - </span>
-        <span>{{ t('card.status_description.' + selectedProject.project_status.toLowerCase()) }}</span>
+      <div id="status-info">
+        <h1>
+          <b>{{ t('card.current_stage') }}: </b>
+          <span>{{ t('status.' + selectedProject.project_status.toLowerCase()) }}</span>
+        </h1>
+        <h1>{{ t('card.status_description.' + selectedProject.project_status.toLowerCase()) }}</h1>
       </div>
 
-      <div v-if="selectedProject.project_status !== 'Complete'">
-        <b>{{ t('card.estimated_completion') }}:</b> {{ estimatedCompletion }}
-      </div>
-      <div v-if="selectedProject.project_status === 'Complete'">
-        <b>{{ t('card.completed') }}:</b> {{ actualCompletionDate }}
+      <div id="completion-info">
+        <div v-if="selectedProject.project_status !== 'Complete'">
+          <b>{{ t('card.estimated_completion') }}:</b> {{ estimatedCompletion }}
+        </div>
+        <div v-if="selectedProject.project_status === 'Complete'">
+          <b>{{ t('card.completed') }}:</b> {{ actualCompletionDate }}
+        </div>
       </div>
 
     </div>
 
     <div>
       <h3>
-        {{ t('card.project_team_description') }}
+        {{ t('card.project.team') }}
       </h3>
 
       <!-- <vue-good-table :columns="projectTeam.columns" :rows="projectTeam.rows" :sort-options="{ enabled: false }"
         style-class="table-style" /> -->
       <ul :style="'list-style-type: disc; margin-left: 20px;'">
-        <li><b>Project coordinator:</b> {{ selectedProject.project_coordinator }}</li>
-        <li><b>Inspector:</b> {{ selectedProject.inspector }}</li>
+        <li><b>{{ t('card.project.coordinator') }}:</b> {{ selectedProject.project_coordinator }}</li>
+        <li><b>{{ t('card.project.inspector') }}:</b> {{ selectedProject.inspector }}</li>
       </ul>
 
     </div>
@@ -341,6 +359,7 @@ const handleMoreClick = () => {
 </template>
 
 <style>
+
 .spacer {
   background-color: #eeeeee;
   border-bottom-width: 1px;
@@ -378,9 +397,9 @@ const handleMoreClick = () => {
 }
 
 .is-archive {
-    margin-top: 6px;
-    margin-bottom: 14px !important;
-  }
+  margin-top: 6px;
+  margin-bottom: 14px !important;
+}
 
 .ec-content {
   margin-bottom: 0px !important;
@@ -444,6 +463,14 @@ const handleMoreClick = () => {
     border-left-width: 0px;
     border-right-width: 1px;
   }
+}
+
+li {
+  margin-left: 0.939rem;
+}
+
+#completion-info {
+  margin-top: 0.626rem;
 }
 
 /* This is copied from phila-ui-3 and edited to match the project's design */

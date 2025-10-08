@@ -11,15 +11,14 @@ const normalizeSiteCategory = (projects) => {
   const categories = new Set();
   const normalizedCategories = ['parks', 'health', 'library', 'fire', 'police', 'property'];
   projects.forEach((project) => {
-    if (project.client_category.toLowerCase().includes('parks')) { categories.add('parks') }
-    if (project.client_category.toLowerCase().includes('health')) { categories.add('health') }
-    if (project.client_category.toLowerCase().includes('library')) { categories.add('library') }
-    if (project.client_category.toLowerCase().includes('fire')) { categories.add('fire') }
-    if (project.client_category.toLowerCase().includes('police')) { categories.add('police') }
-    if (project.client_category.toLowerCase().includes('property')) { categories.add('property') }
-    if (!categories.size) { categories.add(project.client_category.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '')) }
+    let matchedAny = false;
+    normalizedCategories.forEach((normalizedCategory) => {
+      const matchedThis = project.client_category.toLowerCase().includes(normalizedCategory);
+      if (matchedThis) { categories.add(normalizedCategory) }
+      matchedAny |= matchedThis;
+    })
+    if (!matchedAny) { categories.add(project.client_category.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '')) }
   })
-
   if (categories.size > 1) { return 'multiple' }
   return normalizedCategories.includes([...categories][0]) ? [...categories][0] : 'other';
 }
@@ -109,7 +108,7 @@ export default {
           "the_geom_webmercator": "0101000020110F0000576BF80954E45FC1F1E56EBE86965241",
           "objectid": 44534,
           "project_number": "16381E-01-01",
-          "project_name": "Lawncrest Rec fake 3",
+          "project_name": "Lawncrest Rec Locker Room Refresh",
           "client_dept": "Philadephia Parks and Recreation",
           "client_category": "Philadephia Parks and Recreation",
           "site_code": "16381E",
@@ -137,7 +136,7 @@ export default {
           "the_geom_webmercator": "0101000020110F0000576BF80954E45FC1F1E56EBE86965241",
           "objectid": 456753,
           "project_number": "16381E-01-01",
-          "project_name": "Lawncrest Rec fake 4",
+          "project_name": "LawncrestRecreationCenter Pool Equipment Upgrades",
           "client_dept": "Philadephia Parks and Recreation",
           "client_category": "Philadephia Parks and Recreation",
           "site_code": "16381E",
@@ -165,7 +164,7 @@ export default {
           "the_geom_webmercator": "0101000020110F0000576BF80954E45FC1F1E56EBE86965241",
           "objectid": 456754,
           "project_number": "16381E-01-01",
-          "project_name": "Lawncrest Rec fake 5",
+          "project_name": "Lawncrest Rec HVAC System Upgrade",
           "client_dept": "Parks&Rec",
           "client_category": "Parks&Rec",
           "site_code": "16381E",
@@ -223,7 +222,7 @@ export default {
           "project_number": "16-25-7223-01\t",
           "project_name": "Multiple Categories Test",
           "client_dept": "Police Dept",
-          "client_category": "Police Dept",
+          "client_category": "Police Dept Fire Dept",
           "site_code": "16134E",
           "site_name": "Bridesburg Recreation Center",
           "site_address": "4625 RICHMOND ST",
