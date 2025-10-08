@@ -93,11 +93,11 @@ export default{
     "district": "Council District",
     "budget": "Budget",
     "contact": "Contact",
-    "section_description": "Project Description",
+    "section_description": "Project description",
     "improvements_include": "Improvements Include:",
     "section_status": "Status",
     "status_text": "This short description text will provide additional context to help a user interpret this status component.",
-    "current_stage": "Current Stage",
+    "current_stage": "Current stage",
     "status_description": {
       "planning": "We're defining the project needs and scope. Public input may be requested.",
       "design": "We're developing the project designs or plans. Public input may be requested.",
@@ -105,11 +105,11 @@ export default{
       "complete": "The project is complete. We may continue to share updates about the finished work."
     },
     "completed": "Completed",
-    "estimated_completion": "Estimated Completion",
+    "estimated_completion": "Estimated completion",
     "archived_on": "This project was archived on",
     "archive_message": "Projects are archived six months after completion.",
     "project": {
-      "team": "Project Team",
+      "team": "Project team",
       "coordinator": "Project Coordinator",
       "inspector": "Inspector"
     }

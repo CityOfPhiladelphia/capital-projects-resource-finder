@@ -208,8 +208,7 @@ const trimProjectName = (project_name) => {
 
     <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0"
       :class="{ 'project-selected': excessProjectSelected }" @click="handleMoreClick()">
-      <div class="project-button-text has-text-centered pl-1 pr-1"
-        :class="{ 'project-selected': 'more' === selectedProjectName }">
+      <div class="project-button-text has-text-centered pl-1 pr-1">
         More
         <font-awesome-icon v-if="!moreIsOpen" icon="caret-down" />
         <font-awesome-icon v-if="moreIsOpen" icon="caret-up" />
@@ -360,9 +359,6 @@ const trimProjectName = (project_name) => {
 </template>
 
 <style>
-#completion-info {
-  margin-top: 0.313rem;
-}
 
 .spacer {
   background-color: #eeeeee;
@@ -467,6 +463,10 @@ const trimProjectName = (project_name) => {
     border-left-width: 0px;
     border-right-width: 1px;
   }
+}
+
+#completion-info {
+  margin-top: 0.626rem;
 }
 
 /* This is copied from phila-ui-3 and edited to match the project's design */
