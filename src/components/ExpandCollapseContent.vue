@@ -207,7 +207,7 @@ const trimProjectName = (project_name) => {
     </button>
 
     <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0"
-      :class="{ 'project-selected': excessProjectSelected }" @click="handleMoreClick()">
+      :class="{ 'project-selected': excessProjectSelected || moreIsOpen }" @click="handleMoreClick()">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         More
         <font-awesome-icon v-if="!moreIsOpen" icon="caret-down" />
@@ -359,7 +359,6 @@ const trimProjectName = (project_name) => {
 </template>
 
 <style>
-
 .spacer {
   background-color: #eeeeee;
   border-bottom-width: 1px;
