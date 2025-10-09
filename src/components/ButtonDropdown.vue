@@ -38,7 +38,8 @@ const lastProject = computed(() => {
       @click="$emit('clickedProject', project.project_name)"
     >
       <div class="button-div-1 has-text-centered pl-1 pr-1">
-        <div class="button-div-2">
+        <div class="button-div-2"
+        :class="{ 'button-div-2-selected': project.project_name == props.selectedProject }">
           {{ project.project_name }}
         </div>
       </div>
@@ -66,7 +67,7 @@ const lastProject = computed(() => {
   top: 0;
   right:0;
   background-color: white;
-  z-index: 10;
+  z-index: 5;
   padding: 0;
   border-left-width: 1px;
   border-bottom-width: 1px;
@@ -116,6 +117,10 @@ const lastProject = computed(() => {
   border-style: solid;
   border-color: rgb(204,204,204);
   height: 48px;
+}
+
+.button-div-2-selected {
+  border-bottom-width: 0px;
 }
 
 .button-div-3 {
