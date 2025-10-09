@@ -44,10 +44,12 @@ const firstProjects = computed(() => {
   padding: 0;
   border-style: none;
   border-color: rgb(204, 204, 204);
+  width: 33.3%;
 }
 
 .project-button-dropdown {
   width: 100%;
+  height: 48px;
   color: #0f4d90;
   font-size: 1rem;
   font-family: 'Montserrat', sans-serif;
@@ -62,7 +64,6 @@ const firstProjects = computed(() => {
   border-top-width: 0px;
   border-style: solid;
   border-color: rgb(204, 204, 204);
-  height: 48px;
 }
 
 .project-button-dropdown:hover {

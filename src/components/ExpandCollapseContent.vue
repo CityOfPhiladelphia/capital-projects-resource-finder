@@ -203,7 +203,7 @@ const normalizeProjectCategory = (client_category) => {
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0"
+    <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0 multiple-children"
       :class="{ 'project-selected': excessProjectSelected || moreIsOpen }" @click="handleMoreClick()">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         More
