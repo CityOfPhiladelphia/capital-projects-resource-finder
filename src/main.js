@@ -124,7 +124,7 @@ const getProjectStatusBitArray = (locations) => {
   let offset = 0; // tracks the offset for setting a portion of the ArrayBuffer
   let setBit = 1; // gets shifted to the left once every cycle to set bits in the views
 
-  // for each location, check if any project at site in archived and set a bit of so
+  // for each location, check if any project at site is archived and set a bit if so
   // do the same to set bits for non-archived
   // both are required since a single site may have a mix of archived and active projects
   locations.forEach((location, i) => {

@@ -3,7 +3,7 @@
 const props = defineProps({
   projects: {
     type: Array,
-    default: function(){
+    default: function () {
       return [];
     },
   },
@@ -16,13 +16,7 @@ const props = defineProps({
 const $emit = defineEmits(['clickedProject']);
 
 const firstProjects = computed(() => {
-  const projects = [ ...props.projects ];
-  return projects.splice(0, projects.length - 1);
-});
-
-const lastProject = computed(() => {
-  const projects = [ ...props.projects ];
-  return projects.pop();
+  return [...props.projects];
 });
 
 </script>
@@ -30,107 +24,53 @@ const lastProject = computed(() => {
 <template>
   <div class="dropdown column is-4 is-hoverable">
 
-    <button
-      v-for="project in firstProjects"
-      :key="project.project_name"
-      class="project-button column is-4 p-0"
-      :class="{ 'is-selected': project.project_name == props.selectedProject }"
-      @click="$emit('clickedProject', project.project_name)"
-    >
-      <div class="button-div-1 has-text-centered pl-1 pr-1">
-        <div class="button-div-2"
-        :class="{ 'button-div-2-selected': project.project_name == props.selectedProject }">
-          {{ project.project_name }}
-        </div>
-      </div>
-    </button>
-
-    <button
-      class="project-button column is-4 p-0"
-      :class="{ 'is-selected': lastProject.project_name == props.selectedProject }"
-      @click="$emit('clickedProject', lastProject.project_name)"
-    >
-      <div class="button-div-1 has-text-centered pl-1 pr-1">
-        <div class="button-div-3">
-          {{ lastProject.project_name }}
-        </div>
-      </div>
+    <button v-for="project in firstProjects" :key="project.project_name"
+      class="project-button-dropdown column has-text-centered pl-1 pr-1 is-4 p-0" :class="{
+        'is-selected': project.project_name == props.selectedProject,
+      }" @click="$emit('clickedProject', project.project_name)">
+      {{ project.project_name }}
     </button>
 
   </div>
 </template>
 
 <style scoped>
-
 .dropdown {
   position: absolute;
   top: 0;
-  right:0;
+  right: 0;
   background-color: white;
   z-index: 5;
   padding: 0;
-  border-left-width: 1px;
-  border-bottom-width: 1px;
-  border-right-width: 0px;
-  border-top-width: 0px;
-  border-style: solid;
-  border-color: rgb(204,204,204);
+  border-style: none;
+  border-color: rgb(204, 204, 204);
 }
 
-.project-button {
+.project-button-dropdown {
   width: 100%;
   color: #0f4d90;
   font-size: 1rem;
   font-family: 'Montserrat', sans-serif;
   background-color: white;
   cursor: pointer;
-  border-width: 0px !important;
-  :hover {
-    background-color: #eeeeee;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left-width: 1px !important;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+  border-top-width: 0px;
+  border-style: solid;
+  border-color: rgb(204, 204, 204);
+  height: 48px;
+}
+
+.project-button-dropdown:hover {
+  background-color: #eeeeee;
 }
 
 .is-selected {
   background-color: #0f4d90 !important;
   color: white !important;
-  :hover {
-    background-color: #0f4d90 !important;
-  }
 }
-
-.button-div-1 {
-  font-size: 1rem;
-  font-family: 'Montserrat', sans-serif;
-  cursor: pointer;
-  border-width: 0px;
-  justify-content: center;
-}
-
-.button-div-2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-left-width: 0px;
-  border-bottom-width: 1px;
-  border-right-width: 0px;
-  border-top-width: 0px;
-  border-style: solid;
-  border-color: rgb(204,204,204);
-  height: 48px;
-}
-
-.button-div-2-selected {
-  border-bottom-width: 0px;
-}
-
-.button-div-3 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-width: 0px;
-  height: 48px;
-}
-
-
-
 </style>

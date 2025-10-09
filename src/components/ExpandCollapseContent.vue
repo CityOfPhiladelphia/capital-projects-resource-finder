@@ -18,7 +18,7 @@ const isArchiveProject = (project) => { return !!project.archive_date && (new Da
 const props = defineProps({
   item: {
     type: Object,
-    default: () => { }
+    default: () => { return {} }
   },
   isMobile: {
     type: Boolean,
@@ -61,35 +61,35 @@ const excessProjectSelected = computed(() => {
   return excessProjectNames.includes(selectedProjectName.value);
 })
 
-const projectTeam = computed(() => {
-  let columns = [
-    {
-      label: 'Name',
-      i18nLabel: 'card.team_name',
-      field: 'name',
-      thClass: 'th-black-class',
-      tdClass: 'table-text',
-    },
-    {
-      label: 'Role',
-      i18nLabel: 'card.team_role',
-      field: 'role',
-      thClass: 'th-black-class',
-      tdClass: 'table-text',
-    }
-  ];
-  let rows = [
-    {
-      name: function (selectedProject) { if (selectedProject) return selectedProject.value.project_coordinator },
-      role: 'Project Coordinator'
-    },
-    {
-      name: function (selectedProject) { if (selectedProject) return selectedProject.value.inspector },
-      role: 'Inspector'
-    },
-  ];
-  return { columns, rows };
-});
+// const projectTeam = computed(() => {
+//   let columns = [
+//     {
+//       label: 'Name',
+//       i18nLabel: 'card.team_name',
+//       field: 'name',
+//       thClass: 'th-black-class',
+//       tdClass: 'table-text',
+//     },
+//     {
+//       label: 'Role',
+//       i18nLabel: 'card.team_role',
+//       field: 'role',
+//       thClass: 'th-black-class',
+//       tdClass: 'table-text',
+//     }
+//   ];
+//   let rows = [
+//     {
+//       name: function (selectedProject) { if (selectedProject) return selectedProject.value.project_coordinator },
+//       role: 'Project Coordinator'
+//     },
+//     {
+//       name: function (selectedProject) { if (selectedProject) return selectedProject.value.inspector },
+//       role: 'Inspector'
+//     },
+//   ];
+//   return { columns, rows };
+// });
 
 const estimatedCompletion = computed(() => {
   if (!selectedProject.value) return 'N/A';
@@ -114,6 +114,7 @@ const actualCompletionDate = computed(() => {
   try {
     value = format(selectedProject.value.actual_completion, 'MMMM d, yyyy');
   } catch (error) {
+    console.log(error);
     value = 'No date provided';
   }
   return value;
@@ -121,15 +122,11 @@ const actualCompletionDate = computed(() => {
 
 // METHODS
 const parseAddress = (address) => {
-  const formattedAddress = address.replace(/(Phila.+)/g, city => `${city}`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `${lineOne}`).replace(/,/, '');
-  return formattedAddress;
+  return address.replace(/(Phila.+)/g, city => `${city}`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `${lineOne}`).replace(/,/, '');
 };
 
 const makeValidUrl = (url) => {
-  let newUrl = window.decodeURIComponent(url);
-  newUrl = newUrl
-    .trim()
-    .replace(/\s/g, '');
+  const newUrl = window.decodeURIComponent(url).trim().replace(/\s/g, '');
   if (/^(:\/\/)/.test(newUrl)) {
     return `http${newUrl}`;
   }
@@ -160,13 +157,13 @@ const normalizeProjectCategory = (client_category) => {
   return categories.size ? t('projectCategory.' + [...categories][0]) : client_category;
 }
 
-const trimProjectName = (project_name) => {
-  let project_copy = project_name;
-  props.item.properties.site_name.toLowerCase().split(' ').forEach((word) => {
-    if (!project_copy.toLowerCase().split(word)[0]) { project_copy = project_copy.slice(word.length).trim() }
-  })
-  return project_copy.length < project_name.length ? project_copy : project_name;
-}
+// const trimProjectName = (project_name) => {
+//   let project_copy = project_name;
+//   props.item.properties.site_name.toLowerCase().split(' ').forEach((word) => {
+//     if (!project_copy.toLowerCase().split(word)[0]) { project_copy = project_copy.slice(word.length).trim() }
+//   })
+//   return project_copy.length < project_name.length ? project_copy : project_name;
+// }
 
 </script>
 
@@ -228,7 +225,7 @@ const trimProjectName = (project_name) => {
 
   <div class='main-ec-content'>
 
-    <print-share-section :item="selectedProject" :featureId="props.item._featureId" v-if="selectedProject" />
+    <print-share-section :item="selectedProject" :featureId="props.item._featureId" :is-mobile="props.isMobile" v-if="selectedProject" />
 
     <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive" />
 
@@ -308,7 +305,7 @@ const trimProjectName = (project_name) => {
         {{ t('card.improvements_include') }}
         <ul v-if="selectedProject && selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'">
-          <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index" class="impr-item">
+          <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index"  class="li-card">
             {{ improvement }}
           </li>
         </ul>
@@ -349,8 +346,8 @@ const trimProjectName = (project_name) => {
       <!-- <vue-good-table :columns="projectTeam.columns" :rows="projectTeam.rows" :sort-options="{ enabled: false }"
         style-class="table-style" /> -->
       <ul :style="'list-style-type: disc; margin-left: 20px;'">
-        <li><b>{{ t('card.project.coordinator') }}:</b> {{ selectedProject.project_coordinator }}</li>
-        <li><b>{{ t('card.project.inspector') }}:</b> {{ selectedProject.inspector }}</li>
+        <li class="li-card"><b>{{ t('card.project.coordinator') }}:</b> {{ selectedProject.project_coordinator }}</li>
+        <li class="li-card"><b>{{ t('card.project.inspector') }}:</b> {{ selectedProject.inspector }}</li>
       </ul>
 
     </div>
@@ -446,7 +443,6 @@ const trimProjectName = (project_name) => {
 
   .more-zone {
     position: relative;
-
   }
 
   .project-selected {
@@ -464,7 +460,7 @@ const trimProjectName = (project_name) => {
   }
 }
 
-li {
+.li-card {
   margin-left: 0.939rem;
 }
 
@@ -587,7 +583,6 @@ li {
   }
 
   &.is-align-middle {
-
     td,
     th {
       vertical-align: middle;

@@ -2,13 +2,12 @@
 
 // use these if running off unlinked package
 import { useMainStore } from '@phila/pinboard';
-import { useRoute, useRouter } from '@phila/pinboard';
+import { useRouter } from '@phila/pinboard';
 // OR
 // use this if running off linked package
 // import { useMainStore } from '../../node_modules/@phila/pinboard/src/stores/MainStore.js';
 // import { useRoute, useRouter } from '../../node_modules/@phila/pinboard/src/main.js';
 
-import { computed, getCurrentInstance, inject } from 'vue';
 import * as bulmaToast from 'bulma-toast'
 
 bulmaToast.setDefaults({
@@ -19,13 +18,8 @@ bulmaToast.setDefaults({
   zIndex: 9999,
 });
 
-const instance = getCurrentInstance();
-if (import.meta.env.VITE_DEBUG) console.log('getCurrentInstance:', getCurrentInstance, 'instance:', instance);
-
-const route = useRoute();
 const router = useRouter();
 
-console.log('useRoute:', useRoute, 'route:', route, 'useRouter:', useRouter, 'router:', router);
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -35,24 +29,16 @@ const MainStore = useMainStore();
 const props = defineProps({
   'item': {
     type: Object,
-    default: {},
+    default: () => {}
   },
   'featureId': {
     type: [String, Number],
-    default: null,
+    default: null
   },
-});
-
-const showPrintAndShare = computed(() => {
-  let value = false;
-  // if (route.name == 'home') {
-    value = true;
-  // }
-  return value;
-});
-
-const isMobile = computed(() => {
-  // return MainStore.windowDimensions.width < 768;
+  'isMobile': {
+    type: Boolean,
+    default: false
+  }
 });
 
 const clickedShare = () => {
@@ -82,10 +68,7 @@ const clickedPrint = () => {
 
 <template>
   <div>
-    <div
-      v-if="showPrintAndShare"
-      style="text-align:right;"
-    >
+    <div style="text-align:right;">
       <button
         class="button is-small card-button"
         @click="clickedShare"
@@ -123,6 +106,7 @@ const clickedPrint = () => {
 .card-button:focus:not(:active), .card-button.is-focused:not(:active) {
   box-shadow: none !important;
 }
+
 .card-button-text {
   font-family: "OpenSans-Regular", "Open Sans", sans-serif;
   font-size: 14px;
