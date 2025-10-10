@@ -36,7 +36,7 @@ const reorderData = (data) => {
     ([site_name, value]) => ({
       'site_name': site_name,
       'site_category': normalizeSiteCategory(value),
-      'council_district': value[0].council_district,
+      'council_district': parseInt(value[0].council_district) ? value[0].council_district : "0",
       'lat': value[0].lat,
       'lon': value[0].lon,
       projects: value
