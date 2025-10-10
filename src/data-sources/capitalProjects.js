@@ -23,6 +23,27 @@ const normalizeSiteCategory = (projects) => {
   return normalizedCategories.includes([...categories][0]) ? [...categories][0] : 'other';
 }
 
+// function for consolidating different projects into the site where they occur
+const reorderData = (data) => {
+  return Array.from(
+    data.rows.reduce((groups, obj) => {
+      const category = obj['site_name'];
+      if (!category || typeof category !== 'string') return groups;
+      if (!groups.has(category)) { groups.set(category, []) };
+      groups.get(category).push(obj);
+      return groups;
+    }, new Map()),
+    ([site_name, value]) => ({
+      'site_name': site_name,
+      'site_category': normalizeSiteCategory(value),
+      'council_district': value[0].council_district,
+      'lat': value[0].lat,
+      'lon': value[0].lon,
+      projects: value
+    })
+  );
+}
+
 export default {
   id: 'capital_projects',
   type: 'http-get',
@@ -36,14 +57,6 @@ export default {
     },
     success: function (data) {
       if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);
-
-      const testArchived = data.rows.filter(r => {
-        return r.project_name == '8th and Diamond Improvements';
-      })[0];
-
-      testArchived.actual_completion = '2023-12-31';
-
-      console.log('testArchived:', testArchived);
 
       data.rows.push(
         {
@@ -297,28 +310,7 @@ export default {
         },
       );
 
-      const reorderedData = Array.from(
-        data.rows.reduce((groups, obj) => {
-          const category = obj['site_name'];
-          if (!category || typeof category !== 'string') return groups;
-
-          if (!groups.has(category)) {
-            groups.set(category, []);
-          }
-
-          groups.get(category).push(obj);
-          return groups;
-        }, new Map()),
-        ([site_name, value]) => ({
-          'site_name': site_name,
-          'site_category': normalizeSiteCategory(value),
-          'council_district': value[0].council_district,
-          'lat': value[0].lat,
-          'lon': value[0].lon,
-          projects: value
-        })
-      );
-
+      const reorderedData = reorderData(data);
       if (import.meta.env.VITE_DEBUG) console.log('reorderedData:', reorderedData);
       return reorderedData;
     },
