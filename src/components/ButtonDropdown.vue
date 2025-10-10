@@ -42,9 +42,13 @@ const firstProjects = computed(() => {
   background-color: white;
   z-index: 5;
   padding: 0;
-  border-style: none;
+  border-style: solid;
   border-color: rgb(204, 204, 204);
-  width: 33.3%;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 1px;
+  border-right-width: 0px;
+  width: 33.4%;
 }
 
 .project-button-dropdown {
@@ -58,10 +62,10 @@ const firstProjects = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left-width: 1px !important;
-  border-bottom-width: 1px;
-  border-right-width: 1px;
   border-top-width: 0px;
+  border-bottom-width: 1px;
+  border-left-width: 0px;
+  border-right-width: 0px;
   border-style: solid;
   border-color: rgb(204, 204, 204);
 }

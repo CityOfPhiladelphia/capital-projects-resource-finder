@@ -170,10 +170,8 @@ const normalizeProjectCategory = (client_category) => {
 <template>
   <div v-if="props.item.properties.projects.length > 1" class="ec-content button-row is-multiline columns is-mobile">
 
-    <button class="project-button column is-4 p-0" :class="{
-      'project-selected': !moreIsOpen && item.properties.projects[0].project_name === selectedProjectName,
-      'multiple-children': item.properties.projects.length > 1,
-      'only-child': item.properties.projects.length == 1
+    <button class="project-button column is-4 p-0 first-child" :class="{
+      'project-selected': !moreIsOpen && item.properties.projects[0].project_name === selectedProjectName
     }" @click="handleProjectClick(item.properties.projects[0].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[0].project_name) }} -->
@@ -181,10 +179,9 @@ const normalizeProjectCategory = (client_category) => {
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length > 1" class="project-button column is-4 p-0" :class="{
+    <button class="project-button column is-4 p-0 middle-child" :class="{
       'project-selected': !moreIsOpen && item.properties.projects[1].project_name === selectedProjectName,
-      'multiple-children': item.properties.projects.length > 1,
-      'only-child': item.properties.projects.length == 1
+      'second-child-final': item.properties.projects.length == 2
     }" @click="handleProjectClick(item.properties.projects[1].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[1].project_name) }} -->
@@ -192,10 +189,8 @@ const normalizeProjectCategory = (client_category) => {
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length == 3" class="project-button column is-4 p-0" :class="{
+    <button v-if="item.properties.projects.length == 3" class="project-button column is-4 p-0 middle-child" :class="{
       'project-selected': !moreIsOpen && item.properties.projects[2].project_name === selectedProjectName,
-      'multiple-children': item.properties.projects.length > 1,
-      'only-child': item.properties.projects.length == 1
     }" @click="handleProjectClick(item.properties.projects[2].project_name)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[2].project_name) }} -->
@@ -203,7 +198,7 @@ const normalizeProjectCategory = (client_category) => {
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0 multiple-children"
+    <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0 middle-child"
       :class="{ 'project-selected': excessProjectSelected || moreIsOpen }" @click="handleMoreClick()">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         More
@@ -225,7 +220,8 @@ const normalizeProjectCategory = (client_category) => {
 
   <div class='main-ec-content'>
 
-    <print-share-section :item="selectedProject" :featureId="props.item._featureId" :is-mobile="props.isMobile" v-if="selectedProject" />
+    <print-share-section :item="selectedProject" :featureId="props.item._featureId" :is-mobile="props.isMobile"
+      v-if="selectedProject" />
 
     <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive" />
 
@@ -305,7 +301,7 @@ const normalizeProjectCategory = (client_category) => {
         {{ t('card.improvements_include') }}
         <ul v-if="selectedProject && selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'">
-          <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index"  class="li-card">
+          <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index" class="li-card">
             {{ improvement }}
           </li>
         </ul>
@@ -402,6 +398,7 @@ const normalizeProjectCategory = (client_category) => {
   margin-right: -.25rem;
   padding-top: .75rem;
   font-size: 14px;
+  border-style: none;
 
   button:nth-child(1) {
     border-left-width: 0px;
@@ -436,7 +433,7 @@ const normalizeProjectCategory = (client_category) => {
     background-color: #eeeeee;
     cursor: pointer;
     border: 0px;
-    border-bottom-width: 1px;
+    border-bottom-width: 0px;
     border-style: solid;
     border-color: rgb(204, 204, 204);
   }
@@ -450,12 +447,15 @@ const normalizeProjectCategory = (client_category) => {
     border-bottom: 0px;
   }
 
-  .multiple-children {
-    border-right-width: 1px;
+  .first-child {
+    border-left-width: 0px;
   }
 
-  .only-child {
-    border-left-width: 0px;
+  .middle-child {
+    border-left-width: 1px;
+  }
+
+  .second-child-final {
     border-right-width: 1px;
   }
 }
@@ -583,6 +583,7 @@ const normalizeProjectCategory = (client_category) => {
   }
 
   &.is-align-middle {
+
     td,
     th {
       vertical-align: middle;
