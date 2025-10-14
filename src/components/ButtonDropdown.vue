@@ -24,10 +24,10 @@ const firstProjects = computed(() => {
 <template>
   <div class="dropdown column is-4 is-hoverable">
 
-    <button v-for="project in firstProjects" :key="project.project_name"
+    <button v-for="project in firstProjects" :key="project.fields_hash"
       class="project-button-dropdown column has-text-centered pl-1 pr-1 is-4 p-0" :class="{
-        'is-selected': project.project_name == props.selectedProject,
-      }" @click="$emit('clickedProject', project.project_name)">
+        'is-selected': project.fields_hash == props.selectedProject,
+      }" @click="$emit('clickedProject', project.fields_hash)">
       {{ project.project_name }}
     </button>
 

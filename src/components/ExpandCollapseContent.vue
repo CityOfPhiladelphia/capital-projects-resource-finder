@@ -27,7 +27,7 @@ const props = defineProps({
 });
 
 // REFS
-const selectedProjectName = ref(props.item.properties.projects[0].project_name);
+const selectedProjectHash = ref(props.item.properties.projects[0].fields_hash);
 const moreIsOpen = ref(false);
 const archiveActive = ref(isArchiveProject(props.item.properties.projects[0]))
 
@@ -35,7 +35,7 @@ const archiveActive = ref(isArchiveProject(props.item.properties.projects[0]))
 watch(
   () => props.item,
   async newProjects => {
-    selectedProjectName.value = newProjects.properties.projects[0].project_name;
+    selectedProjectHash.value = newProjects.properties.projects[0].fields_hash;
     moreIsOpen.value = false;
     archiveActive.value = isArchiveProject(newProjects.properties.projects[0]);
   }
@@ -43,7 +43,7 @@ watch(
 
 // COMPUTED PROPERTIES
 const selectedProject = computed(() => {
-  return props.item.properties.projects.find(project => project.project_name === selectedProjectName.value);
+  return props.item.properties.projects.find(project => project.fields_hash === selectedProjectHash.value);
 });
 
 const archiveMessage = computed(() => {
@@ -58,7 +58,7 @@ const excessProjects = computed(() => {
 
 const excessProjectSelected = computed(() => {
   let excessProjectNames = excessProjects.value.map(project => project.project_name);
-  return excessProjectNames.includes(selectedProjectName.value);
+  return excessProjectNames.includes(selectedProjectHash.value);
 })
 
 // const projectTeam = computed(() => {
@@ -92,20 +92,10 @@ const excessProjectSelected = computed(() => {
 // });
 
 const estimatedCompletion = computed(() => {
-  if (!selectedProject.value) return 'N/A';
-  const season = selectedProject.value.estimated_completion_season;
-  const year = selectedProject.value.estimated_completion_year;
-  if (season && year && season !== year) {
-    return `${season} ${year}`;
-  } else if (season && year && season === year) {
-    return `${season}`;
-  } else if (season && !year) {
-    return `${season}`;
-  } else if (!season && year) {
-    return `${year}`;
-  } else {
-    return 'N/A';
-  }
+  if (!selectedProject.value) return 'TBD';
+  const season = selectedProject.value.estimated_completion_season ? selectedProject.value.estimated_completion_season : '';
+  const year = selectedProject.value.estimated_completion_year ? selectedProject.value.estimated_completion_year : '';
+  return `${season} ${year}`.trim();
 });
 
 const actualCompletionDate = computed(() => {
@@ -136,14 +126,14 @@ const makeValidUrl = (url) => {
   return newUrl;
 };
 
-const handleProjectClick = (projectName) => {
+const handleProjectClick = (projectHash) => {
   moreIsOpen.value = false;
-  if (import.meta.env.VITE_DEBUG) console.log('handleProjectClick projectName:', projectName);
-  selectedProjectName.value = projectName;
+  if (import.meta.env.VITE_DEBUG) console.log('handleProjectClick projectHash:', projectHash);
+  selectedProjectHash.value = projectHash;
 };
 
 const handleMoreClick = () => {
-  if (import.meta.env.VITE_DEBUG) console.log('handleMoreClick projectName:', 'more');
+  if (import.meta.env.VITE_DEBUG) console.log('handleMoreClick projectHash:', 'more');
   moreIsOpen.value = !moreIsOpen.value;
 };
 
@@ -165,14 +155,18 @@ const normalizeProjectCategory = (client_category) => {
 //   return project_copy.length < project_name.length ? project_copy : project_name;
 // }
 
+const getSplitChar = (str) => {
+  return str.replace(/[a-zA-Z0-9,;]/g, '').trim()
+}
+
 </script>
 
 <template>
   <div v-if="props.item.properties.projects.length > 1" class="ec-content button-row is-multiline columns is-mobile">
 
     <button class="project-button column is-4 p-0 first-child" :class="{
-      'project-selected': !moreIsOpen && item.properties.projects[0].project_name === selectedProjectName
-    }" @click="handleProjectClick(item.properties.projects[0].project_name)">
+      'project-selected': !moreIsOpen && item.properties.projects[0].fields_hash === selectedProjectHash
+    }" @click="handleProjectClick(item.properties.projects[0].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[0].project_name) }} -->
         {{ item.properties.projects[0].project_name }}
@@ -180,9 +174,9 @@ const normalizeProjectCategory = (client_category) => {
     </button>
 
     <button class="project-button column is-4 p-0 middle-child" :class="{
-      'project-selected': !moreIsOpen && item.properties.projects[1].project_name === selectedProjectName,
+      'project-selected': !moreIsOpen && item.properties.projects[1].fields_hash === selectedProjectHash,
       'second-child-final': item.properties.projects.length == 2
-    }" @click="handleProjectClick(item.properties.projects[1].project_name)">
+    }" @click="handleProjectClick(item.properties.projects[1].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[1].project_name) }} -->
         {{ item.properties.projects[1].project_name }}
@@ -190,8 +184,8 @@ const normalizeProjectCategory = (client_category) => {
     </button>
 
     <button v-if="item.properties.projects.length == 3" class="project-button column is-4 p-0 middle-child" :class="{
-      'project-selected': !moreIsOpen && item.properties.projects[2].project_name === selectedProjectName,
-    }" @click="handleProjectClick(item.properties.projects[2].project_name)">
+      'project-selected': !moreIsOpen && item.properties.projects[2].fields_hash === selectedProjectHash,
+    }" @click="handleProjectClick(item.properties.projects[2].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[2].project_name) }} -->
         {{ item.properties.projects[2].project_name }}
@@ -211,7 +205,7 @@ const normalizeProjectCategory = (client_category) => {
     <div v-if="item.properties.projects.length == 2" class="spacer column is-4"></div>
 
     <div class="more-zone column is-12 p-0">
-      <button-dropdown v-if="moreIsOpen" :projects="excessProjects" :selectedProject="selectedProjectName"
+      <button-dropdown v-if="moreIsOpen" :projects="excessProjects" :selectedProject="selectedProjectHash"
         @clicked-project="handleProjectClick">
       </button-dropdown>
     </div>
@@ -301,8 +295,14 @@ const normalizeProjectCategory = (client_category) => {
         {{ t('card.improvements_include') }}
         <ul v-if="selectedProject && selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'">
-          <li v-for="(improvement, index) in selectedProject.project_scope.split(',')" :key="index" class="li-card">
-            {{ improvement }}
+          <li v-for="(group, groupIndex) in groups = selectedProject.project_scope.includes(';') ? selectedProject.project_scope.split(';') : selectedProject.project_scope.split(',')" :key="groupIndex" class="li-card">
+            {{ selectedProject.project_scope.includes(';') ? group.split(getSplitChar(group))[0] : group }}
+            <ul v-if="selectedProject.project_scope.includes(';')"
+              :style="'list-style-type: disc; margin-left: 20px;'">
+              <li v-for="(subGroup, index) in group.split(' - ')[1].split(',')" :key="index" class="li-card">
+                {{ subGroup }}
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -342,8 +342,10 @@ const normalizeProjectCategory = (client_category) => {
       <!-- <vue-good-table :columns="projectTeam.columns" :rows="projectTeam.rows" :sort-options="{ enabled: false }"
         style-class="table-style" /> -->
       <ul :style="'list-style-type: disc; margin-left: 20px;'">
-        <li class="li-card"><b>{{ t('card.project.coordinator') }}:</b> {{ selectedProject.project_coordinator }}</li>
-        <li class="li-card"><b>{{ t('card.project.inspector') }}:</b> {{ selectedProject.inspector }}</li>
+        <li class="li-card"><b>{{ t('card.project.coordinator') }}:</b> {{ selectedProject.project_coordinator ?
+          selectedProject.project_coordinator : 'TBD' }}</li>
+        <li class="li-card"><b>{{ t('card.project.inspector') }}:</b> {{ selectedProject.inspector ?
+          selectedProject.inspector : 'TBD' }}</li>
       </ul>
 
     </div>
