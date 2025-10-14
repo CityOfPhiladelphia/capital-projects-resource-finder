@@ -35,7 +35,7 @@ const reorderData = (data) => {
     }, new Map()),
     ([site_code, value]) => ({
       'site_code': site_code,
-      'site_name': value[0].site_name,
+      'site_name': getShortestSiteName(value),
       'site_category': normalizeSiteCategory(value),
       'council_district': value[0].council_district,
       'lat': value[0].lat,
@@ -43,6 +43,16 @@ const reorderData = (data) => {
       projects: value
     })
   );
+}
+
+const getShortestSiteName = (projects) => {
+  let shortestLength = projects[0].site_name.length;
+  let shortestName = projects[0].site_name;
+  for (let i = 1; i < projects.length - 1; i++) {
+    shortestName = projects[i].site_name.length < shortestLength ? projects[i].site_name : shortestName;
+  }
+  return shortestName;
+
 }
 
 const queryFields = [
