@@ -25,7 +25,7 @@ const normalizeSiteCategory = (projects) => {
 
 const formatProjectNames = (projects) => {
   projects.forEach((project) => {
-    project.project_name = toSentenceCase(project.project_name, false);
+    project.project_name = formatSiteOrProjectName(project.project_name, false);
   })
   return projects;
 }
@@ -58,15 +58,37 @@ const getShortestSiteName = (projects) => {
   for (let i = 1; i < projects.length - 1; i++) {
     shortestName = projects[i].site_name.length < shortestLength ? projects[i].site_name : shortestName;
   }
-  return toSentenceCase(shortestName, true);
+  return formatSiteOrProjectName(shortestName, true);
 }
 
-const toSentenceCase = (rawString, isSiteName) => {
+const formatSiteOrProjectName = (rawString, isSiteName) => {
   rawString = rawString.includes(' - ') ? isSiteName ? rawString.split(' - ')[0] : rawString.split(' - ')[1] : rawString;
-  let senCase = (rawString.charAt(0).toUpperCase() + rawString.slice(1).toLowerCase()).replace(/\band\b/, '&');
+  let senCase = toSentenceCase(rawString).replace(/Martin luther king|martin luther king/, 'Martin Luther King')
+  .replace(/\band\b/, '&')
+  .replace(/\bFdr|fdr\b/, 'FDR')
+  .replace(/\bbb\b/, 'basketball')
+  .replace(/\bpg|p\/g\b/, 'playground')
+  .replace(/\brc\b/, 'recreation center')
+  .replace(/\brec\b/, 'recreation')
+  .replace(/\bcrc\b/, 'community center');
   const splitSen = senCase.split(' ');
-  senCase = splitSen[1] === '&' ? senCase.replace(splitSen[2], splitSen[2].charAt(0).toUpperCase() + splitSen[2].slice(1)) : senCase;
-  return senCase.replace(/\bFdr\b/, 'FDR').replace(/\bbb\b/, 'basketball').replace(/\bpg\b/, 'playground').replace(/\brc\b/, 'recreation center').replace(/\brec\b/, 'recreation').replace(/\bcrc\b/, 'community center');
+  const iRec = splitSen.indexOf('recreation');
+  const iPlay = splitSen.indexOf('playground');
+  senCase = splitSen[0].includes("'") ? senCase.replace(splitSen[0], toProperCase(splitSen[0])) : senCase;
+  senCase = iRec > 1 && splitSen[iRec - 1] !== 'community' ? senCase.replace(splitSen[iRec - 1], toProperCase(splitSen[iRec - 1])) : senCase;
+  senCase = iPlay > 1 ? senCase.replace(splitSen[iPlay - 1], toProperCase(splitSen[iPlay - 1])) : senCase;
+  senCase = splitSen[1] === '&' ? senCase.replace(splitSen[2], toProperCase(splitSen[2])) : senCase;
+  return senCase;
+}
+
+const toSentenceCase = (rawString) => {
+  return rawString.charAt(0).toUpperCase() + rawString.slice(1).toLowerCase();
+}
+
+////////////////////// NEEDS TO GUARD AGAINST POSSESSIVE CASE
+const toProperCase = (properNoun) => {
+  const iAps = properNoun.split('').indexOf("'");
+  return iAps > 0 ? `${toSentenceCase(properNoun.slice(0, iAps))}'${toSentenceCase(properNoun.slice(iAps + 1))}` : toSentenceCase(properNoun);
 }
 
 const queryFields = [
