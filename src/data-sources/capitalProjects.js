@@ -23,6 +23,13 @@ const normalizeSiteCategory = (projects) => {
   return normalizedCategories.includes([...categories][0]) ? [...categories][0] : 'other';
 }
 
+const formatProjectNames = (projects) => {
+  projects.forEach((project) => {
+    project.project_name = toSentenceCase(project.project_name, false);
+  })
+  return projects;
+}
+
 // function for consolidating different projects into the site where they occur
 const reorderData = (data) => {
   return Array.from(
@@ -40,7 +47,7 @@ const reorderData = (data) => {
       'council_district': value[0].council_district,
       'lat': value[0].lat,
       'lon': value[0].lon,
-      projects: value
+      projects: formatProjectNames(value)
     })
   );
 }
@@ -51,8 +58,15 @@ const getShortestSiteName = (projects) => {
   for (let i = 1; i < projects.length - 1; i++) {
     shortestName = projects[i].site_name.length < shortestLength ? projects[i].site_name : shortestName;
   }
-  return shortestName;
+  return toSentenceCase(shortestName, true);
+}
 
+const toSentenceCase = (rawString, isSiteName) => {
+  rawString = rawString.includes(' - ') ? isSiteName ? rawString.split(' - ')[0] : rawString.split(' - ')[1] : rawString;
+  let senCase = (rawString.charAt(0).toUpperCase() + rawString.slice(1).toLowerCase()).replace(/\band\b/, '&');
+  const splitSen = senCase.split(' ');
+  senCase = splitSen[1] === '&' ? senCase.replace(splitSen[2], splitSen[2].charAt(0).toUpperCase() + splitSen[2].slice(1)) : senCase;
+  return senCase.replace(/\bFdr\b/, 'FDR').replace(/\bbb\b/, 'basketball').replace(/\bpg\b/, 'playground').replace(/\brc\b/, 'recreation center').replace(/\brec\b/, 'recreation').replace(/\bcrc\b/, 'community center');
 }
 
 const queryFields = [
@@ -87,7 +101,7 @@ export default {
   url: 'https://phl.carto.com/api/v2/sql',
   options: {
     params: {
-      q: `select * from capital_projects_for_finder`,
+      q: `select ${queryFields} from capital_projects_for_finder`,
     },
     success: function (data) {
       if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);
@@ -342,6 +356,34 @@ export default {
       //     "lon": -75.09962206419256,
       //     "archive_date": null
       //   },
+      //   {
+      //     "cartodb_id": 1200,
+      //     "the_geom": "0101000020E61000008E72F2D8D6C252C094FE7CD1A2034440",
+      //     "the_geom_webmercator": "0101000020110F000077BB6E131BDE5FC1463554C4ED935241",
+      //     "objectid": 1200,
+      //     "project_number": "16228E-02-02",
+      //     "project_name": "Disston Recreation Center Improvements",
+      //     "client_dept": "Philadephia Parks and Recreation",
+      //     "client_category": "Philadephia Parks and Recreation",
+      //     "site_code": "16228E",
+      //     "site_name": "Disston Recreation Center",
+      //     "site_address": "4423 LONGSHORE AVE",
+      //     "council_district": "6",
+      //     "project_scope": "P1 playground, adult fitness;P2 Building renovation;P3 new roof;P4 aluminum cornice",
+      //     "inspector": "TBD",
+      //     "project_coordinator": "Sebastiani",
+      //     "estimated_completion_season": "Fall",
+      //     "estimated_completion_year": "2025",
+      //     "actual_completion": null,
+      //     "project_status": "Construction",
+      //     "project_estimated_cost": "1500000",
+      //     "contact_email": "CPO@phila.gov",
+      //     "website_link": "https://www.phila.gov/programs/rebuild/",
+      //     "lat": 40.02840632060284,
+      //     "lon": -75.0443632476474,
+      //     "archive_date": null,
+      //     "fields_hash": "123451e61b6913e487cd762d782ad4bb"
+      //   }
       // );
 
 
@@ -359,9 +401,9 @@ export default {
         councilDistricts.add(row.council_district)
         if (row.project_name === row.site_name) { projectsAsSites.add(row.site_name) }
       })
-      console.log("STATUSES: ", [...statuses])
-      console.log("DISTRICTS: ", [...councilDistricts])
-      console.log("PROJECT NAME SAME AS SITE: ", [...projectsAsSites])
+      // console.log("STATUSES: ", [...statuses])
+      // console.log("DISTRICTS: ", [...councilDistricts])
+      // console.log("PROJECT NAME SAME AS SITE: ", [...projectsAsSites])
       ////////////////////////////////////////////////// END TEMP FIXES //////////////////////////////////////////////////
 
       const reorderedData = reorderData(data);
@@ -399,8 +441,8 @@ export default {
       })
       // console.log("SAME COST AND SCOPE: ", duplicateProjects)
 
-      console.log("AFTER CLEANING 1.....................")
-      console.log(reorderedData)
+      // console.log("AFTER CLEANING 1.....................")
+      // console.log(reorderedData)
 
       // FIND WHERE SITE AND COST ARE THE SAME
       let duplicateProjects = {};
@@ -430,7 +472,7 @@ export default {
           }
         }
       })
-      console.log("SAME COST AND SITE: ", duplicateProjects)
+      // console.log("SAME COST AND SITE: ", duplicateProjects)
       ////////////////////////////////////////////////// END TEMP TESTING AND DATA CLEANING /////////////////////////////////////////////
 
       return reorderedData;

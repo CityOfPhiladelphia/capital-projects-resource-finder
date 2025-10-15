@@ -46,6 +46,8 @@ import customGreeting from './components/customGreeting.vue';
 import expandCollapseContent from './components/ExpandCollapseContent.vue';
 import i18n from './i18n/i18n';
 
+import { markRaw } from 'vue';
+
 const customComps = markRaw({
   'customGreeting': customGreeting,
   'expandCollapseContent': expandCollapseContent,
