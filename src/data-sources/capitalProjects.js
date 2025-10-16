@@ -69,7 +69,7 @@ const formatSiteOrProjectName = (rawString, isSiteName) => {
   let senCase = toSentenceCase(rawString).replace(/Martin luther king|martin luther king/, 'Martin Luther King')
   .replace(/Malcolm x|malcolm x/, 'Malcolm X')
   .replace(/\band\b/, '&')
-  .replace(/\bFdr|fdr\b/, 'FDR')
+  .replace(/\b[Ff]dr\b/, 'FDR')
   .replace(/\bbb\b/, 'basketball')
   .replace(/\bpg|p\/g\b/, 'playground')
   .replace(/\brc\b/, 'recreation center')
@@ -82,7 +82,7 @@ const formatSiteOrProjectName = (rawString, isSiteName) => {
   senCase = iRec > 1 && splitSen[iRec - 1] !== 'community' ? senCase.replace(splitSen[iRec - 1], toProperCase(splitSen[iRec - 1])) : senCase;
   senCase = iPlay > 1 ? senCase.replace(splitSen[iPlay - 1], toProperCase(splitSen[iPlay - 1])) : senCase;
   senCase = splitSen[1] === '&' ? senCase.replace(splitSen[2], toProperCase(splitSen[2])) : senCase;
-  return senCase;
+  return senCase.replace(/^[mM]c[a-z]/, `Mc${senCase.charAt(senCase.split(/^[mM]c[a-z]/).indexOf(/^[mM]c[a-z]/) + 3).toUpperCase()}`);
 }
 
 // takes a string and return a string with the first letter capitalized and the rest lower case
