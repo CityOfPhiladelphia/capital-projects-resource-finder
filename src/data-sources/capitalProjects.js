@@ -67,6 +67,7 @@ const getShortestSiteName = (projects) => {
 const formatSiteOrProjectName = (rawString, isSiteName) => {
   rawString = rawString.includes(' - ') ? isSiteName ? rawString.split(' - ')[0] : rawString.split(' - ')[1] : rawString;
   let senCase = toSentenceCase(rawString).replace(/Martin luther king|martin luther king/, 'Martin Luther King')
+  .replace(/Malcolm x|malcolm x/, 'Malcolm X')
   .replace(/\band\b/, '&')
   .replace(/\bFdr|fdr\b/, 'FDR')
   .replace(/\bbb\b/, 'basketball')
@@ -93,7 +94,8 @@ const toSentenceCase = (rawString) => {
 // ignores apostrophes for possessive case and contractions by considering only apostrophes in the first half of the word as valid
 const toProperCase = (properNoun) => {
   const iAps = properNoun.split('').indexOf("'");
-  return iAps > 0 && iAps < properNoun.length / 2 ? `${toSentenceCase(properNoun.slice(0, iAps))}'${toSentenceCase(properNoun.slice(iAps + 1))}` : toSentenceCase(properNoun);
+  properNoun = iAps > 0 && iAps < properNoun.length / 2 ? `${toSentenceCase(properNoun.slice(0, iAps))}'${toSentenceCase(properNoun.slice(iAps + 1))}` : toSentenceCase(properNoun);
+  return properNoun.replace(/^[mM]c[a-z]/, `Mc${properNoun.charAt(2).toUpperCase()}`)
 }
 
 const queryFields = [
@@ -439,66 +441,66 @@ export default {
       ////////////////////////////////////////////////// TEMP TESTING AND DATA CLEANING ///////////////////////////////////////////////
       // REMOVE WHERE SCOPE AND COST ARE THE SAME
       // let duplicateProjects = {};
-      reorderedData.forEach((site) => {
-        if (site.projects.length > 1) {
-          // const possibleDuplicates = new Set();
-          for (let i = 0; i < site.projects.length - 1; i++) {
-            const currentProject = site.projects[i];
+      // reorderedData.forEach((site) => {
+      //   if (site.projects.length > 1) {
+      //     // const possibleDuplicates = new Set();
+      //     for (let i = 0; i < site.projects.length - 1; i++) {
+      //       const currentProject = site.projects[i];
 
-            for (let j = i + 1; j < site.projects.length; j++) {
-              const otherProject = site.projects[j];
-              if (!!currentProject.project_estimated_cost &&
-                currentProject.project_estimated_cost !== 'TBD' &&
-                currentProject.project_estimated_cost === otherProject.project_estimated_cost &&
-                currentProject.project_scope === otherProject.project_scope
-              ) {
-                // console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-                // console.log(currentProject)
-                // console.log(otherProject)
-                // possibleDuplicates.add(currentProject);
-                // possibleDuplicates.add(otherProject);
-                site.projects = [...site.projects.slice(0, j), ...site.projects.slice(j + 1)]
-              }
-            }
-          }
-          // if (possibleDuplicates.size) {
-          //   duplicateProjects[site.site_name] = [...possibleDuplicates]
-          // }
-        }
-      })
+      //       for (let j = i + 1; j < site.projects.length; j++) {
+      //         const otherProject = site.projects[j];
+      //         if (!!currentProject.project_estimated_cost &&
+      //           currentProject.project_estimated_cost !== 'TBD' &&
+      //           currentProject.project_estimated_cost === otherProject.project_estimated_cost &&
+      //           currentProject.project_scope === otherProject.project_scope
+      //         ) {
+      //           // console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+      //           // console.log(currentProject)
+      //           // console.log(otherProject)
+      //           // possibleDuplicates.add(currentProject);
+      //           // possibleDuplicates.add(otherProject);
+      //           site.projects = [...site.projects.slice(0, j), ...site.projects.slice(j + 1)]
+      //         }
+      //       }
+      //     }
+      //     // if (possibleDuplicates.size) {
+      //     //   duplicateProjects[site.site_name] = [...possibleDuplicates]
+      //     // }
+      //   }
+      // })
       // console.log("SAME COST AND SCOPE: ", duplicateProjects)
 
       // console.log("AFTER CLEANING 1.....................")
       // console.log(reorderedData)
 
       // FIND WHERE SITE AND COST ARE THE SAME
-      let duplicateProjects = {};
-      reorderedData.forEach((site) => {
-        if (site.projects.length > 1) {
-          const possibleDuplicates = new Set();
-          for (let i = 0; i < site.projects.length - 1; i++) {
-            const currentProject = site.projects[i];
+      // let duplicateProjects = {};
+      // reorderedData.forEach((site) => {
+      //   if (site.projects.length > 1) {
+      //     const possibleDuplicates = new Set();
+      //     for (let i = 0; i < site.projects.length - 1; i++) {
+      //       const currentProject = site.projects[i];
 
-            for (let j = i + 1; j < site.projects.length; j++) {
-              const otherProject = site.projects[j];
-              if (!!currentProject.project_estimated_cost &&
-                currentProject.project_estimated_cost !== 'TBD' &&
-                currentProject.project_estimated_cost === otherProject.project_estimated_cost
-              ) {
-                // console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-                // console.log(currentProject)
-                // console.log(otherProject)
-                possibleDuplicates.add(currentProject);
-                possibleDuplicates.add(otherProject);
-                // site.projects = [...site.projects.slice(0, j), ...site.projects.slice(j + 1)]
-              }
-            }
-          }
-          if (possibleDuplicates.size) {
-            duplicateProjects[site.site_name] = [...possibleDuplicates]
-          }
-        }
-      })
+      //       for (let j = i + 1; j < site.projects.length; j++) {
+      //         const otherProject = site.projects[j];
+      //         if (!!currentProject.project_estimated_cost &&
+      //           currentProject.project_estimated_cost !== 'TBD' &&
+      //           currentProject.project_estimated_cost === otherProject.project_estimated_cost
+      //         ) {
+      //           // console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+      //           // console.log(currentProject)
+      //           // console.log(otherProject)
+      //           possibleDuplicates.add(currentProject);
+      //           possibleDuplicates.add(otherProject);
+      //           // site.projects = [...site.projects.slice(0, j), ...site.projects.slice(j + 1)]
+      //         }
+      //       }
+      //     }
+      //     if (possibleDuplicates.size) {
+      //       duplicateProjects[site.site_name] = [...possibleDuplicates]
+      //     }
+      //   }
+      // })
       // console.log("SAME COST AND SITE: ", duplicateProjects)
       ////////////////////////////////////////////////// END TEMP TESTING AND DATA CLEANING /////////////////////////////////////////////
 

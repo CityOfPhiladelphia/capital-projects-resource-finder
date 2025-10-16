@@ -64,7 +64,7 @@ const excessProjects = computed(() => {
 });
 
 const excessProjectSelected = computed(() => {
-  let excessProjectNames = excessProjects.value.map(project => project.project_name);
+  let excessProjectNames = excessProjects.value.map(project => project.fields_hash);
   return excessProjectNames.includes(selectedProjectHash.value);
 })
 
