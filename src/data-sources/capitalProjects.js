@@ -52,6 +52,7 @@ const reorderData = (data) => {
   );
 }
 
+// gives app the best chance of displaying a site name, rather than a site name with the project description
 const getShortestSiteName = (projects) => {
   let shortestLength = projects[0].site_name.length;
   let shortestName = projects[0].site_name;
@@ -61,6 +62,8 @@ const getShortestSiteName = (projects) => {
   return formatSiteOrProjectName(shortestName, true);
 }
 
+// reformats the site and project names to Sentence Case
+// uses regex to expand some abbreviations back to full words, e.g. bb => basketball
 const formatSiteOrProjectName = (rawString, isSiteName) => {
   rawString = rawString.includes(' - ') ? isSiteName ? rawString.split(' - ')[0] : rawString.split(' - ')[1] : rawString;
   let senCase = toSentenceCase(rawString).replace(/Martin luther king|martin luther king/, 'Martin Luther King')
@@ -81,14 +84,16 @@ const formatSiteOrProjectName = (rawString, isSiteName) => {
   return senCase;
 }
 
+// takes a string and return a string with the first letter capitalized and the rest lower case
 const toSentenceCase = (rawString) => {
   return rawString.charAt(0).toUpperCase() + rawString.slice(1).toLowerCase();
 }
 
-////////////////////// NEEDS TO GUARD AGAINST POSSESSIVE CASE
+// capitalizes the first letter of a word and the first letter following an apostrophe, e.g. O'Connor
+// ignores apostrophes for possessive case and contractions by considering only apostrophes in the first half of the word as valid
 const toProperCase = (properNoun) => {
   const iAps = properNoun.split('').indexOf("'");
-  return iAps > 0 ? `${toSentenceCase(properNoun.slice(0, iAps))}'${toSentenceCase(properNoun.slice(iAps + 1))}` : toSentenceCase(properNoun);
+  return iAps > 0 && iAps < properNoun.length / 2 ? `${toSentenceCase(properNoun.slice(0, iAps))}'${toSentenceCase(properNoun.slice(iAps + 1))}` : toSentenceCase(properNoun);
 }
 
 const queryFields = [

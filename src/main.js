@@ -168,7 +168,7 @@ const $config = {
   // printView: false,
   allowZipcodeSearch: true,
   allowPrint: true,
-  showPrintInCards: false,
+  hidePrintInCards: true, // pinboard will show additional print/share in cards if not hidden
   retractableRefine: true,
   dropdownRefine: false,
   searchBar: {
