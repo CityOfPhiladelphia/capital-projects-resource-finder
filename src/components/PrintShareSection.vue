@@ -19,7 +19,7 @@ bulmaToast.setDefaults({
 });
 
 const router = useRouter();
-
+const route = useRoute();
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -67,7 +67,7 @@ const clickedPrint = () => {
 </script>
 
 <template>
-  <div>
+  <div v-if="route.name !== 'printView'">
     <div style="text-align:right;">
       <button
         class="button is-small card-button"

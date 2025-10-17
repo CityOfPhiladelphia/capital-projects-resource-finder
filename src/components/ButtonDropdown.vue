@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue';
 
 const props = defineProps({
   projects: {
@@ -24,10 +25,10 @@ const firstProjects = computed(() => {
 <template>
   <div class="dropdown column is-4 is-hoverable">
 
-    <button v-for="project in firstProjects" :key="project.project_name"
+    <button v-for="project in firstProjects" :key="project.fields_hash"
       class="project-button-dropdown column has-text-centered pl-1 pr-1 is-4 p-0" :class="{
-        'is-selected': project.project_name == props.selectedProject,
-      }" @click="$emit('clickedProject', project.project_name)">
+        'is-selected': project.fields_hash == props.selectedProject,
+      }" @click="$emit('clickedProject', project.fields_hash)">
       {{ project.project_name }}
     </button>
 
@@ -42,9 +43,13 @@ const firstProjects = computed(() => {
   background-color: white;
   z-index: 5;
   padding: 0;
-  border-style: none;
+  border-style: solid;
   border-color: rgb(204, 204, 204);
-  width: 33.3%;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 1px;
+  border-right-width: 0px;
+  width: 33.4%;
 }
 
 .project-button-dropdown {
@@ -58,10 +63,10 @@ const firstProjects = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left-width: 1px !important;
-  border-bottom-width: 1px;
-  border-right-width: 1px;
   border-top-width: 0px;
+  border-bottom-width: 1px;
+  border-left-width: 0px;
+  border-right-width: 0px;
   border-style: solid;
   border-color: rgb(204, 204, 204);
 }
