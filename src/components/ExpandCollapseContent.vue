@@ -182,14 +182,6 @@ const toSentenceCaseNoEnclosing = (rawString) => {
   return rawString.toLowerCase().replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '').replace(/\.\s+([a-z])[^.]|^(\s*[a-z])[^.]/g, str => str.replace(/([a-z])/, str => str.toUpperCase())).replace(/\btbd|Tbd\b/, 'TBD').replace(/\bhvac|Hvac\b/, 'HVAC');
 }
 
-// const trimProjectName = (project_name) => {
-//   let project_copy = project_name;
-//   props.item.properties.site_name.toLowerCase().split(' ').forEach((word) => {
-//     if (!project_copy.toLowerCase().split(word)[0]) { project_copy = project_copy.slice(word.length).trim() }
-//   })
-//   return project_copy.length < project_name.length ? project_copy : project_name;
-// }
-
 </script>
 
 <template>

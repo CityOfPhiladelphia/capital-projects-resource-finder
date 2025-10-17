@@ -1,3 +1,119 @@
+/*
+ * FUNCTIONS FOR CLEANING AND FORMATTING DATA FROM CARTO
+ */
+
+// function for consolidating different projects into the site where they occur
+const reorderData = (data) => {
+  return Array.from(
+    data.rows.reduce((groups, obj) => {
+      const category = obj['site_code'];
+      if (!category || typeof category !== 'string') return groups;
+      if (!groups.has(category)) { groups.set(category, []) };
+      groups.get(category).push(obj);
+      return groups;
+    }, new Map()),
+    ([site_code, value]) => ({
+      'site_code': site_code,
+      'site_name': getShortestSiteName(value),
+      'site_category': normalizeSiteCategory(value),
+      'council_district': value[0].council_district,
+      'lat': value[0].lat,
+      'lon': value[0].lon,
+      projects: formatProjectNames(value)
+    })
+  )
+}
+
+// gives app the best chance of displaying a site name, rather than a site name with the project description
+const getShortestSiteName = (projects) => {
+  let shortestLength = projects[0].site_name.length;
+  let shortestName = projects[0].site_name;
+  for (let i = 1; i < projects.length - 1; i++) {
+    shortestName = projects[i].site_name.length < shortestLength ? projects[i].site_name : shortestName;
+  }
+  return formatSiteOrProjectName(shortestName, true);
+}
+
+// reformats the site and project names to Title Case
+// uses regex to expand some abbreviations back to full words, e.g. bb => basketball
+const formatSiteOrProjectName = (rawString, isSiteName) => {
+  //rawString = rawString.includes(' - ') ? isSiteName ? rawString.split(' - ')[0] : rawString.split(' - ')[1] : rawString;
+  rawString.split(' ').filter(Boolean).forEach((word, i, sentence) => {
+    word = word.length > 2 ? word.replace(/^[a-z]/, word.charAt(0).toUpperCase()) : word;
+    switch (true) {
+      case /^A[Nn][Dd]\b/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/^A[Nn][Dd]\b/, '&'))
+        break;
+      }
+      case /^F[Dd][Rr]\b/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/^F[Dd][Rr]\b/, 'FDR'))
+        break;
+      }
+      case /^B[Bb]\b/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/^B[Bb]\b/, 'Basketball'))
+        break;
+      }
+      case /^P[Gg]|P\/[Gg]\b/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/^P[Gg]|P\/[Gg]\b/, 'Playground'))
+        break;
+      }
+      case /^R[Cc]\b/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/^R[Cc]\b/, 'Recreation Center'))
+        break;
+      }
+      case /^R[Ee][Cc]\b/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/^R[Ee][Cc]\b/, 'Recreation'))
+        break;
+      }
+      case /^C[Rr][Cc]\b/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/^C[Rr][Cc]\b/, 'Community Center'))
+        break;
+      }
+      default: {
+        rawString = rawString.replace(sentence[i], word)
+        break;
+      }
+    }
+  })
+  return rawString.trim()
+}
+
+// reformats the site and project names to Sentence Case
+// uses regex to expand some abbreviations back to full words, e.g. bb => basketball
+// const formatSiteOrProjectName = (rawString, isSiteName) => {
+//   rawString = rawString.includes(' - ') ? isSiteName ? rawString.split(' - ')[0] : rawString.split(' - ')[1] : rawString;
+//   let senCase = toSentenceCase(rawString).replace(/Martin luther king|martin luther king/, 'Martin Luther King')
+//   .replace(/Malcolm x|malcolm x/, 'Malcolm X')
+//   .replace(/\band\b/, '&')
+//   .replace(/\b[Ff]dr\b/, 'FDR')
+//   .replace(/\bbb\b/, 'basketball')
+//   .replace(/\bpg|p\/g\b/, 'playground')
+//   .replace(/\brc\b/, 'recreation center')
+//   .replace(/\brec\b/, 'recreation')
+//   .replace(/\bcrc\b/, 'community center');
+//   const splitSen = senCase.split(' ');
+//   const iRec = splitSen.indexOf('recreation');
+//   const iPlay = splitSen.indexOf('playground');
+//   senCase = splitSen[0].includes("'") ? senCase.replace(splitSen[0], toProperCase(splitSen[0])) : senCase;
+//   senCase = iRec > 1 && splitSen[iRec - 1] !== 'community' ? senCase.replace(splitSen[iRec - 1], toProperCase(splitSen[iRec - 1])) : senCase;
+//   senCase = iPlay > 1 ? senCase.replace(splitSen[iPlay - 1], toProperCase(splitSen[iPlay - 1])) : senCase;
+//   senCase = splitSen[1] === '&' ? senCase.replace(splitSen[2], toProperCase(splitSen[2])) : senCase;
+//   return senCase.replace(/^[mM]c[a-z]/, `Mc${senCase.charAt(senCase.split(/^[mM]c[a-z]/).indexOf(/^[mM]c[a-z]/) + 3).toUpperCase()}`);
+// }
+
+// takes a string and return a string with the first letter capitalized and the rest lower case
+const toSentenceCase = (rawString) => {
+  return rawString.charAt(0).toUpperCase() + rawString.slice(1).toLowerCase();
+}
+
+// capitalizes the first letter of a word and the first letter following an apostrophe, e.g. O'Connor
+// ignores apostrophes for possessive case and contractions by considering only apostrophes in the first half of the word as valid
+const toProperCase = (properNoun) => {
+  const iAps = properNoun.split('').indexOf("'");
+  properNoun = iAps > 0 && iAps < properNoun.length / 2 ? `${toSentenceCase(properNoun.slice(0, iAps))}'${toSentenceCase(properNoun.slice(iAps + 1))}` : toSentenceCase(properNoun);
+  return properNoun.replace(/^[mM]c[a-z]/, `Mc${properNoun.charAt(2).toUpperCase()}`)
+}
+
 // gives each site a standard category value
 // goes through each project at a site and checks for a department title's keyword after shifting the project's client_category to lowercase
 // keyword checks and lowercase will allow for some amount of variation of formatting and spelling in the data still being recognized as the same department
@@ -30,72 +146,12 @@ const formatProjectNames = (projects) => {
   return projects;
 }
 
-// function for consolidating different projects into the site where they occur
-const reorderData = (data) => {
-  return Array.from(
-    data.rows.reduce((groups, obj) => {
-      const category = obj['site_code'];
-      if (!category || typeof category !== 'string') return groups;
-      if (!groups.has(category)) { groups.set(category, []) };
-      groups.get(category).push(obj);
-      return groups;
-    }, new Map()),
-    ([site_code, value]) => ({
-      'site_code': site_code,
-      'site_name': getShortestSiteName(value),
-      'site_category': normalizeSiteCategory(value),
-      'council_district': value[0].council_district,
-      'lat': value[0].lat,
-      'lon': value[0].lon,
-      projects: formatProjectNames(value)
-    })
-  );
-}
-
-// gives app the best chance of displaying a site name, rather than a site name with the project description
-const getShortestSiteName = (projects) => {
-  let shortestLength = projects[0].site_name.length;
-  let shortestName = projects[0].site_name;
-  for (let i = 1; i < projects.length - 1; i++) {
-    shortestName = projects[i].site_name.length < shortestLength ? projects[i].site_name : shortestName;
-  }
-  return formatSiteOrProjectName(shortestName, true);
-}
-
-// reformats the site and project names to Sentence Case
-// uses regex to expand some abbreviations back to full words, e.g. bb => basketball
-const formatSiteOrProjectName = (rawString, isSiteName) => {
-  rawString = rawString.includes(' - ') ? isSiteName ? rawString.split(' - ')[0] : rawString.split(' - ')[1] : rawString;
-  let senCase = toSentenceCase(rawString).replace(/Martin luther king|martin luther king/, 'Martin Luther King')
-  .replace(/Malcolm x|malcolm x/, 'Malcolm X')
-  .replace(/\band\b/, '&')
-  .replace(/\b[Ff]dr\b/, 'FDR')
-  .replace(/\bbb\b/, 'basketball')
-  .replace(/\bpg|p\/g\b/, 'playground')
-  .replace(/\brc\b/, 'recreation center')
-  .replace(/\brec\b/, 'recreation')
-  .replace(/\bcrc\b/, 'community center');
-  const splitSen = senCase.split(' ');
-  const iRec = splitSen.indexOf('recreation');
-  const iPlay = splitSen.indexOf('playground');
-  senCase = splitSen[0].includes("'") ? senCase.replace(splitSen[0], toProperCase(splitSen[0])) : senCase;
-  senCase = iRec > 1 && splitSen[iRec - 1] !== 'community' ? senCase.replace(splitSen[iRec - 1], toProperCase(splitSen[iRec - 1])) : senCase;
-  senCase = iPlay > 1 ? senCase.replace(splitSen[iPlay - 1], toProperCase(splitSen[iPlay - 1])) : senCase;
-  senCase = splitSen[1] === '&' ? senCase.replace(splitSen[2], toProperCase(splitSen[2])) : senCase;
-  return senCase.replace(/^[mM]c[a-z]/, `Mc${senCase.charAt(senCase.split(/^[mM]c[a-z]/).indexOf(/^[mM]c[a-z]/) + 3).toUpperCase()}`);
-}
-
-// takes a string and return a string with the first letter capitalized and the rest lower case
-const toSentenceCase = (rawString) => {
-  return rawString.charAt(0).toUpperCase() + rawString.slice(1).toLowerCase();
-}
-
-// capitalizes the first letter of a word and the first letter following an apostrophe, e.g. O'Connor
-// ignores apostrophes for possessive case and contractions by considering only apostrophes in the first half of the word as valid
-const toProperCase = (properNoun) => {
-  const iAps = properNoun.split('').indexOf("'");
-  properNoun = iAps > 0 && iAps < properNoun.length / 2 ? `${toSentenceCase(properNoun.slice(0, iAps))}'${toSentenceCase(properNoun.slice(iAps + 1))}` : toSentenceCase(properNoun);
-  return properNoun.replace(/^[mM]c[a-z]/, `Mc${properNoun.charAt(2).toUpperCase()}`)
+const trimProjectName = (project_name, site_name) => {
+  let nameCopy = project_name;
+  site_name.toLowerCase().split(' ').forEach((word) => {
+    if (!nameCopy.toLowerCase().split(word)[0]) { nameCopy = nameCopy.slice(word.length).trim() }
+  })
+  return nameCopy.length && nameCopy.length < project_name.length ? nameCopy : project_name;
 }
 
 const queryFields = [
@@ -120,6 +176,40 @@ const queryFields = [
   'archive_date',
   'fields_hash'
 ]
+
+const sqlQuery = `
+SELECT DISTINCT site_code, site_name, site_address, council_district, lat, lon, projects
+FROM (
+  SELECT site_code,
+  array_agg(DISTINCT site_name) FILTER (WHERE site_name IS NOT NULL) AS site_name,
+  array_agg(DISTINCT site_address) FILTER (WHERE site_address IS NOT NULL) AS site_address,
+  array_agg(DISTINCT council_district) FILTER (WHERE council_district IS NOT NULL) AS council_district,
+  array_agg(DISTINCT lat) FILTER (WHERE lat IS NOT NULL) AS lat,
+  array_agg(DISTINCT lon) FILTER (WHERE lon IS NOT NULL) AS lon,
+  ARRAY(
+    SELECT jsonb_build_object(
+      'project_name', t.project_name,
+      'project_scope',  t.project_scope,
+      'project_status', t.project_status,
+      'project_estimated_cost', t.project_estimated_cost,
+      'estimated_completion_season', t.estimated_completion_season,
+      'estimated_completion_year', t.estimated_completion_year,
+      'actual_completion', t.actual_completion,
+      'archive_date',  t.archive_date,
+      'project_coordinator', t.project_coordinator,
+      'inspector', t.inspector,
+      'contact_email', t.contact_email,
+      'website_link', t.website_link,
+      'fields_hash', t.fields_hash
+    )
+    FROM  capital_projects_for_finder t
+    WHERE sites.site_code = site_code
+   ) AS projects
+  FROM  (TABLE capital_projects_for_finder ORDER BY site_code, site_name, site_address, council_district, lat, lon) sites
+  GROUP  BY 1
+  ORDER  BY 1
+  ) subquery
+`
 
 export default {
   id: 'capital_projects',
@@ -415,8 +505,10 @@ export default {
       //   }
       // );
 
-
+      /*
       ////////////////////////////////////////////////// TEMP FIXES FOR DATA //////////////////////////////////////////////////////////////
+      */
+
       const stdStatuses = ['Construction', 'Design', 'Complete', 'Planning'];
       const statuses = new Set();
       const councilDistricts = new Set();
@@ -433,12 +525,17 @@ export default {
       // console.log("STATUSES: ", [...statuses])
       // console.log("DISTRICTS: ", [...councilDistricts])
       // console.log("PROJECT NAME SAME AS SITE: ", [...projectsAsSites])
-      ////////////////////////////////////////////////// END TEMP FIXES //////////////////////////////////////////////////
+
+      /*
+      /////////////////////////////////////////////////////////// END TEMP FIXES //////////////////////////////////////////////////
+      */
 
       const reorderedData = reorderData(data);
       if (import.meta.env.VITE_DEBUG) console.log('reorderedData:', reorderedData);
 
+      /*
       ////////////////////////////////////////////////// TEMP TESTING AND DATA CLEANING ///////////////////////////////////////////////
+      */
       // REMOVE WHERE SCOPE AND COST ARE THE SAME
       // let duplicateProjects = {};
       // reorderedData.forEach((site) => {
@@ -502,7 +599,10 @@ export default {
       //   }
       // })
       // console.log("SAME COST AND SITE: ", duplicateProjects)
+
+      /*
       ////////////////////////////////////////////////// END TEMP TESTING AND DATA CLEANING /////////////////////////////////////////////
+      */
 
       return reorderedData;
     },

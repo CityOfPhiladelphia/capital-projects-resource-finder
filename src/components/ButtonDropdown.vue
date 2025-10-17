@@ -29,7 +29,9 @@ const firstProjects = computed(() => {
       class="project-button-dropdown column has-text-centered pl-1 pr-1 is-4 p-0" :class="{
         'is-selected': project.fields_hash == props.selectedProject,
       }" @click="$emit('clickedProject', project.fields_hash)">
-      {{ project.project_name }}
+      <div class="project-button-text has-text-centered pl-1 pr-1">
+        {{ project.project_name }}
+      </div>
     </button>
 
   </div>
@@ -69,6 +71,12 @@ const firstProjects = computed(() => {
   border-right-width: 0px;
   border-style: solid;
   border-color: rgb(204, 204, 204);
+}
+
+.project-button-text {
+  overflow: hidden;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
 }
 
 .project-button-dropdown:hover {
