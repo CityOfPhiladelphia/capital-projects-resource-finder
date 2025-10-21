@@ -7,6 +7,10 @@ import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
 import { format } from 'date-fns';
 
+import { formatSiteOrProjectName as formatProjectName } from '../general/formatStrings'
+import { normalizeCategory as normalizeProjectCategory } from '../general/formatStrings'
+
+
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
@@ -146,16 +150,6 @@ const handleMoreClick = () => {
   moreIsOpen.value = !moreIsOpen.value;
 };
 
-const normalizeProjectCategory = (client_category) => {
-  const categories = new Set();
-  const normalizedCategories = ['parks', 'health', 'library', 'fire', 'police', 'property'];
-  normalizedCategories.forEach((normalizedCategory) => {
-    if (client_category.toLowerCase().includes(normalizedCategory)) { categories.add(normalizedCategory) }
-  })
-  if (categories.size > 1) { return t('projectCategory.multiple') }
-  return categories.size ? t('projectCategory.' + [...categories][0]) : client_category;
-}
-
 // check for a special character being used to mark a group heading
 const getSplitChar = (str) => {
   return str.replace(/[a-zA-Z0-9,;'`~!@$%&(){}[\]]/g, '').trim()
@@ -192,7 +186,7 @@ const toSentenceCaseNoEnclosing = (rawString) => {
     }" @click="handleProjectClick(item.properties.projects[0].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[0].project_name) }} -->
-        {{ item.properties.projects[0].project_name }}
+        {{ formatProjectName(item.properties.projects[0].project_name) }}
       </div>
     </button>
 
@@ -202,7 +196,7 @@ const toSentenceCaseNoEnclosing = (rawString) => {
     }" @click="handleProjectClick(item.properties.projects[1].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[1].project_name) }} -->
-        {{ item.properties.projects[1].project_name }}
+        {{ formatProjectName(item.properties.projects[1].project_name) }}
       </div>
     </button>
 
@@ -211,7 +205,7 @@ const toSentenceCaseNoEnclosing = (rawString) => {
     }" @click="handleProjectClick(item.properties.projects[2].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[2].project_name) }} -->
-        {{ item.properties.projects[2].project_name }}
+        {{ formatProjectName(item.properties.projects[2].project_name) }}
       </div>
     </button>
 
@@ -243,7 +237,7 @@ const toSentenceCaseNoEnclosing = (rawString) => {
     <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive" />
 
     <div>
-      <h2 class="project-name">{{ selectedProject.project_name }}</h2>
+      <h2 class="project-name">{{ formatProjectName(selectedProject.project_name) }}</h2>
     </div>
 
     <div class="columns top-section">
@@ -257,12 +251,12 @@ const toSentenceCaseNoEnclosing = (rawString) => {
           </div>
         </div>
 
-        <div v-if="selectedProject && selectedProject.client_category" class="columns is-mobile">
+        <div v-if="selectedProject && selectedProject.project_category" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="folder" />
           </div>
           <div class="column is-11"
-            v-html="'<b>' + t('card.category') + ': </b>' + normalizeProjectCategory(selectedProject.client_category)" />
+            v-html="'<b>' + t('card.category') + ': </b>' + t(`projectCategory.${normalizeProjectCategory(selectedProject.project_category)}`)" />
         </div>
 
         <div v-if="selectedProject && selectedProject.website_link" class="columns is-mobile website-div">
