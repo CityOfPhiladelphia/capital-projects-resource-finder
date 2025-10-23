@@ -27,14 +27,13 @@ import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, faFolder, faMoneyCheckDollar, faChartTreeMap, faCaretDown, faCaretUp);
 
 // use this if running off unlinked package
-import pinboard from '@phila/pinboard';
 import '../node_modules/@phila/pinboard/dist/index.css';
+import pinboard from '@phila/pinboard';
 
 // OR
 // use these if running off linked package
 // import pinboard from '../node_modules/@phila/pinboard/src/main.js';
 // import pinboard from '../../vue3-pinboard/dist';
-// import '../node_modules/@phila/pinboard/dist/index.css';
 
 
 import legendControl from './general/legendControl';
@@ -194,13 +193,17 @@ const $config = {
         translate: true,
       },
       {
-        type: 'array',
-        field: 'services_offered',
+        type: 'value',
+        field: 'site_category',
         translate: true,
       },
       {
         type: 'value',
-        field: 'organization_name',
+        field: 'site_name',
+      },
+      {
+        type: 'value',
+        field: 'site_address',
       },
       {
         type: 'array',

@@ -18,7 +18,9 @@ const getShortestSiteName = (siteNames) => {
 const sqlQuery = `
 SELECT site_code, site_name, site_address, site_category, council_district, lat, lon, projects
 FROM (
-  SELECT site_code, lat, lon,
+  SELECT site_code,
+  COALESCE(lat, 0) AS lat,
+  COALESCE(lon, 0) AS lon,
   array_agg(DISTINCT site_name) FILTER (WHERE site_name IS NOT NULL) AS site_name,
   array_agg(DISTINCT site_address) FILTER (WHERE site_address IS NOT NULL) AS site_address,
   array_agg(DISTINCT client_category) FILTER (WHERE client_category IS NOT NULL) AS site_category,
@@ -60,38 +62,43 @@ export default {
       q: sqlQuery,
     },
     success: function (data) {
-      const seenSites = {};
-      const iRemoved = [];
+
 
       data.rows.forEach((row, i, original) => {
-        row.site_name = Array.isArray(row.site_name) ? row.site_name : [row.site_name];
-        const siteName = getShortestSiteName(row.site_name);
 
-        row.site_name.concat(siteName).forEach((name) => {
-          seenSites[name] = seenSites[name] ? Math.min(i, seenSites[name]) : i;
-        })
+        row.site_name = getShortestSiteName(row.site_name);
+        row.site_address = Array.isArray(row.site_address) ? row.site_address[0] : row.site_address;
+        row.site_category = normalizeSiteCategory(row.site_category);
+        row.council_district = Array.isArray(row.council_district) ? row.council_district[0] : row.council_district;
 
-        const j = seenSites[siteName];
-        if (j < i) {
-          original[j].site_name = getShortestSiteName([original[j].site_name, siteName]);
-          original[j].site_category = normalizeSiteCategory(original[j].site_category.concat(row.site_category));
-          original[j].projects = original[j].projects.concat(row.projects);
-          iRemoved.push(i);
-          console.log(original[i])
-          console.log(original[j])
-        }
-        else {
-          row.site_name = siteName;
-          row.site_address = Array.isArray(row.site_address) ? row.site_address[0] : row.site_address;
-          row.site_category = normalizeSiteCategory(row.site_category);
-          row.council_district = Array.isArray(row.council_district) ? row.council_district[0] : row.council_district;
-        }
+        // const seenSites = {};
+        // const iRemoved = [];
 
-      })
+        //   row.site_name = Array.isArray(row.site_name) ? row.site_name : [row.site_name];
+        //   const siteName = getShortestSiteName(row.site_name);
 
-      console.log(iRemoved)
-      iRemoved.forEach((i) => {
-        data.rows.splice(i, 1)
+        //   row.site_name.concat(siteName).forEach((name) => {
+        //     seenSites[name] = seenSites[name] ? Math.min(i, seenSites[name]) : i;
+        //   })
+
+        //   const j = seenSites[siteName];
+        //   if (j < i) {
+        //     original[j].site_name = getShortestSiteName([original[j].site_name, siteName]);
+        //     original[j].site_category = normalizeSiteCategory(original[j].site_category.concat(row.site_category));
+        //     original[j].projects = original[j].projects.concat(row.projects);
+        //     iRemoved.push(i);
+        //   }
+        //   else {
+        //     row.site_name = siteName;
+        //     row.site_address = Array.isArray(row.site_address) ? row.site_address[0] : row.site_address;
+        //     row.site_category = normalizeSiteCategory(row.site_category);
+        //     row.council_district = Array.isArray(row.council_district) ? row.council_district[0] : row.council_district;
+        //   }
+
+        // })
+
+        // iRemoved.forEach((i, j) => {
+        //   data.rows.splice(i - j, 1)
       })
 
       if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);

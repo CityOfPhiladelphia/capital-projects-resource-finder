@@ -4,38 +4,38 @@
 export const formatSiteOrProjectName = (rawString) => {
   //rawString = rawString.includes(' - ') ? isSiteName ? rawString.split(' - ')[0] : rawString.split(' - ')[1] : rawString;
   rawString.split(' ').filter(Boolean).forEach((word, i, sentence) => {
-    word = word.length > 2 ? word.replace(/(?<=\W|\b)[a-z]/, word.charAt(0).toUpperCase()) : word;
+    word = word.length > 2 ? word.replace(/^[a-z](?![hs])/, word.charAt(0).toUpperCase()) : word;
     switch (true) {
-      case /(?<=\W|\b)A[Nn][Dd](?<=\W|\b)/.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)A[Nn][Dd](?<=\W|\b)/, '&'))
+      case /(?<=\W|\b)A[Nn][Dd](?=\W|\b)/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)A[Nn][Dd](?=\W|\b)/, '&'))
         break;
       }
-      case /(?<=\W|\b)F[Dd][Rr](?<=\W|\b)/.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)F[Dd][Rr](?<=\W|\b)/, 'FDR'))
+      case /(?<=\W|\b)F[Dd][Rr](?=\W|\b)/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)F[Dd][Rr](?=\W|\b)/, 'FDR'))
         break;
       }
-      case /(?<=\W|\b)B[Bb](?<=\W|\b)/.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)B[Bb](?<=\W|\b)/, 'Basketball'))
+      case /(?<=\W|\b)B[Bb](?=\W|\b)/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)B[Bb](?=\W|\b)/, 'Basketball'))
         break;
       }
-      case /(?<=\W|\b)P[Gg]|P\/[Gg](?<=\W|\b)/.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)P[Gg]|P\/[Gg](?<=\W|\b)/, 'Playground'))
+      case /(?<=\W|\b)P[Gg]|P\/[Gg](?=\W|\b)/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)P[Gg]|P\/[Gg](?=\W|\b)/, 'Playground'))
         break;
       }
-      case /(?<=\W|\b)R[Cc](?<=\W|\b)/.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)R[Cc](?<=\W|\b)/, 'Recreation Center'))
+      case /(?<=\W|\b)R[Cc](?=\W|\b)/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)R[Cc](?=\W|\b)/, 'Recreation Center'))
         break;
       }
-      case /(?<=\W|\b)R[Ee][Cc](?<=\W|\b)/.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)R[Ee][Cc](?<=\W|\b)/, 'Recreation'))
+      case /(?<=\W|\b)R[Ee][Cc](?=\W|\b)/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)R[Ee][Cc](?=\W|\b)/, 'Recreation'))
         break;
       }
-      case /(?<=\W|\b)C[Rr][Cc](?<=\W|\b)/.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)C[Rr][Cc](?<=\W|\b)/, 'Community Center'))
+      case /(?<=\W|\b)C[Rr][Cc](?=\W|\b)/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)C[Rr][Cc](?=\W|\b)/, 'Community Center'))
         break;
       }
-      case /(?<=\W|\b)C[Tt][Rr](?<=\W|\b)/.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)C[Tt][Rr](?<=\W|\b)/, 'Center'))
+      case /(?<=\W|\b)C[Tt][Rr](?=\W|\b)/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)C[Tt][Rr](?=\W|\b)/, 'Center'))
         break;
       }
       case /(?<=\W|\b)[Hh][Oo][Rr][Tt](?=\W|\b)/.test(word): {
@@ -48,6 +48,10 @@ export const formatSiteOrProjectName = (rawString) => {
       }
       case /(?<=\W|\b)[St][Tt](?=\W|\b)/.test(word): {
         rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)[St][Tt](?=\W|\b)/, 'HorticultStreetuStreetre'))
+        break;
+      }
+      case /(?<=\W|\b)[Bb][Ll][Dd][Gg](?=\W|\b)/.test(word): {
+        rawString = rawString.replace(sentence[i], word.replace(/(?<=\W|\b)[Bb][Ll][Dd][Gg](?=\W|\b)/, 'Building'))
         break;
       }
       default: {
