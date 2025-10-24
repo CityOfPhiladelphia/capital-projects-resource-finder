@@ -30,7 +30,6 @@ const designImage = computed(() => { return designStatus.value === 'past' ? 'ima
 const constructionImage = computed(() => { return constructionStatus.value === 'past' ? 'images/normal_u153.svg' : (constructionStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
 const completeImage = computed(() => { return completeStatus.value === 'past' ? 'images/normal_u153.svg' : (completeStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
 
-
 </script>
 
 <template>
@@ -193,7 +192,6 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 }
 
 @media (min-width: 1000px) {
-
   .chevron {
     margin-right: 52px;
     padding: 12px;
@@ -241,7 +239,6 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
     margin-right: 10px;
   }
 }
-
 
 @media (max-width: 999px) {
 
@@ -294,8 +291,6 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
   .complete-div {
     margin-left: 10px;
   }
-
 }
 
 </style>
-

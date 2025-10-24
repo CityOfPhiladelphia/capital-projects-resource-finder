@@ -2,7 +2,7 @@
 
 import PrintShareSection from './PrintShareSection.vue';
 import ButtonDropdown from './ButtonDropdown.vue';
-import StatusBar from './statusBar.vue';
+import StatusBar from './StatusBar.vue';
 import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
 import { format } from 'date-fns';
