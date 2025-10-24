@@ -41,7 +41,7 @@ import legendControl from './general/legendControl';
 // data-sources
 import capitalProjects from './data-sources/capitalProjects';
 
-import customGreeting from './components/customGreeting.vue';
+import customGreeting from './components/CustomGreeting.vue';
 import expandCollapseContent from './components/ExpandCollapseContent.vue';
 import i18n from './i18n/i18n';
 
