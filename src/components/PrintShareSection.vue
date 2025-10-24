@@ -2,7 +2,7 @@
 
 // use these if running off unlinked package
 import { useMainStore } from '@phila/pinboard';
-import { useRouter } from '@phila/pinboard';
+import { useRoute, useRouter } from '@phila/pinboard';
 // OR
 // use this if running off linked package
 // import { useMainStore } from '../../node_modules/@phila/pinboard/src/stores/MainStore.js';
@@ -19,7 +19,7 @@ bulmaToast.setDefaults({
 });
 
 const router = useRouter();
-
+const route = useRoute();
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -67,7 +67,7 @@ const clickedPrint = () => {
 </script>
 
 <template>
-  <div>
+  <div v-if="route.name !== 'printView'">
     <div style="text-align:right;">
       <button
         class="button is-small card-button"
