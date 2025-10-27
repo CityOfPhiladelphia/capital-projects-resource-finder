@@ -121,7 +121,7 @@ const actualCompletionDate = computed(() => {
   return value;
 });
 
-const headingSplitCharacter = computed(() => { return '\u00AA'})
+const headingSplitCharacter = computed(() => { return '\u00AA' })
 
 // METHODS
 const parseAddress = (address) => {
@@ -162,7 +162,7 @@ const formatProjectScope = (projectScope) => {
     const projectScopeSplit = projectScope.split(';');
     const splitChars = Array.from(projectScopeSplit, (item) => getSplitChar(item)).filter(Boolean);
     if (splitChars.length === projectScopeSplit.length && splitChars.every((chr) => chr === splitChars[0])) {
-      projectScope = projectScope.replaceAll(splitChars[0], headingSplitCharacter.value).replaceAll(`${ headingSplitCharacter.value}`, headingSplitCharacter.value);
+      projectScope = projectScope.replaceAll(splitChars[0], headingSplitCharacter.value).replaceAll(`${headingSplitCharacter.value}`, headingSplitCharacter.value);
     }
   }
 
@@ -181,7 +181,7 @@ const toSentenceCaseNoEnclosing = (rawString) => {
 <template>
   <div v-if="props.item.properties.projects.length > 1" class="ec-content button-row is-multiline columns is-mobile">
 
-    <button class="project-button column is-4 p-0 first-child" :class="{
+    <button class="project-button column is-4 p-0 first-child" type="button" :id="item.properties.projects[0].fields_hash" :class="{
       'project-selected': !moreIsOpen && item.properties.projects[0].fields_hash === selectedProjectHash
     }" @click="handleProjectClick(item.properties.projects[0].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
@@ -190,7 +190,7 @@ const toSentenceCaseNoEnclosing = (rawString) => {
       </div>
     </button>
 
-    <button class="project-button column is-4 p-0 middle-child" :class="{
+    <button class="project-button column is-4 p-0 middle-child" type="button" :id="item.properties.projects[1].fields_hash" :class="{
       'project-selected': !moreIsOpen && item.properties.projects[1].fields_hash === selectedProjectHash,
       'second-child-final': item.properties.projects.length == 2
     }" @click="handleProjectClick(item.properties.projects[1].fields_hash)">
@@ -200,16 +200,17 @@ const toSentenceCaseNoEnclosing = (rawString) => {
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length == 3" class="project-button column is-4 p-0 middle-child" :class="{
-      'project-selected': !moreIsOpen && item.properties.projects[2].fields_hash === selectedProjectHash,
-    }" @click="handleProjectClick(item.properties.projects[2].fields_hash)">
+    <button v-if="item.properties.projects.length == 3" class="project-button column is-4 p-0 middle-child"
+      type="button" :id="item.properties.projects[2].fields_hash" :class="{
+        'project-selected': !moreIsOpen && item.properties.projects[2].fields_hash === selectedProjectHash,
+      }" @click="handleProjectClick(item.properties.projects[2].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[2].project_name) }} -->
         {{ formatProjectName(item.properties.projects[2].project_name) }}
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0 middle-child"
+    <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0 middle-child" id="moreButton" type="button"
       :class="{ 'project-selected': excessProjectSelected || moreIsOpen }" @click="handleMoreClick()">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         More
@@ -315,8 +316,11 @@ const toSentenceCaseNoEnclosing = (rawString) => {
           <li
             v-for="(group, groupIndex) in selectedProject.project_scope.includes(';') ? selectedProject.project_scope.split(';') : selectedProject.project_scope.split(',')"
             :key="groupIndex" class="li-card">
-            {{ toSentenceCaseNoEnclosing(selectedProject.project_scope.includes(';') && selectedProject.project_scope.includes(headingSplitCharacter) ? group.split(headingSplitCharacter)[0] : group) }}
-            <ul v-if="selectedProject.project_scope.includes(';') && selectedProject.project_scope.includes(headingSplitCharacter)"
+            {{ toSentenceCaseNoEnclosing(selectedProject.project_scope.includes(';') &&
+              selectedProject.project_scope.includes(headingSplitCharacter) ? group.split(headingSplitCharacter)[0] :
+              group) }}
+            <ul
+              v-if="selectedProject.project_scope.includes(';') && selectedProject.project_scope.includes(headingSplitCharacter)"
               :style="'list-style-type: disc; margin-left: 20px;'">
               <li v-for="(subGroup, index) in group.split(headingSplitCharacter)[1].split(',')" :key="index"
                 class="li-card">
