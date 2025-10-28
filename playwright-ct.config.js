@@ -12,8 +12,6 @@ export const STORAGE_PROJECTS = path.join(__dirname, './tests/test-storage/proje
 export default defineConfig({
   testDir: './tests',
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
-  outputDir: './tests/test-results',
-  /* Directory to store test results */
   snapshotDir: './__snapshots__',
   /* Maximum time one test can run for. */
   timeout: 10 * 1000,

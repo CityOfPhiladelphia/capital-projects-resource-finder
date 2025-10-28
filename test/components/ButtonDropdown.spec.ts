@@ -1,4 +1,4 @@
-import { test, expect } from '../../node_modules/@playwright/experimental-ct-vue';
+import { test, expect } from '@playwright/experimental-ct-vue';
 import ButtonDropdown from '../../src/components/ButtonDropdown.vue';
 import { STORAGE_PROJECTS } from '../../playwright-ct.config';
 import fs from 'fs'

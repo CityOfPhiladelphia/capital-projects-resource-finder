@@ -1,4 +1,4 @@
-import { test as teardown } from '../node_modules/@playwright/experimental-ct-vue';
+import { test as teardown } from '@playwright/experimental-ct-vue';
 import { STORAGE_PROJECTS } from '../playwright-ct.config';
 import fs from 'fs';
 

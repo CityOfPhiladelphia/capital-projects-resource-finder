@@ -1,4 +1,4 @@
-import { test as setup, expect } from '../node_modules/@playwright/experimental-ct-vue';
+import { test as setup, expect } from '@playwright/experimental-ct-vue';
 import { STORAGE_PROJECTS } from '../playwright-ct.config';
 import fs from 'fs';
 
