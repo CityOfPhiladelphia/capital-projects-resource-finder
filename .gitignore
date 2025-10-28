@@ -30,7 +30,7 @@ coverage
 *.tsbuildinfo
 
 # Playwright
-/test-results/
+/tests/test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/

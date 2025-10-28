@@ -1,12 +1,19 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/experimental-ct-vue';
+import path from 'path'
+import process from 'process';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
-module.exports = defineConfig({
-  testDir: './',
+
+export const STORAGE_PROJECTS = path.join(__dirname, './tests/test-storage/projects.json');
+
+export default defineConfig({
+  testDir: './tests',
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
+  outputDir: './tests/test-results',
+  /* Directory to store test results */
   snapshotDir: './__snapshots__',
   /* Maximum time one test can run for. */
   timeout: 10 * 1000,
@@ -32,16 +39,33 @@ module.exports = defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'setup db',
+      testMatch: /global\.setup\.ts/,
+      teardown: 'cleanup db',
+    },
+    {
+      name: 'cleanup db',
+      testMatch: /global\.teardown\.ts/,
+    },
+    {
+      name: 'ButtonDropdown tests',
+      testDir: './tests/components/ButtonDropdown.spec.ts',
+      dependencies: ['setup db'],
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      dependencies: ['setup db'],
     },
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
+      dependencies: ['setup db'],
     },
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
+      dependencies: ['setup db'],
     },
   ],
 });
