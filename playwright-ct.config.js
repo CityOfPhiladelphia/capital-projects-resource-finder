@@ -7,7 +7,7 @@ import process from 'process';
  * @see https://playwright.dev/docs/test-configuration
  */
 
-export const STORAGE_PROJECTS = path.join(__dirname, './test/test-storage/projects.json');
+export const STORAGE_PROJECTS = path.join(__dirname, './test/projects.json');
 
 export default defineConfig({
   testDir: './test',

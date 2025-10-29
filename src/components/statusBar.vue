@@ -1,5 +1,5 @@
 <script setup>
-import { computed, defineProps } from 'vue';
+import { computed } from 'vue';
 const publicPath = import.meta.env.VITE_PUBLICPATH || '/';
 
 const props = defineProps({

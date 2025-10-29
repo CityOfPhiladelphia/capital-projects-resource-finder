@@ -16,7 +16,7 @@ const { t } = useI18n();
 
 // checks if the project's archive_date is in the past. !!project.archive_date protects against null values
 // new Date(project.archive_date) < new Date() returns true if project.archive_date is null, !!project.archive_date prevents such cases being marked as archived
-const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
+const isArchiveProject = (project) => { return (project.project_status.toLowerCase() === 'complete' && !project.actual_completion) || (project.archive_date ? new Date(project.archive_date) < new Date() : false) }
 
 // PROPS
 const props = defineProps({
@@ -58,7 +58,7 @@ const selectedProject = computed(() => {
 });
 
 const archiveMessage = computed(() => {
-  return archiveActive.value ? t('card.archived_on') + ' ' + selectedProject.value.archive_date.replace(/-/g, '/') + '. ' + t('card.archive_message') : '';
+  return archiveActive.value && selectedProject.value.archive_date ? t('card.archived_on') + ' ' + selectedProject.value.archive_date.replace(/-/g, '/') + '. ' + t('card.archive_message') : t('card.archive_message');
 })
 
 const excessProjects = computed(() => {

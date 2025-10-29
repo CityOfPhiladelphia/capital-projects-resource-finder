@@ -7,7 +7,7 @@ let testProjects = []
 
 try {
   const projs = fs.readFileSync(STORAGE_PROJECTS, { encoding: 'utf8', flag: 'r' })
-  testProjects = JSON.parse(projs).rows
+  testProjects = JSON.parse(projs).rows[0].projects
 } catch (err) {
   console.error('Error reading projects from file:', err);
 }

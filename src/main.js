@@ -59,7 +59,7 @@ const customComps = markRaw({
 // called by filterArchived and getProjectStatusBitArray
 // checks if the project's archive_date is in the past. !!project.archive_date protects against null values
 // new Date(project.archive_date) < new Date() returns true if project.archive_date is null, !!project.archive_date prevents such cases being marked as archived
-const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
+const isArchiveProject = (project) => { return (project.project_status.toLowerCase() === 'complete' && !project.actual_completion) || (project.archive_date ? new Date(project.archive_date) < new Date() : false) }
 
 // filterLocationProjects function gets passed to Pinboard to refine the projects at sites according to their archived status, or (inclusive) based on their project status
 const statusToggleRefine = (locations, selectedServicesArray) => {
