@@ -26,6 +26,7 @@ setup('create new database', async ({ request }) => {
       SELECT mode() WITHIN GROUP ( ORDER BY site_code )
       FROM capital_projects_for_finder
     )
+    LIMIT 3
   `
 
   const response = await request.get(sqlQuery);

@@ -21,12 +21,10 @@ test.describe("ButtonDropdown: Full Functional Component Test", () => {
 
   test.describe('General Tests Independent of State', () => {
 
-
     test("Dropdown renders the correct number of buttons", async ({ mount }) => {
       const dropdown = await mount(ButtonDropdown, { props: testProps });
       const numButtons = await dropdown.getByRole('button').count();
       await expect(numButtons).toEqual(testProjects.length);
-
     });
 
     test('Buttons display their text', async ({ mount }) => {
@@ -53,6 +51,7 @@ test.describe("ButtonDropdown: Full Functional Component Test", () => {
   })
 
   test.describe('Tests That Depend on Current State', () => {
+
     test.describe("Test ButtonDropdown When NONE are Selected", () => {
 
       test("Unselected buttons background color should change on hover", async ({ mount }) => {
@@ -72,16 +71,17 @@ test.describe("ButtonDropdown: Full Functional Component Test", () => {
           await expect(initialBackgroundColor === hoverBackgroundColor).toBeFalsy();
         }
       });
-
     })
 
     test.describe("Test ButtonDropdown When ONE is Selected", () => {
 
       test("Selected button's background color should not change on hover", async ({ mount }) => {
-        const dropdown = await mount(ButtonDropdown, { props: {
-        projects: testProjects,
-        selectedProject: testProjects[0].fields_hash
-      } });
+        const dropdown = await mount(ButtonDropdown, {
+          props: {
+            projects: testProjects,
+            selectedProject: testProjects[0].fields_hash
+          }
+        });
 
         for (let i = 0; i < testProjects.length; i++) {
           const button = await dropdown.locator(`id=${testProjects[i].fields_hash}`);

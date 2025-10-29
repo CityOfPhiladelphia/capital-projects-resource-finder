@@ -7,10 +7,10 @@ import process from 'process';
  * @see https://playwright.dev/docs/test-configuration
  */
 
-export const STORAGE_PROJECTS = path.join(__dirname, './tests/test-storage/projects.json');
+export const STORAGE_PROJECTS = path.join(__dirname, './test/test-storage/projects.json');
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: './test',
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
   snapshotDir: './__snapshots__',
   /* Maximum time one test can run for. */
@@ -46,9 +46,13 @@ export default defineConfig({
       testMatch: /global\.teardown\.ts/,
     },
     {
-      name: 'ButtonDropdown tests',
+      name: 'ButtonDropdown Tests',
       testDir: './tests/components/ButtonDropdown.spec.ts',
       dependencies: ['setup db'],
+    },
+    {
+      name: 'StatusBar Tests',
+      testDir: './tests/components/StatusBar.spec.ts',
     },
     {
       name: 'chromium',

@@ -1,5 +1,5 @@
 <script setup>
-
+import { computed, defineProps } from 'vue';
 const publicPath = import.meta.env.VITE_PUBLICPATH || '/';
 
 const props = defineProps({
@@ -15,9 +15,8 @@ const green = '#B9F2B1';
 const blue = '#0E4D92';
 const gray = '#F0F0F1';
 
-// const projectStatus = ref(props.project.project_status);//.toLowerCase());
-const projectStatus = computed(() => { if (props.project.project_status) return props.project.project_status.toLowerCase(); });
 
+const projectStatus = computed(() => { return props.project.project_status ? props.project.project_status.toLowerCase() : '' });
 const completeColor = computed(() => { return projectStatus.value === 'complete' ? green : gray; });
 
 const planningStatus = computed(() => { return projectStatus.value === 'planning' ? 'current' : (['design', 'construction', 'complete'].includes(projectStatus.value) ? 'past' : 'future'); });
@@ -35,16 +34,16 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 <template>
   <div class="status-bar">
 
-    <div :class="`chevron planning ${planningStatus}`">
+    <div :class="`chevron planning ${planningStatus}`" data-testid="planning">
       <img class="rotated-image" :src="publicPath + planningImage">
     </div>
-    <div :class="`chevron design ${designStatus}`">
+    <div :class="`chevron design ${designStatus}`" data-testid="design">
       <img class="rotated-image" :src="publicPath + designImage">
     </div>
-    <div :class="`chevron construction ${constructionStatus}`">
+    <div :class="`chevron construction ${constructionStatus}`" data-testid="construction">
       <img class="rotated-image" :src="publicPath + constructionImage">
     </div>
-    <div :class="`flag complete ${completeStatus}`" :style="`background: ${completeColor}`">
+    <div :class="`flag complete ${completeStatus}`" :style="`background: ${completeColor}`" data-testid="complete">
       <img class="spaced-image" :src="publicPath + completeImage">
     </div>
 
@@ -70,27 +69,27 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 <style scoped>
 
 .past:after {
-  background: #B9F2B1;
+  background: v-bind('green');
 }
 
 .past:before {
-  background: #B9F2B1;
+  background: v-bind('green');
 }
 
 .current:after {
-  background: #0E4D92;
+  background: v-bind('blue');
 }
 
 .current:before {
-  background: #0E4D92;
+  background: v-bind('blue');
 }
 
 .future:after {
-  background: #F0F0F1;
+  background: v-bind('gray');
 }
 
 .future:before {
-  background: #F0F0F1;
+  background: v-bind('gray');
 }
 
 .inline-block-div {
