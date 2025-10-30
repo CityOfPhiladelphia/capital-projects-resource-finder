@@ -10,8 +10,7 @@
     "build:production": "vite build --mode=production",
     "build:testing": "vite build --mode=testing",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "test-ct": "playwright test -c playwright-ct.config.js"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
     "@fortawesome/pro-regular-svg-icons": "^6.7.2",
@@ -24,8 +23,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.38.0",
-    "@playwright/experimental-ct-vue": "^1.56.1",
-    "@types/node": "^24.9.1",
     "@vitejs/plugin-vue": "^6.0.1",
     "eslint": "^9.38.0",
     "eslint-plugin-vue": "^10.5.1",
