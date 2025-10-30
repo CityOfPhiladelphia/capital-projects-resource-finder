@@ -28,7 +28,8 @@ setup('create new database', async ({ request }) => {
       'inspector', t.inspector,
       'contact_email', t.contact_email,
       'website_link', t.website_link,
-      'fields_hash', t.fields_hash
+      'fields_hash', t.fields_hash,
+      '_featureId', 'capitalProjects_1'
     )
     FROM capital_projects_for_finder t
     WHERE site_code = (

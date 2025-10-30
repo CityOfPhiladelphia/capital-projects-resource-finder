@@ -47,12 +47,17 @@ export default defineConfig({
     },
     {
       name: 'ButtonDropdown Tests',
-      testDir: './tests/components/ButtonDropdown.spec.ts',
+      testDir: './test/components/ButtonDropdown.spec.ts',
       dependencies: ['setup db'],
     },
+    // {
+    //   name: 'ExpandCollapseContent Tests',
+    //   testDir: './test/components/ExpandCollapseContent.spec.ts',
+    //   dependencies: ['setup db'],
+    // },
     {
       name: 'StatusBar Tests',
-      testDir: './tests/components/StatusBar.spec.ts',
+      testDir: './test/components/StatusBar.spec.ts',
     },
     {
       name: 'chromium',

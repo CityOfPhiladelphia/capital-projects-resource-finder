@@ -7,16 +7,12 @@ import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
 import { format } from 'date-fns';
 
-import { formatSiteOrProjectName as formatProjectName } from '../general/formatStrings'
-import { normalizeCategory as normalizeProjectCategory } from '../general/formatStrings'
-
+import { formatSiteOrProjectName as formatProjectName } from '../general/helperFunctions'
+import { normalizeCategory as normalizeProjectCategory } from '../general/helperFunctions'
+import { isArchiveProject } from '../general/helperFunctions'
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
-
-// checks if the project's archive_date is in the past. !!project.archive_date protects against null values
-// new Date(project.archive_date) < new Date() returns true if project.archive_date is null, !!project.archive_date prevents such cases being marked as archived
-const isArchiveProject = (project) => { return (project.project_status.toLowerCase() === 'complete' && !project.actual_completion) || (project.archive_date ? new Date(project.archive_date) < new Date() : false) }
 
 // PROPS
 const props = defineProps({
@@ -179,38 +175,45 @@ const toSentenceCaseNoEnclosing = (rawString) => {
 </script>
 
 <template>
-  <div v-if="props.item.properties.projects.length > 1" class="ec-content button-row is-multiline columns is-mobile">
+  <div v-if="item.properties.projects.length > 1" class="ec-content button-row is-multiline columns is-mobile"
+    data-testid="tab-button-bar">
 
-    <button class="project-button column is-4 p-0 first-child" type="button" :id="item.properties.projects[0].fields_hash" :class="{
-      'project-selected': !moreIsOpen && item.properties.projects[0].fields_hash === selectedProjectHash
-    }" @click="handleProjectClick(item.properties.projects[0].fields_hash)">
+    <button class="project-button column is-4 p-0 first-child" type="button" data-testid="tab-button-first"
+      :id="item.properties.projects[0].fields_hash" :class="{
+        'project-selected': !moreIsOpen && item.properties.projects[0].fields_hash === selectedProjectHash
+      }" @click="handleProjectClick(item.properties.projects[0].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[0].project_name) }} -->
         {{ formatProjectName(item.properties.projects[0].project_name) }}
+        <!-- {{ item.properties.projects[0].project_name }} -->
       </div>
     </button>
 
-    <button class="project-button column is-4 p-0 middle-child" type="button" :id="item.properties.projects[1].fields_hash" :class="{
-      'project-selected': !moreIsOpen && item.properties.projects[1].fields_hash === selectedProjectHash,
-      'second-child-final': item.properties.projects.length == 2
-    }" @click="handleProjectClick(item.properties.projects[1].fields_hash)">
+    <button class="project-button column is-4 p-0 middle-child" type="button" data-testid="tab-button-second"
+      :id="item.properties.projects[1].fields_hash" :class="{
+        'project-selected': !moreIsOpen && item.properties.projects[1].fields_hash === selectedProjectHash,
+        'second-child-final': item.properties.projects.length == 2
+      }" @click="handleProjectClick(item.properties.projects[1].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[1].project_name) }} -->
         {{ formatProjectName(item.properties.projects[1].project_name) }}
+          <!-- {{ item.properties.projects[1].project_name }} -->
       </div>
     </button>
 
     <button v-if="item.properties.projects.length == 3" class="project-button column is-4 p-0 middle-child"
-      type="button" :id="item.properties.projects[2].fields_hash" :class="{
+      data-testid="tab-button-third" type="button" :id="item.properties.projects[2].fields_hash" :class="{
         'project-selected': !moreIsOpen && item.properties.projects[2].fields_hash === selectedProjectHash,
       }" @click="handleProjectClick(item.properties.projects[2].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[2].project_name) }} -->
         {{ formatProjectName(item.properties.projects[2].project_name) }}
+          <!-- {{ item.properties.projects[2].project_name }} -->
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0 middle-child" id="moreButton" type="button"
+    <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0 middle-child"
+      id="moreButton" type="button" data-testid="tab-button-more"
       :class="{ 'project-selected': excessProjectSelected || moreIsOpen }" @click="handleMoreClick()">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         More
@@ -219,10 +222,10 @@ const toSentenceCaseNoEnclosing = (rawString) => {
       </div>
     </button>
 
-    <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
-    <div v-if="item.properties.projects.length == 2" class="spacer column is-4"></div>
+    <div v-if="item.properties.projects.length == 1" class="spacer column is-8" data-testid="tab-spacer-double"></div>
+    <div v-if="item.properties.projects.length == 2" class="spacer column is-4" data-testid="tab-spacer-single"></div>
 
-    <div class="more-zone column is-12 p-0">
+    <div class="more-zone column is-12 p-0" data-testid="more-dropdown-container">
       <button-dropdown v-if="moreIsOpen" :projects="excessProjects" :selectedProject="selectedProjectHash"
         @clicked-project="handleProjectClick">
       </button-dropdown>
@@ -230,9 +233,9 @@ const toSentenceCaseNoEnclosing = (rawString) => {
 
   </div>
 
-  <div class='main-ec-content'>
+  <div class='main-ec-content' data-testid="main-content">
 
-    <print-share-section :item="selectedProject" :featureId="props.item._featureId" :is-mobile="props.isMobile"
+    <print-share-section :item="selectedProject" :featureId="item._featureId" :is-mobile="isMobile"
       v-if="selectedProject" />
 
     <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive" />

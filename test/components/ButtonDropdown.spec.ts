@@ -3,18 +3,16 @@ import ButtonDropdown from '../../src/components/ButtonDropdown.vue';
 import { STORAGE_PROJECTS } from '../../playwright-ct.config';
 import fs from 'fs'
 
-let testProjects = []
+const testProps = {
+  projects: [],
+  selectedProject: ''
+}
 
 try {
   const projs = fs.readFileSync(STORAGE_PROJECTS, { encoding: 'utf8', flag: 'r' })
-  testProjects = JSON.parse(projs).rows[0].projects
+  testProps.projects = JSON.parse(projs).rows[0].projects
 } catch (err) {
   console.error('Error reading projects from file:', err);
-}
-
-const testProps = {
-  projects: testProjects,
-  selectedProject: ''
 }
 
 test.describe("ButtonDropdown: Full Functional Component Test", () => {
@@ -24,13 +22,13 @@ test.describe("ButtonDropdown: Full Functional Component Test", () => {
     test("Dropdown renders the correct number of buttons", async ({ mount }) => {
       const dropdown = await mount(ButtonDropdown, { props: testProps });
       const numButtons = await dropdown.getByRole('button').count();
-      await expect(numButtons).toEqual(testProjects.length);
+      await expect(numButtons).toEqual(testProps.projects.length);
     });
 
     test('Buttons display their text', async ({ mount }) => {
       const dropdown = await mount(ButtonDropdown, { props: testProps });
-      for (let i = 0; i < testProjects.length; i++) {
-        await expect(dropdown.locator(`id=${testProjects[i].fields_hash}`)).toContainText(testProjects[i].project_name);
+      for (let i = 0; i < testProps.projects.length; i++) {
+        await expect(dropdown.locator(`id=${testProps.projects[i].fields_hash}`)).toContainText(testProps.projects[i].project_name);
       }
     });
 
@@ -43,9 +41,9 @@ test.describe("ButtonDropdown: Full Functional Component Test", () => {
         }
       });
 
-      for (let i = 0; i < testProjects.length; i++) {
-        await dropdown.locator(`id=${testProjects[i].fields_hash}`).click();
-        await expect(emittedValues[i]).toEqual(testProjects[i].fields_hash)
+      for (let i = 0; i < testProps.projects.length; i++) {
+        await dropdown.locator(`id=${testProps.projects[i].fields_hash}`).click();
+        await expect(emittedValues[i]).toEqual(testProps.projects[i].fields_hash)
       }
     });
   })
@@ -57,8 +55,8 @@ test.describe("ButtonDropdown: Full Functional Component Test", () => {
       test("Unselected buttons background color should change on hover", async ({ mount }) => {
         const dropdown = await mount(ButtonDropdown, { props: testProps });
 
-        for (let i = 0; i < testProjects.length; i++) {
-          const button = await dropdown.locator(`id=${testProjects[i].fields_hash}`);
+        for (let i = 0; i < testProps.projects.length; i++) {
+          const button = await dropdown.locator(`id=${testProps.projects[i].fields_hash}`);
           const initialBackgroundColor = await button.evaluate((el) => {
             return window.getComputedStyle(el).getPropertyValue('background-color');
           });
@@ -78,13 +76,13 @@ test.describe("ButtonDropdown: Full Functional Component Test", () => {
       test("Selected button's background color should not change on hover", async ({ mount }) => {
         const dropdown = await mount(ButtonDropdown, {
           props: {
-            projects: testProjects,
-            selectedProject: testProjects[0].fields_hash
+            projects: testProps.projects,
+            selectedProject: testProps.projects[0].fields_hash
           }
         });
 
-        for (let i = 0; i < testProjects.length; i++) {
-          const button = await dropdown.locator(`id=${testProjects[i].fields_hash}`);
+        for (let i = 0; i < testProps.projects.length; i++) {
+          const button = await dropdown.locator(`id=${testProps.projects[i].fields_hash}`);
           const initialBackgroundColor = await button.evaluate((el) => {
             return window.getComputedStyle(el).getPropertyValue('background-color');
           });

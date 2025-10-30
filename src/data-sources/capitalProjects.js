@@ -1,5 +1,5 @@
-import { formatSiteOrProjectName as formatSiteName } from '../general/formatStrings'
-import { normalizeCategory as normalizeSiteCategory } from '../general/formatStrings'
+import { formatSiteOrProjectName as formatSiteName } from '../general/helperFunctions'
+import { normalizeCategory as normalizeSiteCategory } from '../general/helperFunctions'
 
 /*
  * FUNCTIONS FOR CLEANING AND FORMATTING DATA FROM CARTO
@@ -18,7 +18,8 @@ const getShortestSiteName = (siteNames) => {
 const sqlQuery = `
 SELECT site_code, site_name, site_address, site_category, council_district, lat, lon, projects
 FROM (
-  SELECT site_code,
+  SELECT
+  site_code,
   COALESCE(lat, 0) AS lat,
   COALESCE(lon, 0) AS lon,
   array_agg(DISTINCT site_name) FILTER (WHERE site_name IS NOT NULL) AS site_name,
