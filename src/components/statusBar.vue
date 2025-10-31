@@ -34,16 +34,16 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 <template>
   <div class="status-bar">
 
-    <div :class="`chevron planning ${planningStatus}`" data-testid="planning">
+    <div :class="`chevron planning ${planningStatus}`">
       <img class="rotated-image" :src="publicPath + planningImage">
     </div>
-    <div :class="`chevron design ${designStatus}`" data-testid="design">
+    <div :class="`chevron design ${designStatus}`">
       <img class="rotated-image" :src="publicPath + designImage">
     </div>
-    <div :class="`chevron construction ${constructionStatus}`" data-testid="construction">
+    <div :class="`chevron construction ${constructionStatus}`">
       <img class="rotated-image" :src="publicPath + constructionImage">
     </div>
-    <div :class="`flag complete ${completeStatus}`" :style="`background: ${completeColor}`" data-testid="complete">
+    <div :class="`flag complete ${completeStatus}`" :style="`background: ${completeColor}`">
       <img class="spaced-image" :src="publicPath + completeImage">
     </div>
 
