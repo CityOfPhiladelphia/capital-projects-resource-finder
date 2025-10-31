@@ -2,17 +2,17 @@
 
 import PrintShareSection from './PrintShareSection.vue';
 import ButtonDropdown from './ButtonDropdown.vue';
-import StatusBar from './statusBar.vue';
+import StatusBar from './StatusBar.vue';
 import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
 import { format } from 'date-fns';
 
+import { formatSiteOrProjectName as formatProjectName } from '../general/helperFunctions'
+import { normalizeCategory as normalizeProjectCategory } from '../general/helperFunctions'
+import { isArchiveProject } from '../general/helperFunctions'
+
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
-
-// checks if the project's archive_date is in the past. !!project.archive_date protects against null values
-// new Date(project.archive_date) < new Date() returns true if project.archive_date is null, !!project.archive_date prevents such cases being marked as archived
-const isArchiveProject = (project) => { return !!project.archive_date && (new Date(project.archive_date) < new Date()) }
 
 // PROPS
 const props = defineProps({
@@ -54,7 +54,7 @@ const selectedProject = computed(() => {
 });
 
 const archiveMessage = computed(() => {
-  return archiveActive.value ? t('card.archived_on') + ' ' + selectedProject.value.archive_date.replace(/-/g, '/') + '. ' + t('card.archive_message') : '';
+  return archiveActive.value && selectedProject.value.archive_date ? t('card.archived_on') + ' ' + selectedProject.value.archive_date.replace(/-/g, '/') + '. ' + t('card.archive_message') : t('card.archive_message');
 })
 
 const excessProjects = computed(() => {
@@ -117,7 +117,7 @@ const actualCompletionDate = computed(() => {
   return value;
 });
 
-const headingSplitCharacter = computed(() => { return '\u00AA'})
+const headingSplitCharacter = computed(() => { return '\u00AA' })
 
 // METHODS
 const parseAddress = (address) => {
@@ -146,16 +146,6 @@ const handleMoreClick = () => {
   moreIsOpen.value = !moreIsOpen.value;
 };
 
-const normalizeProjectCategory = (client_category) => {
-  const categories = new Set();
-  const normalizedCategories = ['parks', 'health', 'library', 'fire', 'police', 'property'];
-  normalizedCategories.forEach((normalizedCategory) => {
-    if (client_category.toLowerCase().includes(normalizedCategory)) { categories.add(normalizedCategory) }
-  })
-  if (categories.size > 1) { return t('projectCategory.multiple') }
-  return categories.size ? t('projectCategory.' + [...categories][0]) : client_category;
-}
-
 // check for a special character being used to mark a group heading
 const getSplitChar = (str) => {
   return str.replace(/[a-zA-Z0-9,;'`~!@$%&(){}[\]]/g, '').trim()
@@ -168,7 +158,7 @@ const formatProjectScope = (projectScope) => {
     const projectScopeSplit = projectScope.split(';');
     const splitChars = Array.from(projectScopeSplit, (item) => getSplitChar(item)).filter(Boolean);
     if (splitChars.length === projectScopeSplit.length && splitChars.every((chr) => chr === splitChars[0])) {
-      projectScope = projectScope.replaceAll(splitChars[0], headingSplitCharacter.value).replaceAll(`${ headingSplitCharacter.value}`, headingSplitCharacter.value);
+      projectScope = projectScope.replaceAll(splitChars[0], headingSplitCharacter.value).replaceAll(`${headingSplitCharacter.value}`, headingSplitCharacter.value);
     }
   }
 
@@ -182,48 +172,48 @@ const toSentenceCaseNoEnclosing = (rawString) => {
   return rawString.toLowerCase().replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '').replace(/\.\s+([a-z])[^.]|^(\s*[a-z])[^.]/g, str => str.replace(/([a-z])/, str => str.toUpperCase())).replace(/\btbd|Tbd\b/, 'TBD').replace(/\bhvac|Hvac\b/, 'HVAC');
 }
 
-// const trimProjectName = (project_name) => {
-//   let project_copy = project_name;
-//   props.item.properties.site_name.toLowerCase().split(' ').forEach((word) => {
-//     if (!project_copy.toLowerCase().split(word)[0]) { project_copy = project_copy.slice(word.length).trim() }
-//   })
-//   return project_copy.length < project_name.length ? project_copy : project_name;
-// }
-
 </script>
 
 <template>
-  <div v-if="props.item.properties.projects.length > 1" class="ec-content button-row is-multiline columns is-mobile">
+  <div v-if="item.properties.projects.length > 1" class="ec-content button-row is-multiline columns is-mobile"
+    data-testid="tab-button-bar">
 
-    <button class="project-button column is-4 p-0 first-child" :class="{
-      'project-selected': !moreIsOpen && item.properties.projects[0].fields_hash === selectedProjectHash
-    }" @click="handleProjectClick(item.properties.projects[0].fields_hash)">
+    <button class="project-button column is-4 p-0 first-child" type="button" data-testid="tab-button-first"
+      :id="item.properties.projects[0].fields_hash" :class="{
+        'project-selected': !moreIsOpen && item.properties.projects[0].fields_hash === selectedProjectHash
+      }" @click="handleProjectClick(item.properties.projects[0].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[0].project_name) }} -->
-        {{ item.properties.projects[0].project_name }}
+        {{ formatProjectName(item.properties.projects[0].project_name) }}
+        <!-- {{ item.properties.projects[0].project_name }} -->
       </div>
     </button>
 
-    <button class="project-button column is-4 p-0 middle-child" :class="{
-      'project-selected': !moreIsOpen && item.properties.projects[1].fields_hash === selectedProjectHash,
-      'second-child-final': item.properties.projects.length == 2
-    }" @click="handleProjectClick(item.properties.projects[1].fields_hash)">
+    <button class="project-button column is-4 p-0 middle-child" type="button" data-testid="tab-button-second"
+      :id="item.properties.projects[1].fields_hash" :class="{
+        'project-selected': !moreIsOpen && item.properties.projects[1].fields_hash === selectedProjectHash,
+        'second-child-final': item.properties.projects.length == 2
+      }" @click="handleProjectClick(item.properties.projects[1].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[1].project_name) }} -->
-        {{ item.properties.projects[1].project_name }}
+        {{ formatProjectName(item.properties.projects[1].project_name) }}
+          <!-- {{ item.properties.projects[1].project_name }} -->
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length == 3" class="project-button column is-4 p-0 middle-child" :class="{
-      'project-selected': !moreIsOpen && item.properties.projects[2].fields_hash === selectedProjectHash,
-    }" @click="handleProjectClick(item.properties.projects[2].fields_hash)">
+    <button v-if="item.properties.projects.length == 3" class="project-button column is-4 p-0 middle-child"
+      data-testid="tab-button-third" type="button" :id="item.properties.projects[2].fields_hash" :class="{
+        'project-selected': !moreIsOpen && item.properties.projects[2].fields_hash === selectedProjectHash,
+      }" @click="handleProjectClick(item.properties.projects[2].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         <!-- {{ trimProjectName(item.properties.projects[2].project_name) }} -->
-        {{ item.properties.projects[2].project_name }}
+        {{ formatProjectName(item.properties.projects[2].project_name) }}
+          <!-- {{ item.properties.projects[2].project_name }} -->
       </div>
     </button>
 
     <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0 middle-child"
+      id="moreButton" type="button" data-testid="tab-button-more"
       :class="{ 'project-selected': excessProjectSelected || moreIsOpen }" @click="handleMoreClick()">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         More
@@ -232,10 +222,10 @@ const toSentenceCaseNoEnclosing = (rawString) => {
       </div>
     </button>
 
-    <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
-    <div v-if="item.properties.projects.length == 2" class="spacer column is-4"></div>
+    <div v-if="item.properties.projects.length == 1" class="spacer column is-8" data-testid="tab-spacer-double"></div>
+    <div v-if="item.properties.projects.length == 2" class="spacer column is-4" data-testid="tab-spacer-single"></div>
 
-    <div class="more-zone column is-12 p-0">
+    <div class="more-zone column is-12 p-0" data-testid="more-dropdown-container">
       <button-dropdown v-if="moreIsOpen" :projects="excessProjects" :selectedProject="selectedProjectHash"
         @clicked-project="handleProjectClick">
       </button-dropdown>
@@ -243,34 +233,34 @@ const toSentenceCaseNoEnclosing = (rawString) => {
 
   </div>
 
-  <div class='main-ec-content'>
+  <div class='main-ec-content' data-testid="main-content">
 
-    <print-share-section :item="selectedProject" :featureId="props.item._featureId" :is-mobile="props.isMobile"
+    <print-share-section :item="selectedProject" :featureId="item._featureId" :is-mobile="isMobile"
       v-if="selectedProject" />
 
     <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive" />
 
     <div>
-      <h2 class="project-name">{{ selectedProject.project_name }}</h2>
+      <h2 class="project-name">{{ formatProjectName(selectedProject.project_name) }}</h2>
     </div>
 
     <div class="columns top-section">
       <div class="column is-6">
-        <div v-if="selectedProject && selectedProject.site_address" class="columns is-mobile">
+        <div v-if="selectedProject && item.properties.site_address" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="map-marker-alt" />
           </div>
           <div class="column is-11">
-            <b>{{ t('card.address') }}: </b> {{ parseAddress(selectedProject.site_address) }}
+            <b>{{ t('card.address') }}: </b> {{ parseAddress(item.properties.site_address) }}
           </div>
         </div>
 
-        <div v-if="selectedProject && selectedProject.client_category" class="columns is-mobile">
+        <div v-if="selectedProject && selectedProject.project_category" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="folder" />
           </div>
           <div class="column is-11"
-            v-html="'<b>' + t('card.category') + ': </b>' + normalizeProjectCategory(selectedProject.client_category)" />
+            v-html="'<b>' + t('card.category') + ': </b>' + t(`projectCategory.${normalizeProjectCategory(selectedProject.project_category)}`)" />
         </div>
 
         <div v-if="selectedProject && selectedProject.website_link" class="columns is-mobile website-div">
@@ -329,8 +319,11 @@ const toSentenceCaseNoEnclosing = (rawString) => {
           <li
             v-for="(group, groupIndex) in selectedProject.project_scope.includes(';') ? selectedProject.project_scope.split(';') : selectedProject.project_scope.split(',')"
             :key="groupIndex" class="li-card">
-            {{ toSentenceCaseNoEnclosing(selectedProject.project_scope.includes(';') && selectedProject.project_scope.includes(headingSplitCharacter) ? group.split(headingSplitCharacter)[0] : group) }}
-            <ul v-if="selectedProject.project_scope.includes(';') && selectedProject.project_scope.includes(headingSplitCharacter)"
+            {{ toSentenceCaseNoEnclosing(selectedProject.project_scope.includes(';') &&
+              selectedProject.project_scope.includes(headingSplitCharacter) ? group.split(headingSplitCharacter)[0] :
+              group) }}
+            <ul
+              v-if="selectedProject.project_scope.includes(';') && selectedProject.project_scope.includes(headingSplitCharacter)"
               :style="'list-style-type: disc; margin-left: 20px;'">
               <li v-for="(subGroup, index) in group.split(headingSplitCharacter)[1].split(',')" :key="index"
                 class="li-card">

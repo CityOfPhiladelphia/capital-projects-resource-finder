@@ -1,5 +1,4 @@
 <script setup>
-import { computed } from 'vue';
 
 const props = defineProps({
   projects: {
@@ -16,20 +15,18 @@ const props = defineProps({
 
 const $emit = defineEmits(['clickedProject']);
 
-const firstProjects = computed(() => {
-  return [...props.projects];
-});
-
 </script>
 
 <template>
   <div class="dropdown column is-4 is-hoverable">
 
-    <button v-for="project in firstProjects" :key="project.fields_hash"
+    <button v-for="project in projects" :key="project.fields_hash" :id="project.fields_hash" type="button"
       class="project-button-dropdown column has-text-centered pl-1 pr-1 is-4 p-0" :class="{
         'is-selected': project.fields_hash == props.selectedProject,
       }" @click="$emit('clickedProject', project.fields_hash)">
-      {{ project.project_name }}
+      <div class="project-button-text has-text-centered pl-1 pr-1">
+        {{ project.project_name }}
+      </div>
     </button>
 
   </div>
@@ -69,6 +66,12 @@ const firstProjects = computed(() => {
   border-right-width: 0px;
   border-style: solid;
   border-color: rgb(204, 204, 204);
+}
+
+.project-button-text {
+  overflow: hidden;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
 }
 
 .project-button-dropdown:hover {

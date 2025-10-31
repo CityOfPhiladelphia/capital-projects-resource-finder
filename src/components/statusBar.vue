@@ -1,5 +1,5 @@
 <script setup>
-
+import { computed } from 'vue';
 const publicPath = import.meta.env.VITE_PUBLICPATH || '/';
 
 const props = defineProps({
@@ -15,9 +15,8 @@ const green = '#B9F2B1';
 const blue = '#0E4D92';
 const gray = '#F0F0F1';
 
-// const projectStatus = ref(props.project.project_status);//.toLowerCase());
-const projectStatus = computed(() => { if (props.project.project_status) return props.project.project_status.toLowerCase(); });
 
+const projectStatus = computed(() => { return props.project.project_status ? props.project.project_status.toLowerCase() : '' });
 const completeColor = computed(() => { return projectStatus.value === 'complete' ? green : gray; });
 
 const planningStatus = computed(() => { return projectStatus.value === 'planning' ? 'current' : (['design', 'construction', 'complete'].includes(projectStatus.value) ? 'past' : 'future'); });
@@ -29,7 +28,6 @@ const planningImage = computed(() => { return planningStatus.value === 'past' ? 
 const designImage = computed(() => { return designStatus.value === 'past' ? 'images/normal_u153.svg' : (designStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
 const constructionImage = computed(() => { return constructionStatus.value === 'past' ? 'images/normal_u153.svg' : (constructionStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
 const completeImage = computed(() => { return completeStatus.value === 'past' ? 'images/normal_u153.svg' : (completeStatus.value === 'current' ? 'images/normal_u303.svg' : 'images/normal_u300.svg'); });
-
 
 </script>
 
@@ -71,27 +69,27 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 <style scoped>
 
 .past:after {
-  background: #B9F2B1;
+  background: v-bind('green');
 }
 
 .past:before {
-  background: #B9F2B1;
+  background: v-bind('green');
 }
 
 .current:after {
-  background: #0E4D92;
+  background: v-bind('blue');
 }
 
 .current:before {
-  background: #0E4D92;
+  background: v-bind('blue');
 }
 
 .future:after {
-  background: #F0F0F1;
+  background: v-bind('gray');
 }
 
 .future:before {
-  background: #F0F0F1;
+  background: v-bind('gray');
 }
 
 .inline-block-div {
@@ -193,7 +191,6 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 }
 
 @media (min-width: 1000px) {
-
   .chevron {
     margin-right: 52px;
     padding: 12px;
@@ -241,7 +238,6 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
     margin-right: 10px;
   }
 }
-
 
 @media (max-width: 999px) {
 
@@ -294,8 +290,6 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
   .complete-div {
     margin-left: 10px;
   }
-
 }
 
 </style>
-
