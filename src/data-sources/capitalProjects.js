@@ -7,10 +7,12 @@ import { normalizeCategory as normalizeSiteCategory } from '../general/helperFun
 
 // gives app the best chance of displaying a site name, rather than a site name with the project description
 const getShortestSiteName = (siteNames) => {
-  let shortestLength = siteNames[0].length;
-  let shortestName = siteNames[0];
+  let shortestName = siteNames[0].split(' - ')[0];
+  let shortestLength = shortestName.length;
+
   for (let i = 1; i < siteNames.length; i++) {
-    shortestName = siteNames[i].length < shortestLength ? siteNames[i] : shortestName;
+    const nextName = siteNames[i].split(' - ')[0];
+    shortestName = nextName.length < shortestName.length ? nextName : shortestName;
   }
   return formatSiteName(shortestName);
 }
@@ -88,42 +90,12 @@ export default {
     },
     success: function (data) {
 
-
-      data.rows.forEach((row, i, original) => {
-
+      data.rows.forEach((row) => {
         row.site_name = getShortestSiteName(row.site_name);
         row.site_address = Array.isArray(row.site_address) ? row.site_address[0] : row.site_address;
         row.site_category = normalizeSiteCategory(row.site_category);
         row.council_district = Array.isArray(row.council_district) ? row.council_district[0] : row.council_district;
 
-        // const seenSites = {};
-        // const iRemoved = [];
-
-        //   row.site_name = Array.isArray(row.site_name) ? row.site_name : [row.site_name];
-        //   const siteName = getShortestSiteName(row.site_name);
-
-        //   row.site_name.concat(siteName).forEach((name) => {
-        //     seenSites[name] = seenSites[name] ? Math.min(i, seenSites[name]) : i;
-        //   })
-
-        //   const j = seenSites[siteName];
-        //   if (j < i) {
-        //     original[j].site_name = getShortestSiteName([original[j].site_name, siteName]);
-        //     original[j].site_category = normalizeSiteCategory(original[j].site_category.concat(row.site_category));
-        //     original[j].projects = original[j].projects.concat(row.projects);
-        //     iRemoved.push(i);
-        //   }
-        //   else {
-        //     row.site_name = siteName;
-        //     row.site_address = Array.isArray(row.site_address) ? row.site_address[0] : row.site_address;
-        //     row.site_category = normalizeSiteCategory(row.site_category);
-        //     row.council_district = Array.isArray(row.council_district) ? row.council_district[0] : row.council_district;
-        //   }
-
-        // })
-
-        // iRemoved.forEach((i, j) => {
-        //   data.rows.splice(i - j, 1)
       })
 
       if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);
