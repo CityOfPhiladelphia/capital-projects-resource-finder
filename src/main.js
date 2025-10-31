@@ -28,11 +28,11 @@ library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, 
 
 // use this if running off unlinked package
 import '../node_modules/@phila/pinboard/dist/index.css';
-import pinboard from '@phila/pinboard';
+// import pinboard from '@phila/pinboard';
 
 // OR
 // use these if running off linked package
-// import pinboard from '../node_modules/@phila/pinboard/src/main.js';
+import pinboard from '../node_modules/@phila/pinboard/src/main.js';
 // import pinboard from '../../vue3-pinboard/dist';
 
 import legendControl from './general/legendControl';
