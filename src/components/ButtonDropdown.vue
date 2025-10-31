@@ -20,7 +20,7 @@ const $emit = defineEmits(['clickedProject']);
 <template>
   <div class="dropdown column is-4 is-hoverable">
 
-    <button v-for="project in projects" :key="project.fields_hash" :id="project.fields_hash" type="button"
+    <button v-for="project in projects" :key="project.fields_hash" type="button"
       class="project-button-dropdown column has-text-centered pl-1 pr-1 is-4 p-0" :class="{
         'is-selected': project.fields_hash == props.selectedProject,
       }" @click="$emit('clickedProject', project.fields_hash)">
