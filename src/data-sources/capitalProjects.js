@@ -28,31 +28,31 @@ const sqlQuery = `
     site_code,
     COALESCE(lat, 0) AS lat,
     COALESCE(lon, 0) AS lon,
+    council_district,
     array_agg(DISTINCT site_name) FILTER (WHERE site_name IS NOT NULL) AS site_name,
     array_agg(DISTINCT site_address) FILTER (WHERE site_address IS NOT NULL) AS site_address,
     array_agg(DISTINCT client_category) FILTER (WHERE client_category IS NOT NULL) AS site_category,
-    array_agg(DISTINCT council_district) FILTER (WHERE council_district IS NOT NULL) AS council_district,
     ARRAY(
       SELECT jsonb_build_object(
-        'project_name', t.project_name,
-        'project_category', t.client_category,
-        'project_scope',  t.project_scope,
-        'project_status', t.project_status,
-        'project_estimated_cost', t.project_estimated_cost,
-        'estimated_completion_season', t.estimated_completion_season,
-        'estimated_completion_year', t.estimated_completion_year,
-        'actual_completion', t.actual_completion,
-        'archive_date',  t.archive_date,
-        'project_coordinator', t.project_coordinator,
-        'inspector', t.inspector,
-        'contact_email', t.contact_email,
-        'website_link', t.website_link,
-        'fields_hash', t.fields_hash)
-      FROM capital_projects_for_finder t
-      WHERE sites.site_code = t.site_code AND ((sites.lat = t.lat AND sites.lon = t.lon) OR t.lat IS NULL)
+        'project_name', project.project_name,
+        'project_category', project.client_category,
+        'project_scope',  project.project_scope,
+        'project_status', project.project_status,
+        'project_estimated_cost', project.project_estimated_cost,
+        'estimated_completion_season', project.estimated_completion_season,
+        'estimated_completion_year', project.estimated_completion_year,
+        'actual_completion', project.actual_completion,
+        'archive_date',  project.archive_date,
+        'project_coordinator', project.project_coordinator,
+        'inspector', project.inspector,
+        'contact_email', project.contact_email,
+        'website_link', project.website_link,
+        'fields_hash', project.fields_hash)
+      FROM capital_projects_for_finder project
+      WHERE ((sites.site_code = project.site_code) OR (sites.site_code IS NULL AND project.site_code IS NULL) AND (sites.lat = project.lat AND sites.lon = project.lon)) OR ((sites.council_district = project.council_district) AND project.site_code IS NULL AND project.lat IS NULL)
     ) AS projects
   FROM (TABLE capital_projects_for_finder ORDER BY site_code, site_name, site_address, council_district, lat, lon) sites
-  GROUP BY site_code, lat, lon
+  GROUP BY site_code, council_district, lat, lon
 `
 
 export default {
