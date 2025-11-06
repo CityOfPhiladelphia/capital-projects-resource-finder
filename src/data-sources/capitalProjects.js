@@ -46,7 +46,8 @@ const sqlQuery = `
         'website_link', project.website_link,
         'fields_hash', project.fields_hash)
       FROM capital_projects_for_finder project
-      WHERE COALESCE(sites.lat, 0) = COALESCE(project.lat, 0) AND COALESCE(sites.lon, 0) = COALESCE(project.lon, 0)
+      WHERE COALESCE(sites.lat, 0) = COALESCE(project.lat, 0)
+        AND COALESCE(sites.lon, 0) = COALESCE(project.lon, 0)
         AND sites.council_district = project.council_district
     ) AS projects
   FROM capital_projects_for_finder sites

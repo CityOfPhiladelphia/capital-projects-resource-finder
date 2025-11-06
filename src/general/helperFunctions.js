@@ -9,6 +9,7 @@ export const formatSiteOrProjectName = (rawString) => {
   rawString = rawString.replace(/(\b[a-z](?!\s))/g, (c) => c.toUpperCase()) // capitalize every first letter
   rawString = rawString.replace(/(?<=\W|\b)[Aa][Nn][Dd](?=\W|\b)/g, '&') // and to &
   rawString = rawString.replace(/(?<=\W|\b)[Ff][Dd][Rr](?=\W|\b)/g, 'FDR') // ensure FDR is all caps
+  rawString = rawString.replace(/(?<=\W|\b)[Cc][Bb](?=\W|\b)/g, 'Cecil B.') // cb to Cecil B.
   rawString = rawString.replace(/(?<=\W|\b)[Bb][Bb](?=\W|\b)/g, 'Basketball') // bb to basketball
   rawString = rawString.replace(/(?<=\W|\b)([Pp][Gg])|([Pp]\/[Gg])(?=\W|\b)/g, 'Playground') // pg to playground
   rawString = rawString.replace(/(?<=\W|\b)R([Cc]|[Ee][Cc])(?=\W|\b)/g, 'Recreation Center') // rc or rec to recreation center
