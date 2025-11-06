@@ -1,8 +1,8 @@
-export default {
+export default{
   "language": "English",
   "app": {
-    "title": "Capital Projects Resource Finder",
-    "subtitle": "TO DO: SUBTITLE",
+    "title": "Capital projects finder",
+    "subtitle": "Find ongoing investments in City-owned facilities",
     "noResults": "We're sorry, there are no results for that search. Adjust the filters you've selected and try again.",
     "servicesOffered": "Services offered",
     "searchPlaceholders": {
@@ -20,33 +20,58 @@ export default {
   },
   "introPage": {
     "section1Title": "",
-    "p0": "",
-    "p1": "",
+    "h3_1": "About the Capital Program and our projects",
+    "p1": "The City of Philadelphia uses capital funds to improve municipal facilities and services. These projects might include investments in:",
     "ul1": {
-      "li": "",
-      "li2": "",
-      "li3": ""
+      "li": "Improvements to City-owned buildings and facilities",
+      "li2": "City technology and communications networkss",
+      "li3": "Specialized municipal vehicles",
+      "li4": "City-managed roads and transportation systems"
     },
-    "section2Title": "",
+    "p2": "In partnership with other City agencies, the <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>Capital Program Office</a> manages the operations for more than 200 capital projects citywide. ",
+    "h3_2": "Using the Capital Projects Resource Finder",
+    "p3": "Use this finder to locate capital projects taking place at City-owned facilities across Philadelphia. For example, you can find active projects at:",
+    "ul2": {
+      "li": "Parks and recreation centers",
+      "li2": "Health centers",
+      "li3": "Libraries",
+      "li4": "Fire and police stations",
+      "li5": "Other City-owned facilities and infrastructure"
+    },
+    "p4": "You can also find recently completed and archived projects (completed within the last six months).",
+    "p5": "Projects are organized by facility. Some facilities may have multiple active projects at one time.",
+    "h3_3": "Learn more",
+    "p6": "We update the information [time period]. If something is wrong, you can let us know through our <a target='_blank' href='https://www.phila.gov/feedback/'>feedback form.</a>"
   },
   "status": {
     "category": "Status",
     "active": "Active Projects",
-    "archived": "Archived Projects",
+    "archive": "View Archive",
+    "archiveAlt": "Archived",
+    "design": "Design",
     "planning": "Planning",
     "construction": "Construction",
     "complete": "Complete"
   },
+  "status_description": {
+    "active": "These projects are currently underway at City-owned facilities.",
+    "archive": "These projects were completed within the last six months.",
+    "planning": "The project is in the planning phase. Public input may be requested.",
+    "design": "The project designs or plans are developed. Public input may be requested.",
+    "construction": "Construction is underway.",
+    "complete": "The project is complete."
+  },
   "projectCategory": {
     "category": "Project Category",
-    "parksRecreation": "Parks & Recreation",
-    "publicHealth": "Public Health",
-    "Human Services": "Human Services",
-    "freeLibrary": "Free Library",
-    "fireDepartment": "Fire Department",
-    "policeDepartment": "Police Department",
-    "publicProperty": "Public Property",
-    "other": "Other"
+    "parks": "Parks & Recreation",
+    "health": "Public Health",
+    "human": "Human Services",
+    "library": "Free Library",
+    "fire": "Fire Department",
+    "police": "Police Department",
+    "property": "Public Property",
+    "other": "Other",
+    "multiple": "Multiple Departments"
   },
   "councilDistrict": {
     "category": "Council District",
@@ -59,26 +84,34 @@ export default {
     "district7": "District 7",
     "district8": "District 8",
     "district9": "District 9",
-    "district10": "District 10",
+    "district10": "District 10"
   },
   "Philadephia Parks and Recreation": "Philadephia Parks and Recreation",
   "card": {
+    "address": "Address",
     "category": "Category",
-    "district": "District",
+    "district": "Council District",
     "budget": "Budget",
-    "section_description": "Description",
-    "description_text": "This short description text will provide background context about the project and should be longer than two to three sentences in length.",
+    "contact": "Contact",
+    "section_description": "Project description",
+    "improvements_include": "Improvements include:",
     "section_status": "Status",
     "status_text": "This short description text will provide additional context to help a user interpret this status component.",
-    "current_stage": "Current Stage",
-    "status_descriptions": {
-      "planning": "The project is in the planning phase. Public input may be requested.",
-      "design": "The project designs or plans are developed. Public input may be requested.",
-      "construction": "Construction is underway.",
-      "complete": "The project is complete."
+    "current_stage": "Current stage",
+    "status_description": {
+      "planning": "We're defining the project needs and scope. Public input may be requested.",
+      "design": "We're developing the project designs or plans. Public input may be requested.",
+      "construction": "We've started construction. Depending on the type of work, travel may be impacted in the area.",
+      "complete": "The project is complete. We may continue to share updates about the finished work."
     },
-    "estimated_completion_description": "Estimated Completion",
-    "estimated_completion_text": "This short description text will provide additional context to help a user interpret this table and the labels",
-    "project_team_description": "Project Team",
+    "completed": "Completed",
+    "estimated_completion": "Estimated completion",
+    "archived_on": "This project was archived on",
+    "archive_message": "Projects are archived six months after completion.",
+    "project": {
+      "team": "Project team",
+      "coordinator": "Project Coordinator",
+      "inspector": "Inspector"
+    }
   }
 }

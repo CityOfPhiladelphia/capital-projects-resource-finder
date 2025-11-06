@@ -1,0 +1,60 @@
+// 'background-color' properties set here are refrenced in the main.js config object in order to set the colors of the dots on the map
+
+export default {
+  legend: {
+    options: {
+      showWithBaseMapOnly: true,
+      shape: 'circle',
+    },
+    data: {
+      'Fire Department': {
+        'width': '15px',
+        'height': '15px',
+        'font-size': '12px',
+        'background-color': '#cc3000',
+      },
+      'Free Library': {
+        'width': '15px',
+        'height': '15px',
+        'font-size': '12px',
+        'background-color': '#f99300',
+      },
+      'Public Health': {
+        'width': '15px',
+        'height': '15px',
+        'font-size': '12px',
+        'background-color': '#edc204',
+      },
+      'Parks & Recreation': {
+        'width': '15px',
+        'height': '15px',
+        'font-size': '12px',
+        'background-color': '#58c04d',
+      },
+      'Police Department': {
+        'width': '15px',
+        'height': '15px',
+        'font-size': '12px',
+        'background-color': '#2176d2',
+      },
+      'Public Property': {
+        'width': '15px',
+        'height': '15px',
+        'font-size': '12px',
+        'background-color': '#0f4d90',
+      },
+      'Other': {
+        'width': '15px',
+        'height': '15px',
+        'font-size': '12px',
+        'background-color': '#9400c6',
+      },
+      'Multiple Departments': {
+        'width': '15px',
+        'height': '15px',
+        'font-size': '12px',
+        'background-color': '#000000',
+      },
+    },
+  },
+};
