@@ -4,71 +4,22 @@ export const isArchiveProject = (project) => { return (project.project_status.to
 // reformats the site and project names to Title Case
 // uses regex to expand some abbreviations back to full words, e.g. bb => basketball
 export const formatSiteOrProjectName = (rawString) => {
-  rawString.split(' ').filter(Boolean).forEach((word, i, sentence) => {
-    const andToAmp = /(?<=\W|\b)[Aa][Nn][Dd](?=\W|\b)/;
-    const fdrToFDR = /(?<=\W|\b)[Ff][Dd][Rr](?=\W|\b)/;
-    const bbToBasketball = /(?<=\W|\b)[Bb][Bb](?=\W|\b)/;
-    const pgToPlayground = /(?<=\W|\b)([Pp][Gg])|([Pp]\/[Gg])(?=\W|\b)/;
-    const rcOrRecToRecreationCenter = /(?<=\W|\b)R([Cc]|[Ee][Cc])(?=\W|\b)/;
-    const ccOrcrcToCommunityCenter = /(?<=\W|\b)[Cc]([Cc]|[Rr][Cc])(?=\W|\b)/;
-    const crtToCenter = /(?<=\W|\b)[Cc][Tt][Rr](?=\W|\b)/;
-    const hortToHorticulture = /(?<=\W|\b)[Hh][Oo][Rr][Tt](?=\W|\b)/;
-    const rdToRoad = /(?<=\W|\b)[Rr][Dd](?=\W|\b)/;
-    const stToStreet = /(?<=\W|\b)[St][Tt](?=\W|\b)/;
-    const bldgToBuilding = /(?<=\W|\b)[Bb][Ll][Dd][Gg](?=s|\W|\b)/
-    word = word.length > 2 ? word.replace(/^[a-z]/, word.charAt(0).toUpperCase()) : word; // Capitalize first letter of all words longer than 2 letters
-    switch (true) {
-      case andToAmp.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(andToAmp, '&'))
-        break;
-      }
-      case fdrToFDR.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(fdrToFDR, 'FDR'))
-        break;
-      }
-      case bbToBasketball.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(bbToBasketball, 'Basketball'))
-        break;
-      }
-      case pgToPlayground.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(pgToPlayground, 'Playground'))
-        break;
-      }
-      case rcOrRecToRecreationCenter.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(rcOrRecToRecreationCenter, 'Recreation Center'))
-        break;
-      }
-      case ccOrcrcToCommunityCenter.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(ccOrcrcToCommunityCenter, 'Community Center'))
-        break;
-      }
-      case crtToCenter.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(crtToCenter, 'Center'))
-        break;
-      }
-      case hortToHorticulture.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(hortToHorticulture, 'Horticulture'))
-        break;
-      }
-      case rdToRoad.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(rdToRoad, 'Road'))
-        break;
-      }
-      case stToStreet.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(stToStreet, 'Street'))
-        break;
-      }
-      case bldgToBuilding.test(word): {
-        rawString = rawString.replace(sentence[i], word.replace(bldgToBuilding, 'Building'))
-        break;
-      }
-      default: {
-        rawString = rawString.replace(sentence[i], word)
-        break;
-      }
-    }
-  })
-  return rawString.replace('Center Center', 'Center').trim()  // Fixes the specific case of "rec ctr" or "rc ctr" turning to "Recreation Center Center"
+  rawString = rawString.replace(/((?<=\w)[\\/[{(])/g, " $1") // instert space before '\', '/', '[', '{', '(' if character is preceded by a word character
+  rawString = rawString.replace(/([\\/)}\]](?=\w))/g, "$1 ") // instert space after '\', '/', ']', '}', ')' if character is followed by a letter
+  rawString = rawString.replace(/(\b[a-z](?!\s))/g, (c) => c.toUpperCase()) // capitalize every first letter
+  rawString = rawString.replace(/(?<=\W|\b)[Aa][Nn][Dd](?=\W|\b)/g, '&') // and to &
+  rawString = rawString.replace(/(?<=\W|\b)[Ff][Dd][Rr](?=\W|\b)/g, 'FDR') // ensure FDR is all caps
+  rawString = rawString.replace(/(?<=\W|\b)[Bb][Bb](?=\W|\b)/g, 'Basketball') // bb to basketball
+  rawString = rawString.replace(/(?<=\W|\b)([Pp][Gg])|([Pp]\/[Gg])(?=\W|\b)/g, 'Playground') // pg to playground
+  rawString = rawString.replace(/(?<=\W|\b)R([Cc]|[Ee][Cc])(?=\W|\b)/g, 'Recreation Center') // rc or rec to recreation center
+  rawString = rawString.replace(/(?<=\W|\b)[Cc]([Cc]|[Rr][Cc])(?=\W|\b)/g, 'Community Center') // cc or crc to community center
+  rawString = rawString.replace(/(?<=\W|\b)[Cc][Tt][Rr](?=\W|\b)/g, 'Center') // ctr to center
+  rawString = rawString.replace(/(?<=\W|\b)[Hh][Oo][Rr][Tt](?=\W|\b)/g, 'Horticulture') // hort to horticulture
+  rawString = rawString.replace(/(?<=\W|\b)[Rr][Dd](?=\W|\b)/g, 'Road') // rd to road
+  rawString = rawString.replace(/(?<=\W|\b)[St][Tt](?=\W|\b)/g, 'Street') // st to street
+  rawString = rawString.replace(/(?<=\W|\b)[Bb][Ll][Dd][Gg](?=s|\W|\b)/g, 'Building') // bldg to building
+  rawString = rawString.replace('Center Center', 'Center') // Fixes the specific case of "rec ctr" or "rc ctr" turning to "Recreation Center Center"
+  return rawString.trim()
 }
 
 // gives each site a standard category value
