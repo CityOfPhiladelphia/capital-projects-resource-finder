@@ -78,19 +78,20 @@ export default {
 
       const stdStatuses = ['Construction', 'Design', 'Complete', 'Planning'];
       const statuses = new Set();
-      // const hashes = new Set();
+      const hashes = new Set();
       data.rows.forEach((site) => {
         // FIX STATUS
         site.projects.forEach((project) => {
           statuses.add(project.project_status)
           project.project_status = stdStatuses.includes(project.project_status) ? project.project_status : "Planning";
-          // hashes.has(project.fields_hash) ? console.log(project.fields_hash) : hashes.add(project.fields_hash)
+          hashes.has(project.fields_hash) ? console.log(project.fields_hash) : hashes.add(project.fields_hash)
         })
       })
 
       // console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXX")
       // console.log([...statuses])
       // console.log([...hashes])
+      // console.log(hashes.size)
 
       /*
       /////////////////////////////////////////////////////////// END TEMP FIXES //////////////////////////////////////////////////
