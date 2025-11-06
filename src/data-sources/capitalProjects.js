@@ -49,7 +49,7 @@ const sqlQuery = `
       WHERE COALESCE(sites.lat, 0) = COALESCE(project.lat, 0) AND COALESCE(sites.lon, 0) = COALESCE(project.lon, 0)
         AND sites.council_district = project.council_district
     ) AS projects
-  FROM (TABLE capital_projects_for_finder ORDER BY site_name, site_address, council_district, lat, lon) sites
+  FROM capital_projects_for_finder sites
   GROUP BY council_district, lat, lon
 `
 
