@@ -23,43 +23,52 @@ const getShortestSiteName = (siteNames) => {
 }
 
 const sqlQuery = `
-SELECT
-  sites.lat AS lat,
-  sites.lon AS lon,
-  sites.council_district AS council_district,
-  array_agg(DISTINCT sites.site_name) FILTER (WHERE sites.site_name IS NOT NULL) AS site_name,
-  array_agg(DISTINCT sites.site_category) FILTER (WHERE sites.site_category IS NOT NULL) AS site_category,
-  array_agg(DISTINCT project) AS projects
-FROM capital_projects_for_finder sq, capital_projects_for_finder pq,
-  LATERAL (
-    SELECT
-      COALESCE(sq.lat, (SELECT pq.lat WHERE sq.site_name = pq.site_name AND sq.council_district = pq.council_district AND pq.lat IS NOT NULL)) AS lat,
-      COALESCE(sq.lon, (SELECT pq.lon WHERE sq.site_name = pq.site_name AND sq.council_district = pq.council_district AND pq.lon IS NOT NULL)) AS lon,
-      sq.council_district AS council_district,
-      sq.site_name AS site_name,
-      sq.client_category AS site_category
-  ) sites,
-  LATERAL (SELECT jsonb_build_object(
-    'project_name', pq.project_name,
-    'project_address', pq.site_address,
-    'project_category', pq.client_category,
-    'project_scope', pq.project_scope,
-    'project_status', pq.project_status,
-    'project_estimated_cost', pq.project_estimated_cost,
-    'estimated_completion_season', pq.estimated_completion_season,
-    'estimated_completion_year', pq.estimated_completion_year,
-    'actual_completion', pq.actual_completion,
-    'archive_date', pq.archive_date,
-    'project_coordinator', pq.project_coordinator,
-    'inspector', pq.inspector,
-    'contact_email', pq.contact_email,
-    'website_link', pq.website_link,
-    'fields_hash', pq.fields_hash) AS project
-     ) proj
-WHERE sites.lat = COALESCE(pq.lat, (SELECT sq.lat WHERE sq.site_name = pq.site_name AND sq.council_district = pq.council_district AND sq.lat IS NOT NULL))
-  AND sites.lon = COALESCE(pq.lon, (SELECT sq.lon WHERE sq.site_name = pq.site_name AND sq.council_district = pq.council_district AND sq.lon IS NOT NULL))
-  AND sites.council_district = pq.council_district
-GROUP BY sites.council_district, sites.lat, sites.lon
+  SELECT
+    sq.lat AS lat,
+    sq.lon AS lon,
+    sq.council_district AS council_district,
+    array_agg(DISTINCT sq.site_name) FILTER (WHERE sq.site_name IS NOT NULL) AS site_name,
+    array_agg(DISTINCT sq.site_category) FILTER (WHERE sq.site_category IS NOT NULL) AS site_category,
+    array_agg(DISTINCT project) AS projects,
+    ARRAY(SELECT DISTINCT unnest(string_to_array(lower(concat_ws(',', VARIADIC array_agg(keywords))), ','))) AS keywords
+  FROM capital_projects_for_finder st, capital_projects_for_finder pt,
+    LATERAL (
+      SELECT
+        st.lat AS lat,
+        st.lon AS lon,
+        st.council_district AS council_district,
+        st.site_name AS site_name,
+        st.client_category AS site_category
+    ) sq,
+    LATERAL (SELECT jsonb_build_object(
+      'project_name', pt.project_name,
+      'project_address', pt.site_address,
+      'project_category', pt.client_category,
+      'project_scope', pt.project_scope,
+      'project_status', pt.project_status,
+      'project_estimated_cost', pt.project_estimated_cost,
+      'estimated_completion_season', pt.estimated_completion_season,
+      'estimated_completion_year', pt.estimated_completion_year,
+      'actual_completion', pt.actual_completion,
+      'archive_date', pt.archive_date,
+      'project_coordinator', pt.project_coordinator,
+      'inspector', pt.inspector,
+      'contact_email', pt.contact_email,
+      'website_link', pt.website_link,
+      'fields_hash', pt.fields_hash) AS project,
+      concat_ws(',',
+        regexp_replace(pt.project_name, '[^\\w]+', ',', 'g'),
+        regexp_replace(pt.project_scope, '[^\\w]+', ',', 'g'),
+        pt.project_coordinator,
+        pt.inspector,
+        pt.estimated_completion_year,
+        pt.estimated_completion_season
+      ) AS keywords
+      ) pq
+  WHERE COALESCE(sq.lat, 0) = COALESCE(pt.lat, 0)
+    AND COALESCE(sq.lon, 0) = COALESCE(pt.lon, 0)
+    AND sq.council_district = pt.council_district
+  GROUP BY sq.council_district, sq.lat, sq.lon
 `
 
 export default {
@@ -103,7 +112,10 @@ export default {
       console.log(hashesSet.size)
       console.log(hashesArray.length)
 
-      // console.log([...statuses])
+      console.log(hashesArray.filter((value, index) =>
+        hashesArray.indexOf(value) !== index && hashesArray.lastIndexOf(value) === index))
+
+      console.log([...statuses])
       // console.log([...hashes])
 
 
