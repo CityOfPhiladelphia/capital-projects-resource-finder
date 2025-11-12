@@ -23,35 +23,43 @@ const getShortestSiteName = (siteNames) => {
 }
 
 const sqlQuery = `
-  SELECT
-    lat,
-    lon,
-    council_district,
-    array_agg(DISTINCT site_name) FILTER (WHERE site_name IS NOT NULL) AS site_name,
-    array_agg(DISTINCT client_category) FILTER (WHERE client_category IS NOT NULL) AS site_category,
-    ARRAY(
-      SELECT jsonb_build_object(
-        'project_name', project.project_name,
-        'project_category', project.client_category,
-        'project_scope',  project.project_scope,
-        'project_status', project.project_status,
-        'project_estimated_cost', project.project_estimated_cost,
-        'estimated_completion_season', project.estimated_completion_season,
-        'estimated_completion_year', project.estimated_completion_year,
-        'actual_completion', project.actual_completion,
-        'archive_date',  project.archive_date,
-        'project_coordinator', project.project_coordinator,
-        'inspector', project.inspector,
-        'contact_email', project.contact_email,
-        'website_link', project.website_link,
-        'fields_hash', project.fields_hash)
-      FROM capital_projects_for_finder project
-      WHERE COALESCE(sites.lat, 0) = COALESCE(project.lat, 0)
-        AND COALESCE(sites.lon, 0) = COALESCE(project.lon, 0)
-        AND sites.council_district = project.council_district
-    ) AS projects
-  FROM capital_projects_for_finder sites
-  GROUP BY council_district, lat, lon
+SELECT
+  sites.lat AS lat,
+  sites.lon AS lon,
+  sites.council_district AS council_district,
+  array_agg(DISTINCT sites.site_name) FILTER (WHERE sites.site_name IS NOT NULL) AS site_name,
+  array_agg(DISTINCT sites.site_category) FILTER (WHERE sites.site_category IS NOT NULL) AS site_category,
+  array_agg(DISTINCT project) AS projects
+FROM capital_projects_for_finder sq, capital_projects_for_finder pq,
+  LATERAL (
+    SELECT
+      COALESCE(sq.lat, (SELECT pq.lat WHERE sq.site_name = pq.site_name AND sq.council_district = pq.council_district AND pq.lat IS NOT NULL)) AS lat,
+      COALESCE(sq.lon, (SELECT pq.lon WHERE sq.site_name = pq.site_name AND sq.council_district = pq.council_district AND pq.lon IS NOT NULL)) AS lon,
+      sq.council_district AS council_district,
+      sq.site_name AS site_name,
+      sq.client_category AS site_category
+  ) sites,
+  LATERAL (SELECT jsonb_build_object(
+    'project_name', pq.project_name,
+    'project_address', pq.site_address,
+    'project_category', pq.client_category,
+    'project_scope', pq.project_scope,
+    'project_status', pq.project_status,
+    'project_estimated_cost', pq.project_estimated_cost,
+    'estimated_completion_season', pq.estimated_completion_season,
+    'estimated_completion_year', pq.estimated_completion_year,
+    'actual_completion', pq.actual_completion,
+    'archive_date', pq.archive_date,
+    'project_coordinator', pq.project_coordinator,
+    'inspector', pq.inspector,
+    'contact_email', pq.contact_email,
+    'website_link', pq.website_link,
+    'fields_hash', pq.fields_hash) AS project
+     ) proj
+WHERE sites.lat = COALESCE(pq.lat, (SELECT sq.lat WHERE sq.site_name = pq.site_name AND sq.council_district = pq.council_district AND sq.lat IS NOT NULL))
+  AND sites.lon = COALESCE(pq.lon, (SELECT sq.lon WHERE sq.site_name = pq.site_name AND sq.council_district = pq.council_district AND sq.lon IS NOT NULL))
+  AND sites.council_district = pq.council_district
+GROUP BY sites.council_district, sites.lat, sites.lon
 `
 
 export default {
@@ -79,20 +87,25 @@ export default {
 
       const stdStatuses = ['Construction', 'Design', 'Complete', 'Planning'];
       const statuses = new Set();
-      const hashes = new Set();
+      const hashesSet = new Set();
+      const hashesArray = [];
       data.rows.forEach((site) => {
         // FIX STATUS
         site.projects.forEach((project) => {
           statuses.add(project.project_status)
           project.project_status = stdStatuses.includes(project.project_status) ? project.project_status : "Planning";
-          hashes.has(project.fields_hash) ? console.log(project.fields_hash) : hashes.add(project.fields_hash)
+          hashesSet.add(project.fields_hash);
+          hashesArray.push(project.fields_hash)
         })
       })
 
-      // console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXX")
+      console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXX")
+      console.log(hashesSet.size)
+      console.log(hashesArray.length)
+
       // console.log([...statuses])
       // console.log([...hashes])
-      // console.log(hashes.size)
+
 
       /*
       /////////////////////////////////////////////////////////// END TEMP FIXES //////////////////////////////////////////////////

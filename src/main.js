@@ -189,16 +189,12 @@ const $config = {
       },
       {
         type: 'value',
-        field: 'site_category',
-        translate: true,
-      },
-      {
-        type: 'value',
         field: 'site_name',
       },
       {
         type: 'value',
-        field: 'site_address',
+        field: 'site_category',
+        translate: true,
       },
       {
         type: 'array',
