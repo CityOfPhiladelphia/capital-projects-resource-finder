@@ -7,9 +7,9 @@ import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
 import { format } from 'date-fns';
 
-import { formatSiteOrProjectName as formatProjectName } from '../general/helperFunctions'
-import { normalizeCategory as normalizeProjectCategory } from '../general/helperFunctions'
-import { isArchiveProject } from '../general/helperFunctions'
+import { formatString as formatProjectName } from '../composables/formatString'
+import { normalizeCategory as normalizeProjectCategory } from '../composables/normalizeCategory'
+import { isArchiveProject } from '../composables/isArchiveProject'
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();

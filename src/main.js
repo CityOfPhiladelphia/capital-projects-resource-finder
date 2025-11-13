@@ -36,7 +36,6 @@ import pinboard from '@phila/pinboard';
 // import pinboard from '../../vue3-pinboard/dist';
 
 import legendControl from './general/legendControl';
-import { isArchiveProject } from './general/helperFunctions'
 
 // data-sources
 import capitalProjects from './data-sources/capitalProjects';
@@ -47,107 +46,15 @@ import i18n from './i18n/i18n';
 
 import { markRaw } from 'vue';
 
+// function imports
+import { isArchiveProject } from './composables/isArchiveProject';
+import { statusToggleRefine } from './composables/statusToggleRefine';
+import { getProjectStatusBitArray } from './composables/getProjectStatusBitArray';
+
 const customComps = markRaw({
   'customGreeting': customGreeting,
   'expandCollapseContent': expandCollapseContent,
 });
-
-//
-// FUNCTION UTILITIES TO PASS TO PINBOARD TO CUSTOMIZE ITS BEHAVIOR FOR THE CAP FINDER'S REFINE
-//
-
-// filterLocationProjects function gets passed to Pinboard to refine the projects at sites according to their archived status, or (inclusive) based on their project status
-const statusToggleRefine = (locations, selectedServicesArray) => {
-  // entries from the selectedServicesArray are split into their refine group and value
-  const refineGroups = new Set(); // set ensures that all refine group entries are unique
-  const selectedStatusesArray = Array.from(selectedServicesArray, (service) => {
-    const splitService = service.split('_');
-    refineGroups.add(splitService[0])
-    return splitService[1];
-  })
-
-  // check if the selectedStatusesArray includes 'archive'
-  // if so return only sites with archive projects, otherwise only sites with active projects
-  const archiveFilteredLocations = filterArchived(locations, selectedStatusesArray.includes('archive'))
-
-  // if refineGroups does not include 'status' or if selectedStatusesArray includes 'archive', returns because no further refining is necessary
-  if (![...refineGroups].includes('status') || selectedStatusesArray.includes('archive')) { return archiveFilteredLocations }
-
-  // filter sites' projects based on the status checkboxes that are selected
-  // does largely the same thing as filterArchived, but for the other project statuses instead
-  const filteredSites = [];
-  archiveFilteredLocations.forEach((location) => {
-    const filteredProjects = location.properties.projects.filter((project) => selectedStatusesArray.includes(project.project_status.toLowerCase()))
-    if (filteredProjects.length) {
-      const locationCopy = JSON.parse(JSON.stringify(location));
-      locationCopy.properties.projects = filteredProjects;
-      filteredSites.push(locationCopy);
-    }
-  })
-  return filteredSites;
-}
-
-// called by statusToggleRefine
-// takes in locations and archive flag
-// filters each site's projects based on the if the result of isArchiveProject function matches the flag
-// if filteredProjects is not empty, a copy of the site is made and the projects are replaced with the filtered projects
-// site is then push or filtered sites array, which the ultimately function returns
-const filterArchived = (locations, archiveToggle) => {
-  const filteredSites = [];
-  locations.forEach((location) => {
-    const filteredProjects = location.properties.projects.filter((project) => isArchiveProject(project) === archiveToggle)
-    if (filteredProjects.length) {
-      const locationCopy = JSON.parse(JSON.stringify(location));
-      locationCopy.properties.projects = filteredProjects;
-      filteredSites.push(locationCopy);
-    }
-  })
-  return filteredSites;
-}
-
-// function for getting the counts of locations to return based on the status toggle
-// data structure is a bit array, where each set bit corresponds to a site having an archived or active status project at it
-// set bits are summed in Pinboard to display the correct numbers in the LocationsPanel message
-// because sites can have both active and archived projects, bit arrays for each toggle state are calculated to account for overlap
-const getProjectStatusBitArray = (locations) => {
-  const bufferLength = Math.ceil(locations.length / 8); // ArrayBuffers are declared in 8-bit chunks
-  const bufferToggleOff = new ArrayBuffer(bufferLength); // buffers for toggle on and off statuses
-  const bufferToggleOn = new ArrayBuffer(bufferLength);
-  const viewToggleOff = new DataView(bufferToggleOff); // DataViews for each ArrayBuffer
-  const viewToggleOn = new DataView(bufferToggleOn);
-
-  let bitsToSet_toggleOn, bitsToSet_toggleOff = 0; // accumulate set bits before being pushed into buffer
-  let offset = 0; // tracks the offset for setting a portion of the ArrayBuffer
-  let setBit = 1; // gets shifted to the left once every cycle to set bits in the views
-
-  // for each location, check if any project at site is archived and set a bit if so
-  // do the same to set bits for non-archived
-  // both are required since a single site may have a mix of archived and active projects
-  locations.forEach((location, i) => {
-    bitsToSet_toggleOff |= location.properties.projects.some((project) => !isArchiveProject(project)) ? setBit : 0;
-    bitsToSet_toggleOn |= location.properties.projects.some((project) => isArchiveProject(project)) ? setBit : 0;
-    setBit <<= 1; // shift setBit to the left: 00000010 <<= 00000001
-
-    // on 8th iteration, push bits to buffers and reset accumulators and setBit
-    if (i % 8 === 7) {
-      viewToggleOff.setUint8(offset, bitsToSet_toggleOff);
-      viewToggleOn.setUint8(offset, bitsToSet_toggleOn);
-      bitsToSet_toggleOff = bitsToSet_toggleOn = 0;
-      setBit = 1;
-      offset++; // increment offset for next push to buffers
-    }
-  })
-
-  if (bitsToSet_toggleOff | bitsToSet_toggleOn) { // push remaining bits to buffers if forEach ended when i % 8 != 7
-    viewToggleOff.setUint8(offset, bitsToSet_toggleOff);
-    viewToggleOn.setUint8(offset, bitsToSet_toggleOn);
-  }
-
-  return { // returns object with toggle status keys for each ArrayBuffer
-    toggleOff: bufferToggleOff,
-    toggleOn: bufferToggleOn
-  }
-}
 
 const $config = {
   publicPath: import.meta.env.VITE_PUBLICPATH,
@@ -195,6 +102,10 @@ const $config = {
         type: 'value',
         field: 'site_category',
         translate: true,
+      },
+      {
+        type: 'array',
+        field: 'keywords'
       },
       {
         type: 'array',
