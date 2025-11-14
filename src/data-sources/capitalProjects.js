@@ -10,7 +10,7 @@ const sqlQuery = `
     array_agg(DISTINCT sq.site_name) AS site_name,
     array_agg(DISTINCT sq.site_category) AS site_category,
     array_agg(DISTINCT project) AS projects,
-    ARRAY( SELECT
+    ARRAY( SELECT DISTINCT
       unnest(string_to_array(lower(concat_ws(',', VARIADIC array_agg(keywords))), ','))
     ) AS keywords
   FROM capital_projects_for_finder st, capital_projects_for_finder pt,
