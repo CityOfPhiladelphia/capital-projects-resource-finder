@@ -93,12 +93,11 @@ export default {
         })
       })
 
-      console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXX")
-      console.log([...statuses])
-      console.log(hashesSet.size)
-      console.log(hashesArray.length)
-      console.log("REPEATED PROJECTS: ", hashesArray.filter((value, index) =>
-        hashesArray.indexOf(value) !== index && hashesArray.lastIndexOf(value) === index))
+      // console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXX")
+      // console.log([...statuses])
+      // console.log(hashesSet.size)
+      // console.log(hashesArray.length)
+      // console.log("REPEATED PROJECTS: ", hashesArray.filter((value, index) => hashesArray.indexOf(value) !== index && hashesArray.lastIndexOf(value) === index))
 
       /*
       /////////////////////////////////////////////////////////// END TEMP FIXES //////////////////////////////////////////////////
