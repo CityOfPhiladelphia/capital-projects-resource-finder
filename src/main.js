@@ -1,10 +1,3 @@
-// this is the base-config for resource-finder
-// the point of this file is that it will move outside the project
-// (so that settings we put in it can be used by other projects)
-// and be pulled in with an axios call or something
-// (we might not need to use axios with new vue async tools)
-// if that is not needed, we can move this info to main.js
-
 import isMac from './util/is-mac';
 if (isMac()) {
   import('./assets/mac-style.scss')
@@ -35,21 +28,22 @@ import pinboard from '@phila/pinboard';
 // import pinboard from '../node_modules/@phila/pinboard/src/main.js';
 // import pinboard from '../../vue3-pinboard/dist';
 
-import legendControl from './general/legendControl';
-
 // data-sources
-import capitalProjects from './data-sources/capitalProjects';
+import capitalProjects from '@/data-sources/capitalProjects';
+import legendControl from '@/general/legendControl';
 
-import customGreeting from './components/CustomGreeting.vue';
-import expandCollapseContent from './components/ExpandCollapseContent.vue';
-import i18n from './i18n/i18n';
+// component imports
+import customGreeting from '@/components/CustomGreeting.vue';
+import expandCollapseContent from '@/components/ExpandCollapseContent.vue';
 
-import { markRaw } from 'vue';
+// translation import
+import i18n from '@/i18n/i18n';
 
 // function imports
-import { isArchiveProject } from './composables/isArchiveProject';
-import { statusToggleRefine } from './composables/statusToggleRefine';
-import { getProjectStatusBitArray } from './composables/getProjectStatusBitArray';
+import { markRaw } from 'vue';
+import { isArchiveProject } from '@/composables/isArchiveProject';
+import { statusToggleRefine } from '@/composables/statusToggleRefine';
+import { getProjectStatusBitArray } from '@/composables/getProjectStatusBitArray';
 
 const customComps = markRaw({
   'customGreeting': customGreeting,

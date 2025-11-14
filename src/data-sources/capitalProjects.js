@@ -1,5 +1,5 @@
-import { getShortestSiteName } from '../composables/getShortestSiteName';
-import { normalizeCategory as normalizeSiteCategory } from '../composables/normalizeCategory';
+import { getShortestSiteName } from '@/composables/getShortestSiteName';
+import { normalizeCategory as normalizeSiteCategory } from '@/composables/normalizeCategory';
 import { expandContractions } from '@/composables/expandContractions';
 
 const sqlQuery = `
@@ -7,8 +7,8 @@ const sqlQuery = `
     sq.lat AS lat,
     sq.lon AS lon,
     sq.council_district AS council_district,
-    array_agg(DISTINCT sq.site_name) FILTER (WHERE sq.site_name IS NOT NULL) AS site_name,
-    array_agg(DISTINCT sq.site_category) FILTER (WHERE sq.site_category IS NOT NULL) AS site_category,
+    array_agg(DISTINCT sq.site_name) AS site_name,
+    array_agg(DISTINCT sq.site_category) AS site_category,
     array_agg(DISTINCT project) AS projects,
     ARRAY( SELECT
       unnest(string_to_array(lower(concat_ws(',', VARIADIC array_agg(keywords))), ','))
