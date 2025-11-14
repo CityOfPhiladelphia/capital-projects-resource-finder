@@ -29,7 +29,7 @@ export default{
       "li4": "Carreteras y sistemas de transporte gestionados por la ciudad"
     },
     "p2": "En asociación con otras agencias municipales, la Oficina del Programa <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>Capital</a> administra las operaciones de más de 200 proyectos de capital en toda la ciudad. ",
-    "h3_2": "Uso del buscador de proyectos de capital",
+    "h3_2": "Uso del buscador de recursos para proyectos de capital",
     "p3": "Utilice este buscador para localizar los proyectos de capital que se llevan a cabo en instalaciones de propiedad municipal en Filadelfia. Por ejemplo, puede encontrar proyectos activos en:",
     "ul2": {
       "li": "Parques y centros recreativos",
@@ -46,22 +46,32 @@ export default{
   "status": {
     "category": "Estado",
     "active": "Proyectos activos",
-    "archived": "Proyectos archivados",
+    "archive": "Ver archivo",
+    "archiveAlt": "Archivado",
     "design": "Diseño",
     "planning": "Planificación",
     "construction": "Construcción",
     "complete": "Completa"
   },
+  "status_description": {
+    "active": "Estos proyectos se encuentran actualmente en marcha en instalaciones de propiedad municipal.",
+    "archive": "Estos proyectos se completaron en los últimos seis meses.",
+    "planning": "El proyecto se encuentra en fase de planificación. Es posible que se solicite la opinión del público.",
+    "design": "Se desarrollan los diseños o planes del proyecto. Se puede solicitar la opinión del público.",
+    "construction": "La construcción está en marcha.",
+    "complete": "El proyecto está completo."
+  },
   "projectCategory": {
     "category": "Categoría de proyecto",
-    "parksRecreation": "Parques y recreación",
-    "publicHealth": "Salud pública",
-    "humanServices": "Servicios humanos",
-    "freeLibrary": "Biblioteca gratuita",
-    "fireDepartment": "Departamento de Bomberos",
-    "policeDepartment": "Departamento de Policía",
-    "publicProperty": "Propiedad pública",
-    "other": "Otros"
+    "parks": "Parques y recreación",
+    "health": "Salud pública",
+    "human": "Servicios humanos",
+    "library": "Biblioteca gratuita",
+    "fire": "Departamento de Bomberos",
+    "police": "Departamento de Policía",
+    "property": "Propiedad pública",
+    "other": "Otros",
+    "multiple": "Múltiples departamentos"
   },
   "councilDistrict": {
     "category": "Distrito del Consejo",
@@ -76,24 +86,31 @@ export default{
     "district9": "Distrito 9",
     "district10": "Distrito 10"
   },
-  "Philadephia Parks and Recreation": "Parques y Recreación de Filadelfia",
   "card": {
+    "address": "Dirección",
     "category": "Categoría",
-    "district": "Distrito",
+    "district": "Distrito del Consejo",
     "budget": "Presupuesto",
-    "section_description": "Descripción",
-    "description_text": "Este breve texto descriptivo proporcionará un contexto de fondo sobre el proyecto y debe tener más de dos o tres oraciones.",
+    "contact": "Contactar",
+    "section_description": "Descripción del proyecto",
+    "improvements_include": "Las mejoras incluyen:",
     "section_status": "Estado",
     "status_text": "Este breve texto descriptivo proporcionará un contexto adicional para ayudar al usuario a interpretar este componente de estado.",
     "current_stage": "Etapa actual",
-    "status_descriptions": {
-      "planning": "El proyecto se encuentra en fase de planificación. Es posible que se solicite la opinión del público.",
-      "design": "Se desarrollan los diseños o planes del proyecto. Se puede solicitar la opinión del público.",
-      "construction": "La construcción está en marcha.",
-      "complete": "El proyecto está completo."
+    "status_description": {
+      "planning": "Estamos definiendo las necesidades y el alcance del proyecto. Es posible que se solicite la opinión del público.",
+      "design": "Estamos desarrollando los diseños o planes del proyecto. Es posible que se solicite la opinión del público.",
+      "construction": "Hemos empezado la construcción. Según el tipo de trabajo, los viajes en la zona pueden verse afectados.",
+      "complete": "El proyecto está completo. Es posible que sigamos compartiendo actualizaciones sobre el trabajo terminado."
     },
-    "estimated_completion_description": "Finalización estimada",
-    "estimated_completion_text": "Este breve texto descriptivo proporcionará un contexto adicional para ayudar al usuario a interpretar esta tabla y las etiquetas.",
-    "project_team_description": "Equipo del proyecto"
+    "completed": "Completado",
+    "estimated_completion": "Finalización estimada",
+    "archived_on": "Este proyecto se archivó el",
+    "archive_message": "Los proyectos se archivan seis meses después de su finalización.",
+    "project": {
+      "team": "Equipo del proyecto",
+      "coordinator": "Coordinadora del proyecto",
+      "inspector": "Inspector"
+    }
   }
 }
