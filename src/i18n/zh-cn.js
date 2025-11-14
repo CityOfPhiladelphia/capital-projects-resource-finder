@@ -29,7 +29,7 @@ export default{
       "li4": "城市管理的道路和交通系统"
     },
     "p2": "<a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>资本计划办公室与其他城市机构合作，</a>管理全市200多个基本建设项目的运营。",
-    "h3_2": "使用资本项目查找器",
+    "h3_2": "使用资本项目资源查找器",
     "p3": "使用此查找器查找费城各城市自有设施中发生的资本项目。例如，你可以在以下地址找到活跃的项目：",
     "ul2": {
       "li": "公园和娱乐中心",
@@ -46,22 +46,32 @@ export default{
   "status": {
     "category": "状态",
     "active": "活跃的项目",
-    "archived": "存档的项目",
+    "archive": "查看档案",
+    "archiveAlt": "已存档",
     "design": "设计",
     "planning": "规划",
     "construction": "施工",
     "complete": "已完成"
   },
+  "status_description": {
+    "active": "这些项目目前正在城市拥有的设施中进行。",
+    "archive": "这些项目是在过去六个月内完成的。",
+    "planning": "该项目处于规划阶段。可以要求公众提供意见。",
+    "design": "项目设计或计划已制定。可以要求公众提供意见。",
+    "construction": "施工正在进行中。",
+    "complete": "该项目已完成。"
+  },
   "projectCategory": {
     "category": "项目类别",
-    "parksRecreation": "公园与娱乐",
-    "publicHealth": "公共卫生",
-    "humanServices": "人类服务",
-    "freeLibrary": "免费图书馆",
-    "fireDepartment": "消防部门",
-    "policeDepartment": "警察局",
-    "publicProperty": "公共财产",
-    "other": "其他"
+    "parks": "公园与娱乐",
+    "health": "公共卫生",
+    "human": "人类服务",
+    "library": "免费图书馆",
+    "fire": "消防部门",
+    "police": "警察局",
+    "property": "公共财产",
+    "other": "其他",
+    "multiple": "多个部门"
   },
   "councilDistrict": {
     "category": "议会区",
@@ -76,24 +86,31 @@ export default{
     "district9": "第 9 区",
     "district10": "第 10 区"
   },
-  "Philadephia Parks and Recreation": "费城公园和娱乐场所",
   "card": {
+    "address": "地址",
     "category": "类别",
-    "district": "地区",
+    "district": "议会区",
     "budget": "预算",
-    "section_description": "描述",
-    "description_text": "这段简短的描述文本将提供有关该项目的背景信息，其长度应超过两到三句话。",
+    "contact": "联系我们",
+    "section_description": "项目描述",
+    "improvements_include": "改进包括：",
     "section_status": "状态",
     "status_text": "这个简短的描述文本将提供额外的背景信息，以帮助用户解释这个状态组件。",
     "current_stage": "当前阶段",
-    "status_descriptions": {
-      "planning": "该项目处于规划阶段。可以要求公众提供意见。",
-      "design": "项目设计或计划已制定。可以要求公众提供意见。",
-      "construction": "施工正在进行中。",
-      "complete": "该项目已完成。"
+    "status_description": {
+      "planning": "我们正在定义项目需求和范围。可以要求公众提供意见。",
+      "design": "我们正在制定项目设计或计划。可以要求公众提供意见。",
+      "construction": "我们已经开始施工。视工作类型而定，该地区的出行可能会受到影响。",
+      "complete": "该项目已完成。我们可能会继续分享有关已完成工作的最新信息。"
     },
-    "estimated_completion_description": "预计完工",
-    "estimated_completion_text": "此简短的描述文本将提供额外的背景信息，以帮助用户解释此表和标签",
-    "project_team_description": "项目组"
+    "completed": "已完成",
+    "estimated_completion": "预计完工",
+    "archived_on": "该项目存档于",
+    "archive_message": "项目在完成六个月后存档。",
+    "project": {
+      "team": "项目组",
+      "coordinator": "项目协调员",
+      "inspector": "检查员"
+    }
   }
 }

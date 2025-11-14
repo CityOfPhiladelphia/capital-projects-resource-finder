@@ -83,6 +83,4 @@ let i18n = {
   },
 };
 
-// console.log('injury prevention i18n.js, i18n:', i18n);
-
 export default i18n;

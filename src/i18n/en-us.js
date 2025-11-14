@@ -86,7 +86,6 @@ export default{
     "district9": "District 9",
     "district10": "District 10"
   },
-  "Philadephia Parks and Recreation": "Philadephia Parks and Recreation",
   "card": {
     "address": "Address",
     "category": "Category",

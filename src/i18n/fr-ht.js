@@ -29,7 +29,7 @@ export default{
       "li4": "Wout ki jere nan vil ak sistèm transpò"
     },
     "p2": "An patenarya ak lòt ajans vil, Biwo Pw <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>ogram Kapital</a> la jere operasyon yo pou plis pase 200 pwojè kapital nan tout lavil la. ",
-    "h3_2": "Sèvi ak chèche pwojè kapital la",
+    "h3_2": "Sèvi ak Resous Chèche Pwojè Kapital la",
     "p3": "Sèvi ak chèche sa a pou lokalize pwojè kapital k ap pran plas nan enstalasyon City-posede atravè Philadelphia. Pou egzanp, ou ka jwenn pwojè aktif nan:",
     "ul2": {
       "li": "Pak ak sant rekreyasyon",
@@ -46,22 +46,32 @@ export default{
   "status": {
     "category": "Estati",
     "active": "Pwojè aktif",
-    "archived": "Pwojè achiv",
+    "archive": "Gade Achiv",
+    "archiveAlt": "Achiv",
     "design": "Konsepsyon",
     "planning": "Planifikasyon",
     "construction": "Konstriksyon",
     "complete": "Ranpli"
   },
+  "status_description": {
+    "active": "Pwojè sa yo kounye a sou pye nan enstalasyon vil posede yo.",
+    "archive": "Pwojè sa yo te ranpli nan sis dènye mwa yo.",
+    "planning": "Pwojè a se nan faz planifikasyon an. Ka mande opinyon piblik.",
+    "design": "Desen pwojè yo oswa plan yo devlope. Ka mande opinyon piblik.",
+    "construction": "Konstriksyon se sou pye.",
+    "complete": "Pwojè a se konplè."
+  },
   "projectCategory": {
     "category": "Kategori pwojè",
-    "parksRecreation": "Pak & Rekreyasyon",
-    "publicHealth": "Sante Piblik",
-    "humanServices": "Sèvis Imèn",
-    "freeLibrary": "Bibliyotèk gratis",
-    "fireDepartment": "Depatman Ponpye",
-    "policeDepartment": "Depatman Lapolis",
-    "publicProperty": "pwopriyete piblik",
-    "other": "Lòt"
+    "parks": "Pak & Rekreyasyon",
+    "health": "Sante Piblik",
+    "human": "Sèvis Imèn",
+    "library": "Bibliyotèk gratis",
+    "fire": "Depatman Ponpye",
+    "police": "Depatman Lapolis",
+    "property": "pwopriyete piblik",
+    "other": "Lòt",
+    "multiple": "Depatman miltip"
   },
   "councilDistrict": {
     "category": "Distri Konsèy",
@@ -76,24 +86,31 @@ export default{
     "district9": "Distri 9",
     "district10": "Distri 10"
   },
-  "Philadephia Parks and Recreation": "Pak Philadephia ak rekreyasyon",
   "card": {
+    "address": "Adrès",
     "category": "Kategori",
-    "district": "Distri",
+    "district": "Distri Konsèy",
     "budget": "Bidjè",
-    "section_description": "Deskripsyon",
-    "description_text": "Sa a tèks deskripsyon kout pral bay kontèks background sou pwojè a epi yo ta dwe pi long pase de a twa fraz nan longè.",
+    "contact": "Kontakte",
+    "section_description": "Deskripsyon pwojè",
+    "improvements_include": "Amelyorasyon gen ladan:",
     "section_status": "Estati",
     "status_text": "Tèks deskripsyon kout sa a pral bay kontèks adisyonèl ede yon itilizatè entèprete eleman estati sa a.",
     "current_stage": "Etap aktyèl",
-    "status_descriptions": {
-      "planning": "Pwojè a se nan faz planifikasyon an. Ka mande opinyon piblik.",
-      "design": "Desen pwojè yo oswa plan yo devlope. Ka mande opinyon piblik.",
-      "construction": "Konstriksyon se sou pye.",
-      "complete": "Pwojè a se konplè."
+    "status_description": {
+      "planning": "Nou ap defini bezwen pwojè yo ak sijè ki abòde yo. Ka mande opinyon piblik.",
+      "design": "Nou ap devlope desen yo pwojè oswa plan yo. Ka mande opinyon piblik.",
+      "construction": "Nou te kòmanse konstriksyon. Tou depan de kalite travay la, vwayaj pouvwa dwe afekte nan zòn nan.",
+      "complete": "Pwojè a se konplè. Nou ka kontinye pataje dènye enfòmasyon sou travay la fini."
     },
-    "estimated_completion_description": "Estime fini",
-    "estimated_completion_text": "Tèks deskripsyon kout sa a pral bay kontèks adisyonèl ede yon itilizatè entèprete tab sa a ak etikèt yo",
-    "project_team_description": "Ekip Pwojè"
+    "completed": "Konplete",
+    "estimated_completion": "Estime fini",
+    "archived_on": "Pwojè sa a te achiv sou",
+    "archive_message": "Pwojè yo achiv sis mwa apre yo fin fini.",
+    "project": {
+      "team": "Ekip pwojè",
+      "coordinator": "Kòdonatè Pwoj",
+      "inspector": "Enspektè"
+    }
   }
 }

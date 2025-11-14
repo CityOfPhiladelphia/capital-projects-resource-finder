@@ -29,7 +29,7 @@ export default{
       "li4": "Đường bộ và hệ thống giao thông do thành phố quản lý"
     },
     "p2": "Hợp tác với các cơ quan khác của Thành phố, Văn phòng Chương trình Thủ <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>đô</a> quản lý hoạt động cho hơn 200 dự án vốn trên toàn thành phố. ",
-    "h3_2": "Sử dụng công cụ tìm dự án vốn",
+    "h3_2": "Sử dụng Công cụ tìm tài nguyên dự án vốn",
     "p3": "Sử dụng công cụ tìm kiếm này để xác định vị trí các dự án vốn đang diễn ra tại các cơ sở thuộc sở hữu của Thành phố trên khắp Philadelphia. Ví dụ: bạn có thể tìm thấy các dự án đang hoạt động tại:",
     "ul2": {
       "li": "Công viên và trung tâm giải trí",
@@ -46,22 +46,32 @@ export default{
   "status": {
     "category": "Trạng thái",
     "active": "Dự án đang hoạt động",
-    "archived": "Dự án lưu trữ",
+    "archive": "Xem Kho Lưu Trữ",
+    "archiveAlt": "Đã lưu trữ",
     "design": "Thiết kế",
     "planning": "Lập kế hoạch",
     "construction": "Xây dựng",
     "complete": "Hoàn thành"
   },
+  "status_description": {
+    "active": "Các dự án này hiện đang được tiến hành tại các cơ sở thuộc sở hữu của Thành phố.",
+    "archive": "Các dự án này đã được hoàn thành trong vòng sáu tháng qua.",
+    "planning": "Dự án đang trong giai đoạn lập kế hoạch. Thông tin đầu vào công khai có thể được yêu cầu.",
+    "design": "Các thiết kế hoặc kế hoạch dự án được phát triển. Thông tin đầu vào công khai có thể được yêu cầu.",
+    "construction": "Việc xây dựng đang được tiến hành.",
+    "complete": "Dự án đã hoàn thành."
+  },
   "projectCategory": {
     "category": "Danh mục dự án",
-    "parksRecreation": "Công viên & Giải trí",
-    "publicHealth": "Y tế công cộng",
-    "humanServices": "Dịch vụ nhân sự",
-    "freeLibrary": "Thư viện miễn phí",
-    "fireDepartment": "Sở cứu hỏa",
-    "policeDepartment": "Sở cảnh sát",
-    "publicProperty": "Tài sản công cộng",
-    "other": "Khác"
+    "parks": "Công viên & Giải trí",
+    "health": "Y tế công cộng",
+    "human": "Dịch vụ nhân sự",
+    "library": "Thư viện miễn phí",
+    "fire": "Sở cứu hỏa",
+    "police": "Sở cảnh sát",
+    "property": "Tài sản công cộng",
+    "other": "Khác",
+    "multiple": "Nhiều phòng ban"
   },
   "councilDistrict": {
     "category": "Quận Hội đồng",
@@ -76,24 +86,31 @@ export default{
     "district9": "Quận 9",
     "district10": "Quận 10"
   },
-  "Philadephia Parks and Recreation": "Công viên và giải trí Philadephia",
   "card": {
+    "address": "Địa chỉ",
     "category": "Thể loại",
-    "district": "Quận",
+    "district": "Quận Hội đồng",
     "budget": "Ngân sách",
-    "section_description": "Mô tả",
-    "description_text": "Văn bản mô tả ngắn này sẽ cung cấp bối cảnh nền về dự án và nên dài hơn hai đến ba câu.",
+    "contact": "Liên hệ",
+    "section_description": "Mô tả dự án",
+    "improvements_include": "Các cải tiến bao gồm:",
     "section_status": "Trạng thái",
     "status_text": "Văn bản mô tả ngắn này sẽ cung cấp ngữ cảnh bổ sung để giúp người dùng giải thích thành phần trạng thái này.",
     "current_stage": "Giai đoạn hiện tại",
-    "status_descriptions": {
-      "planning": "Dự án đang trong giai đoạn lập kế hoạch. Thông tin đầu vào công khai có thể được yêu cầu.",
-      "design": "Các thiết kế hoặc kế hoạch dự án được phát triển. Thông tin đầu vào công khai có thể được yêu cầu.",
-      "construction": "Việc xây dựng đang được tiến hành.",
-      "complete": "Dự án đã hoàn thành."
+    "status_description": {
+      "planning": "Chúng tôi đang xác định nhu cầu và phạm vi của dự án. Thông tin đầu vào công khai có thể được yêu cầu.",
+      "design": "Chúng tôi đang phát triển các thiết kế hoặc kế hoạch dự án. Thông tin đầu vào công khai có thể được yêu cầu.",
+      "construction": "Chúng tôi đã bắt đầu xây dựng. Tùy thuộc vào loại công việc, việc đi lại có thể bị ảnh hưởng trong khu vực.",
+      "complete": "Dự án đã hoàn thành. Chúng tôi có thể tiếp tục chia sẻ cập nhật về công việc đã hoàn thành."
     },
-    "estimated_completion_description": "Dự kiến hoàn thành",
-    "estimated_completion_text": "Văn bản mô tả ngắn này sẽ cung cấp ngữ cảnh bổ sung để giúp người dùng giải thích bảng này và các nhãn",
-    "project_team_description": "Nhóm dự án"
+    "completed": "Đã hoàn thành",
+    "estimated_completion": "Dự kiến hoàn thành",
+    "archived_on": "Dự án này đã được lưu trữ trên",
+    "archive_message": "Các dự án được lưu trữ sáu tháng sau khi hoàn thành.",
+    "project": {
+      "team": "Đội ngũ dự án",
+      "coordinator": "Điều phối viên dự án",
+      "inspector": "Thanh tra"
+    }
   }
 }

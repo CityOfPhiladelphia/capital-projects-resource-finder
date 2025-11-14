@@ -7,9 +7,9 @@ import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
 import { format } from 'date-fns';
 
-import { formatSiteOrProjectName as formatProjectName } from '../general/helperFunctions'
-import { normalizeCategory as normalizeProjectCategory } from '../general/helperFunctions'
-import { isArchiveProject } from '../general/helperFunctions'
+import { formatString as formatProjectName } from '@/composables/formatString'
+import { normalizeCategory as normalizeProjectCategory } from '@/composables/normalizeCategory'
+import { isArchiveProject } from '@/composables/isArchiveProject'
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -239,12 +239,12 @@ const toSentenceCaseNoEnclosing = (rawString) => {
 
     <div class="columns top-section">
       <div class="column is-6">
-        <div v-if="selectedProject && item.properties.site_address" class="columns is-mobile">
+        <div v-if="selectedProject && selectedProject.project_address" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="map-marker-alt" />
           </div>
           <div class="column is-11">
-            <b>{{ t('card.address') }}: </b> {{ parseAddress(item.properties.site_address) }}
+            <b>{{ t('card.address') }}: </b> {{ parseAddress(selectedProject.project_address) }}
           </div>
         </div>
 
