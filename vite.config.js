@@ -44,11 +44,11 @@ export default defineConfig(({ mode }) => {
         // ],
       }),
     ],
-    // base: 'testing/primary-care/',
     base: env.VITE_PUBLICPATH,
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+        '@pinboard': env.VITE_LINKED ? fileURLToPath(new URL('./node_modules/@phila/pinboard/src/main.js', import.meta.url)) : '@phila/pinboard',
       }
     },
     optimizeDeps: {
