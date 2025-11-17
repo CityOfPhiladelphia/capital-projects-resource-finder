@@ -4,23 +4,16 @@ import { expandContractions } from '@/composables/expandContractions';
 
 const sqlQuery = `
   SELECT
-    sq.lat AS lat,
-    sq.lon AS lon,
-    sq.council_district AS council_district,
-    array_agg(DISTINCT sq.site_name) AS site_name,
-    array_agg(DISTINCT sq.site_category) AS site_category,
+    st.lat AS lat,
+    st.lon AS lon,
+    st.council_district AS council_district,
+    array_agg(DISTINCT st.site_name) AS site_name,
+    array_agg(DISTINCT st.client_category) AS site_category,
     array_agg(DISTINCT project) AS projects,
     ARRAY( SELECT DISTINCT
       unnest(string_to_array(lower(concat_ws(',', VARIADIC array_agg(keywords))), ','))
     ) AS keywords
   FROM capital_projects_for_finder st, capital_projects_for_finder pt,
-    LATERAL( SELECT
-      st.lat AS lat,
-      st.lon AS lon,
-      st.council_district AS council_district,
-      st.site_name AS site_name,
-      st.client_category AS site_category
-    ) sq,
     LATERAL( SELECT
       jsonb_build_object(
         'project_name', pt.project_name,
@@ -48,11 +41,8 @@ const sqlQuery = `
         pt.estimated_completion_season
       ) AS keywords
     ) pq
-  WHERE COALESCE(st.lat, 0) = COALESCE(pt.lat, 0)
-    AND COALESCE(st.lon, 0) = COALESCE(pt.lon, 0)
-    AND st.council_district = pt.council_district
-    AND st.site_name = pt.site_name
-  GROUP BY sq.council_district, sq.lat, sq.lon
+  WHERE (COALESCE(st.lat, 0), COALESCE(st.lon, 0), st.council_district, st.site_name) = (COALESCE(pt.lat, 0), COALESCE(pt.lon, 0), pt.council_district, pt.site_name)
+  GROUP BY st.council_district, st.lat, st.lon
 `
 
 export default {
@@ -75,10 +65,7 @@ export default {
 
       if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);
 
-      /*
       ////////////////////////////////////////////////// TEMP FIXES FOR DATA //////////////////////////////////////////////////////////////
-      */
-
       const stdStatuses = ['Construction', 'Design', 'Complete', 'Planning'];
       const statuses = new Set();
       const hashesSet = new Set();
@@ -92,16 +79,14 @@ export default {
           hashesArray.push(project.fields_hash)
         })
       })
-
-      // console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXX")
-      // console.log([...statuses])
-      // console.log(hashesSet.size)
-      // console.log(hashesArray.length)
-      // console.log("REPEATED PROJECTS: ", hashesArray.filter((value, index) => hashesArray.indexOf(value) !== index && hashesArray.lastIndexOf(value) === index))
-
-      /*
+      if (import.meta.env.VITE_DEBUG) {
+        console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXX")
+        console.log([...statuses])
+        console.log(hashesSet.size)
+        console.log(hashesArray.length)
+        console.log("REPEATED PROJECTS: ", hashesArray.filter((value, index) => hashesArray.indexOf(value) !== index && hashesArray.lastIndexOf(value) === index))
+      }
       /////////////////////////////////////////////////////////// END TEMP FIXES //////////////////////////////////////////////////
-      */
 
       return data.rows;
     },

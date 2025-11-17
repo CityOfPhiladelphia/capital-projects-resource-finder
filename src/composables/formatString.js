@@ -16,11 +16,9 @@ export const formatString = (rawString) => {
   // replace 'and' with '&'
   rawString = rawString.replace(/(?<=\W|\b)[Aa][Nn][Dd](?=\W|\b)/g, '&'); // and to &
 
-  // expand single word sites
-
   // fix proper names
   rawString = rawString.replace(/(?<=\W|\b)[Ff][Dd][Rr](?=\W|\b)/g, 'FDR'); // ensure FDR is all caps
-  rawString = rawString.replace(/(?<=\W|\b)[Cc][Bb](?=\W|\b)/g, 'Cecil B.'); // cb to Cecil B.
+  rawString = rawString.replace(/(?<=\W|\b)[Cc][Bb](?=\W|\b)/g, 'Cecil B'); // cb to Cecil B.
   rawString = rawString.replace(/(?<=\W|\b)[Mm][Ll][Kk](?=\W|\b)/g, 'MLK'); // mlk to all caps
 
   // period after initials
