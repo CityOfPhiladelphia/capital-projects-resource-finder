@@ -1,12 +1,7 @@
 <script setup>
 
-// use these if running off unlinked package
-import { useMainStore } from '@phila/pinboard';
-import { useRoute, useRouter } from '@phila/pinboard';
-// OR
-// use this if running off linked package
-// import { useMainStore } from '../../node_modules/@phila/pinboard/src/stores/MainStore.js';
-// import { useRoute, useRouter } from '../../node_modules/@phila/pinboard/src/main.js';
+import { useMainStore } from '@pinboard';
+import { useRoute, useRouter } from '@pinboard';
 
 import * as bulmaToast from 'bulma-toast'
 

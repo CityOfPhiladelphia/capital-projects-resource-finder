@@ -19,14 +19,8 @@ import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
 library.add(farAngleDown, farAngleUp, farTimes, farPlus, farMinus, farEnvelope, faFolder, faMoneyCheckDollar, faChartTreeMap, faCaretDown, faCaretUp);
 
-// use this if running off unlinked package
 import '../node_modules/@phila/pinboard/dist/index.css';
-import pinboard from '@phila/pinboard';
-
-// OR
-// use these if running off linked package
-// import pinboard from '../node_modules/@phila/pinboard/src/main.js';
-// import pinboard from '../../vue3-pinboard/dist';
+import pinboard from '@pinboard';
 
 // data-sources
 import capitalProjects from '@/data-sources/capitalProjects';
