@@ -2,35 +2,31 @@ import { expandContractions } from "./expandContractions"
 
 // Standardize format of project_scope so it can be rendered more easily in Template
 export const formatProjectScope = (projectScope) => {
-  console.log(projectScope)
   projectScope = expandContractions(projectScope);
-  // turn ; into , to make list all coma seperated
-  projectScope = projectScope.replace(/;/g, ',');
-  // turn non-comma list characters to ;
-  // standardize space around them
-  projectScope = projectScope.replace(/(\W\s{0,1}){0,1}(\({0,1}([Pp](hase){0,1}\s{0,1}){0,1}\d{1}\){0,1}\s{0,1})[-:;/|\\](?=[\w\s])/gi, ',')
-  // projectScope = projectScope.replace(/,(?=\s{0,1}\w+;)/g, '');
-  console.log(projectScope.trim())
-  return projectScope.trim()
+  projectScope = formatStringToCommaSeperated(projectScope);
+  return Array.from(projectScope.split(','), (item) => toSentenceCase(item.trim())).toString() // each item to Sentence case
 }
 
-const toSentenceCaseNoEnclosing = (rawString) => {
-  // strips enclosing (), {}, or [], then converts result into sentence case
-  return rawString.toLowerCase().replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '').replace(/\.\s+([a-z])[^.]|^(\s*[a-z])[^.]/g, str => str.replace(/([a-z])/, str => str.toUpperCase())).replace(/\btbd|Tbd\b/, 'TBD').replace(/\bhvac|Hvac\b/, 'HVAC');
+const formatStringToCommaSeperated = (rawString) => {
+  return rawString
+    .replace(/((?<=[A-Za-z])[\\/[{(])/g, " $1") // instert space before '\', '/', '[', '{', '(' if character is preceded by a word character
+    .replace(/([\\/)}\]](?=[A-Za-z]))/g, "$1 ") // instert space after '\', '/', ']', '}', ')' if character is followed by a letter
+    .replace(/(?:(?:[,-:;|\\]|(?i:and))\s{0,1}){0,1}(?:(?:\({0,1}(?:[Bb][Pp]#|[Pp](?i:hase){0,1})\s{0,1}\d{1}\){0,1}\s{0,1})|(?:\d\)))(?:[-:;|\\]{0,1}\s{0,1})/g, ',') // turns refrences to project phases into ','
+    .replace(/^\W|[,.]$/, '') // remove leading or trailing punctuation
+    .replace(/(?<!(?i:mt|\s\w))(?<=\w)[.;]|(?:,\s{0,1}[Aa]nd)(?=\s{0,1}\S)/g, ','); // turn ';', '.', ', and' into ',' to make lists all coma seperated
 }
 
-// // Standardize format of project_scope so it can be rendered more easily in Template
-// export const formatProjectScope = (projectScope) => {
-//   // Is list with headings? change heading marker standard character splitting on headings
-//   if (projectScope.includes(';')) {
-//     const projectScopeSplit = projectScope.split(';');
-//     const splitChars = Array.from(projectScopeSplit, (item) => getSplitChar(item)).filter(Boolean);
-//     if (splitChars.length === projectScopeSplit.length && splitChars.every((chr) => chr === splitChars[0])) {
-//       projectScope = projectScope.replaceAll(splitChars[0], headingSplitCharacter.value).replaceAll(`${headingSplitCharacter.value}`, headingSplitCharacter.value);
-//     }
-//   }
-
-//   // turn '.', ', and', ' /' into ',' so they act as regular list items, turn 'bb' and 'pg' into 'basketball' and 'playground', remove leading/trailing whitespace
-//   projectScope = projectScope.replace(/\bbb|Bb|BB\b/, 'basketball').replace(/\bpg|Pg|PG\b/, 'playground').replace(/\.|, and| \//g, ',').trim()
-//   return projectScope.endsWith(',') ? projectScope.substr(0, projectScope.length - 1) : projectScope; // remove trailing comma is it exists
-// }
+const toSentenceCase = (rawString) => {
+  return rawString.toLowerCase()
+    .replace(/^\W\s{0,}|[,.]$/g, '') // remove leading punctuation and any following white space, and any trailing punctuation
+    .replace(/(.*)([)}\]]$)/g, (match, p1, p2) => `${p1}${match.match(/[({[\]]/) ? p2 : ''}`) // remove trailing )}] if not paired with opening
+    .replace(/(^[a-z])/g, (c) => c.toUpperCase()) // capitalize first letter
+    .replace(/\b[b-df-hj-np-tv-xz]{1,}\b/g, (c) => c.toUpperCase()) // make abbreviations all caps
+    .replace(/(?<= by )\w(?=\w)/g,  (c) => c.toUpperCase()) // capitalize Proper Noun
+    .replace(/\b[Hh]vac\b/g, 'HVAC') // hvac to all caps
+    .replace(/\b[Aa]arp\b/g, 'AARP') // aarp to all caps
+    .replace(/\b[Aa]da\b/g, 'ADA') // aarp to all caps
+    .replace(/\b[Pp][Uu]\b/g, 'PU') // aarp to all caps
+    .replace(/(?<=\s)[Ww]\W(?=\s\w)/g, 'with') // 'w.' to 'with'
+    .replace(/(\b(?i:mt))(?:. )([A-Z-a-z])(\w{2,})/g, (match, p1, p2, p3) => `Mt. ` + `${p2}`.toUpperCase() + `${p3}`.toLowerCase())
+}

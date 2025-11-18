@@ -7,7 +7,7 @@ import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
 import { format } from 'date-fns';
 
-import { formatString as formatProjectName } from '@/composables/formatString'
+import { formatString as formatProjectName } from '@/composables/formatStringTitleCase'
 import { normalizeCategory as normalizeProjectCategory } from '@/composables/normalizeCategory'
 import { isArchiveProject } from '@/composables/isArchiveProject'
 import { formatProjectScope } from '@/composables/formatProjectScope'
@@ -117,8 +117,6 @@ const actualCompletionDate = computed(() => {
   }
   return value;
 });
-
-const headingSplitCharacter = computed(() => { return '\u00AA' })
 
 // METHODS
 const parseAddress = (address) => {
@@ -285,19 +283,9 @@ const handleMoreClick = () => {
         <ul v-if="selectedProject && selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'">
           <li
-            v-for="(group, groupIndex) in selectedProject.project_scope.includes(headingSplitCharacter) ? selectedProject.project_scope.split(headingSplitCharacter) : selectedProject.project_scope.split(',')"
-            :key="groupIndex" class="li-card">
-            {{ selectedProject.project_scope.includes(';') &&
-              selectedProject.project_scope.includes(headingSplitCharacter) ? group.split(headingSplitCharacter)[0] :
-              group }}
-            <ul
-              v-if="selectedProject.project_scope.includes(';') && selectedProject.project_scope.includes(headingSplitCharacter)"
-              :style="'list-style-type: disc; margin-left: 20px;'">
-              <li v-for="(subGroup, index) in group.split(headingSplitCharacter)[1].split(',')" :key="index"
-                class="li-card">
-                {{ subGroup }}
-              </li>
-            </ul>
+            v-for="(item, i) in selectedProject.project_scope.split(',')"
+            :key="i" class="li-card">
+            {{ item }}
           </li>
         </ul>
       </div>
