@@ -1,16 +1,17 @@
 import { expandContractions } from "./expandContractions"
+import regexPat from "./regexPats"
 
 // reformats the site and project names to Title Case
 // uses regex to expand some abbreviations back to full words, e.g. bb => basketball
-export const formatString = (rawString) => {
+export const formatStringTitleCase = (rawString) => {
   return expandContractions(rawString) // expand contractions
-    .replace(/((?<=\D)[\\/[{(-])/g, " $1") // instert space before '\', '/', '[', '{', '(' if character is preceded by a letter
-    .replace(/([\\/)}\]-](?=\D))/g, "$1 ") // instert space after '\', '/', ']', '}', ')' if character is followed by a letter
-    .replace(/(\b[a-z](?=\w{3}|'\w{2}))/g, (c) => c.toUpperCase()) // capitalize every first letter
-    .replace(/(?<=\W|\b)[Aa][Nn][Dd](?=\W|\b)/g, '&') // and to &
-    .replace(/(?<=\W|\b)[Ff][Dd][Rr](?=\W|\b)/g, 'FDR') // ensure FDR is all caps
-    .replace(/(?<=\W|\b)[Mm][Ll][Kk](?=\W|\b)/g, 'MLK') // mlk to all caps
-    .replace(/(?<!Malcolm )(?<=\W|\b)([A-Z])(?=\s)/g, "$1.") // period after initials e.g. "Cecil B" to "Cecil B." ignoring Malcolm X
-    .replace(/(?<=\s)\(\d\)(?=\s|$)/g, '') // remove (#)
-    .trim()
+    .replace(regexPat.slashDashOrOpening, " $1") // instert space before '\', '/', -, '[', '{', '(' if character is preceded by a letter
+    .replace(regexPat.slashDashOrClosing, "$1 ") // instert space after '\', '/', -, ']', '}', ')' if character is followed by a letter
+    .replace(/(\b[a-z]{1,2}(?=\w{2}|'\w{2}))/g, (c) => c.toUpperCase()) // capitalize every first letter
+    .replace(regexPat.word.and, '&') // and to &
+    .replace(regexPat.word.fdr, 'FDR') // ensure FDR is all caps
+    .replace(regexPat.word.mlk, 'MLK') // mlk to all caps
+    .replace(regexPat.word.love, 'Love') // LOVE to Love
+    .replace(regexPat.singleInitialNotMalcolm, "$1.") // period after initials e.g. "Cecil B" to "Cecil B." ignoring Malcolm X
+    .replace(regexPat.leadingTrailingPunctAndWhite, '') // remove leading or trailing punctuation
 }

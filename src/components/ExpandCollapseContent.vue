@@ -7,10 +7,11 @@ import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
 import { format } from 'date-fns';
 
-import { formatString as formatProjectName } from '@/composables/formatStringTitleCase'
+import regexPat from '@/composables/regexPats';
 import { normalizeCategory as normalizeProjectCategory } from '@/composables/normalizeCategory'
 import { isArchiveProject } from '@/composables/isArchiveProject'
 import { formatProjectScope } from '@/composables/formatProjectScope'
+import { formatStringSentenceCase } from '@/composables/formatStringSentenceCase'
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -155,7 +156,7 @@ const handleMoreClick = () => {
         'project-selected': !moreIsOpen && item.properties.projects[0].fields_hash === selectedProjectHash
       }" @click="handleProjectClick(item.properties.projects[0].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ formatProjectName(item.properties.projects[0].project_name) }}
+        {{ formatStringSentenceCase(item.properties.projects[0].project_name) }}
       </div>
     </button>
 
@@ -165,7 +166,7 @@ const handleMoreClick = () => {
         'second-child-final': item.properties.projects.length == 2
       }" @click="handleProjectClick(item.properties.projects[1].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ formatProjectName(item.properties.projects[1].project_name) }}
+        {{ formatStringSentenceCase(item.properties.projects[1].project_name) }}
       </div>
     </button>
 
@@ -174,7 +175,7 @@ const handleMoreClick = () => {
         'project-selected': !moreIsOpen && item.properties.projects[2].fields_hash === selectedProjectHash,
       }" @click="handleProjectClick(item.properties.projects[2].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ formatProjectName(item.properties.projects[2].project_name) }}
+        {{ formatStringSentenceCase(item.properties.projects[2].project_name) }}
       </div>
     </button>
 
@@ -207,7 +208,7 @@ const handleMoreClick = () => {
     <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive" />
 
     <div>
-      <h2 class="project-name">{{ formatProjectName(selectedProject.project_name) }}</h2>
+      <h2 class="project-name">{{ formatStringSentenceCase(selectedProject.project_name) }}</h2>
     </div>
 
     <div class="columns top-section">
@@ -283,7 +284,7 @@ const handleMoreClick = () => {
         <ul v-if="selectedProject && selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'">
           <li
-            v-for="(item, i) in selectedProject.project_scope.split(',')"
+            v-for="(item, i) in selectedProject.project_scope.split(regexPat.character.unenclosedComma)"
             :key="i" class="li-card">
             {{ item }}
           </li>
