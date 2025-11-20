@@ -10,4 +10,6 @@ export const getShortestSiteName = (siteNames) => {
     shortestName = nextName.length < shortestName.length ? nextName : shortestName;
   }
   return shortestName.replace('Nicetown - Tioga Library', 'Nicetown-Tioga Library') // fixes format for library
+
+
 }
