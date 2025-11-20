@@ -7,7 +7,7 @@ import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
 import { format } from 'date-fns';
 
-import regexPat from '@/composables/regexPats';
+import regexDictionary from '@/composables/regexDictionary';
 import { normalizeCategory as normalizeProjectCategory } from '@/composables/normalizeCategory'
 import { isArchiveProject } from '@/composables/isArchiveProject'
 import { formatProjectScope } from '@/composables/formatProjectScope'
@@ -284,7 +284,7 @@ const handleMoreClick = () => {
         <ul v-if="selectedProject && selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'">
           <li
-            v-for="(item, i) in selectedProject.project_scope.split(regexPat.character.unenclosedComma)"
+            v-for="(item, i) in selectedProject.project_scope.split(regexDictionary.character.unenclosedComma)"
             :key="i" class="li-card">
             {{ item }}
           </li>
