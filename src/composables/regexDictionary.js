@@ -10,7 +10,7 @@ export default {
     centerRepeated: /(?:[Cc]enter(?:\s|\b)){2,}/g,
     firstLowerAndMinLength: /(\b[a-z](?=\w{3}|'\w{2}))/g,
     stringSeparators: /(?<!(?:\b\w)|(?:\b\w\w))(?<=\w)[.;]|(?:(?:,|(?<=[)}\]]))\s?[Aa]nd)(?=\s?\S)/g,
-    initialUpperNotStreetOrAllCaps: /(?<!(?:(?:\d\w*)(?:\s(?:and))?\s)|(?:\.\s))(?<=\s)(?:[A-Z])(?!\.|(?:[A-Z]+)|(?:[a-z]{1,2}[A-Z.])|(?:'[A-Z]))|(?:[A-Z]{2,}(?=[a-rt-z]))/g,
+    initialUpperNotStreetOrAllCaps: /(?<!(?:(?:\d\w*)(?:\s(?:and))?\s)|(?:\.\s))(?<=\W)(?:[A-Z])(?!\.|(?:[A-Z]+)|(?:[a-z]{1,2}[A-Z.])|(?:'[A-Z]))|(?:[A-Z]{2,}(?=[a-rt-z]))/g,
     engineSingleDigit: /(engine )(\d)(?=\b)/i
   },
   whiteSpace: {
