@@ -4,6 +4,7 @@ import regexDictionary from "./regexDictionary"
 // will remove trailing periods from contractions, e.g. bldg. => building
 export const expandContractions = (rawString) => {
   return rawString
+  .replace(regexDictionary.contraction.with, 'with') // 'w.' to 'with'
   .replace(regexDictionary.contraction.cb, 'Cecil B') // cb to Cecil B
   .replace(regexDictionary.contraction.bb, 'basketball') // bb to basketball
   .replace(regexDictionary.contraction.pg, 'playground') // pg to playground

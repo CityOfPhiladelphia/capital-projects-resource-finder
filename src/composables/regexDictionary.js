@@ -7,12 +7,24 @@ export default {
     wordAfterBy: /(?<= by )\w(?=\w)/g,
     mtName: /(\b(?i:mt))(?:. )([A-Z-a-z])(\w{2,})/g,
     singleInitialNotMalcolm: /(?<!Malcolm )(?<=\W|\b)([A-Z])(?=\s)/g,
+    centerRepeated: /(?:[Cc]enter(?:\s|\b)){2,}/g,
     firstLowerAndMinLength: /(\b[a-z](?=\w{3}|'\w{2}))/g,
-    stringSeparators: /(?<!(?:\b\w)|(?:\b\w\w))(?<=\w)[.;]|(?:(?:,|(?<=[)}\]]))\s?[Aa]nd)(?=\s?\S)/g
+    stringSeparators: /(?<!(?:\b\w)|(?:\b\w\w))(?<=\w)[.;]|(?:(?:,|(?<=[)}\]]))\s?[Aa]nd)(?=\s?\S)/g,
+    initialUpperNotStreetOrAllCaps: /(?<!(?:(?:\d\w*)(?:\s(?:and))?\s)|(?:\.\s))(?<=\s)(?:[A-Z])(?!\.|(?:[A-Z]+)|(?:[a-z]{1,2}[A-Z.])|(?:'[A-Z]))|(?:[A-Z]{2,}(?=[a-rt-z]))/g,
+    engineSingleDigit: /(engine )(\d)(?=\b)/i
   },
   whiteSpace: {
     leadingTrailingPunctAndWhite: /^\W*|\s*[,.]\s*$/g,
     whiteBeforePunct: /(?:\s)([^\\/[{()}\]])(?=\s)/g
+  },
+  character: {
+    amp: /\s?&\s?/g,
+    unenclosedComma: /(?<!\([^)}\]]*),(?![^({[)}\]]*[)}\]])/g,
+    openingBrackParen: /[({[\]]/,
+    slashOrOpening: /((?<=[A-Za-z])[\\/[{(])/g,
+    slashOrClosing: /([\\/)}\]](?=[A-Za-z]))/g,
+    slashDashOrOpening: /((?<=[A-Za-z])[\\/[{(-])/g,
+    slashDashOrClosing: /([\\/)}\]-](?=[A-Za-z]))/g
   },
   contraction: {
     with: /(?<=\s)[Ww]\W(?=\s\w)/g,
@@ -31,22 +43,12 @@ export default {
     bldg: /(?<=\W|\b)[Bb][Ll][Dd][Gg]((s\.|\.)(?=[ ])|(?=s\W|\b))/g
   },
   word: {
-    hvac: /\b[Hh]vac\b/g,
-    aarp: /\b[Aa]arp\b/g,
-    ada: /\b[Aa]da\b/g,
-    pu: /\b[Pp][Uu]\b/g,
+    ada: /\b[Aa][Dd][Aa]\b/g,
+    aarp: /\b[Aa]{2}[Rr][Pp]\b/g,
+    hvac: /\b[Hh][Vv][Aa][Cc]\b/g,
     and: /(?<=\W|\b)[Aa][Nn][Dd](?=\W|\b)/g,
     fdr: /(?<=\W|\b)[Ff][Dd][Rr](?=\W|\b)/g,
     mlk: /(?<=\W|\b)[Mm][Ll][Kk](?=\W|\b)/g,
     love: /(?<=\W|\b)[Ll][Oo][Vv][Ee](?=\W|\b)/g
-  },
-  character: {
-    amp: /\s?&\s?/g,
-    unenclosedComma: /(?<!\([^)}\]]*),(?![^({[)}\]]*[)}\]])/g,
-    openingBrackParen: /[({[\]]/,
-    slashOrOpening: /((?<=[[:alpha]])[\\/[{(])/g,
-    slashOrClosing: /([\\/)}\]](?=[[:alpha]]))/g,
-    slashDashOrOpening: /((?<=[[:alpha]])[\\/[{(-])/g,
-    slashDashOrClosing: /([\\/)}\]-](?=[[:alpha]]))/g
   }
 }
