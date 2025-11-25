@@ -1,0 +1,54 @@
+export default {
+  pattern: {
+    projectPhase: /(?:(?:[,-:;|\\]|(?i:and))\s?)?(?:(?:\(?(?:[Bb][Pp]\W|[Pp](?i:hase)?|\((?=\d\)))\s?\d\)?\s?)|(?:\d\)))(?:[-:;|\\]?\s?)/g,
+    twoPlusNoVowels: /(?i:\b[b-df-hj-np-tv-xz]{2,}\b)/g,
+    everythingBeforeClosingCharAtEnd: /(.*)([)}\]]$)/g,
+    firstLetterLowercase: /(^[a-z])/g,
+    wordAfterBy: /(?<= by )\w(?=\w)/g,
+    mtName: /(\b(?i:mt))(?:. )([A-Z-a-z])(\w{2,})/g,
+    singleInitialNotMalcolm: /(?<!Malcolm )(?<=\W|\b)([A-Z])(?=\s)/g,
+    centerRepeated: /(?i:center(?:\s|\b)){2,}/g,
+    firstLowerAndMinLength: /(\b[a-z](?=\w{3}|'\w{2}))/g,
+    stringSeparators: /(?<!(?:\b\w)|(?:\b\w\w))(?<=\w)[.;]|(?:(?:,|(?<=[)}\]]))\s?[Aa]nd)(?=\s?\S)/g,
+    initialUpperNotStreetOrAllCaps: /(?<!(?:(?:\d\w*)(?:\s(?:and))?\s)|(?:\.\s))(?<=\W)(?:[A-Z])(?!\.|(?:[A-Z]+)|(?:[a-z]{1,2}[A-Z.])|(?:'[A-Z]))|(?:[A-Z]{2,}(?=[a-rt-z]))/g,
+    engineSingleDigit: /(engine )(\d)(?=\b)/gi
+  },
+  whiteSpace: {
+    leadingTrailingPunctAndWhite: /^\W*|\s*[,.]\s*$/g,
+    whiteBeforePunct: /(?:\s)([^\\/[{()}\]])(?=\s)/g
+  },
+  character: {
+    amp: /\s?&\s?/g,
+    unenclosedComma: /(?<!\([^)}\]]*),(?![^({[)}\]]*[)}\]])/g,
+    openingBrackParen: /[({[\]]/,
+    slashOrOpening: /((?<=[A-Za-z])[\\/[{(])/g,
+    slashOrClosing: /([\\/)}\]](?=[A-Za-z]))/g,
+    slashDashOrOpening: /((?<=[A-Za-z])[\\/[{(-])/g,
+    slashDashOrClosing: /([\\/)}\]-](?=[A-Za-z]))/g
+  },
+  contraction: {
+    with: /(?<=\s)[Ww]\W(?=\s\w)/g,
+    cb: /(?<=\W|\b)[Cc][Bb](?=\W|\b)/g,
+    bb: /(?<=\W|\b)[Bb][Bb](\.(?=[ ])|(?=\W|\b))/g,
+    pg: /(?<=\W|\b)([Pp][\\/]?[Gg])(\.(?=[ ])|(?=\W|\b))/g,
+    rcOrRec: /(?<=\W|\b)[Rr][Ee]?[Cc](\.(?=[ ])|(?=\W|\b))/g,
+    ccOrCrc: /(?<=\W|\b)[Cc][Rr]?[Cc](\.(?=[ ])|(?=\W|\b))/g,
+    ec: /(?<=\W|\b)[Ee][Cc](\.(?=[ ])|(?=\W|\b))/g,
+    oac: /(?<=\W|\b)[Oo][Aa][Cc](\.(?=[ ])|(?=\W|\b))/g,
+    ctr: /(?<=\W|\b)[Cc][Tt][Rr](\.(?=[ ])|(?=\W|\b))/g,
+    hort: /(?<=\W|\b)[Hh][Oo][Rr][Tt](\.(?=[ ])|(?=\W|\b))/g,
+    rd: /(?<=\W|\b)[Rr][Dd](\.(?=[ ])|(?=\W|\b))/g,
+    st: /(?<=\W|\b)[Ss][Tt](\.(?=[ ])|(?=\W|\b))/g,
+    ave: /(?<=\W|\b)[Aa][Vv][Ee](\.(?=[ ])|(?=\W|\b))/g,
+    bldg: /(?<=\W|\b)[Bb][Ll][Dd][Gg]((s\.|\.)(?=[ ])|(?=s\W|\b))/g
+  },
+  word: {
+    ada: /\b[Aa][Dd][Aa]\b/g,
+    aarp: /\b[Aa]{2}[Rr][Pp]\b/g,
+    hvac: /\b[Hh][Vv][Aa][Cc]\b/g,
+    and: /(?<=\W|\b)[Aa][Nn][Dd](?=\W|\b)/g,
+    fdr: /(?<=\W|\b)[Ff][Dd][Rr](?=\W|\b)/g,
+    mlk: /(?<=\W|\b)[Mm][Ll][Kk](?=\W|\b)/g,
+    love: /(?<=\W|\b)[Ll][Oo][Vv][Ee](?=\W|\b)/g
+  }
+}
