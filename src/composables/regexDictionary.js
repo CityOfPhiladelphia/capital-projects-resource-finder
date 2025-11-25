@@ -1,6 +1,6 @@
 export default {
   pattern: {
-    projectPhase: /(?:(?:[,-:;|\\]|(?i:and))\s?)?(?:(?:\(?(?:[Bb][Pp]\W|[Pp](?i:hase)?|\((?=\d\)))\s?\d\)?\s?)|(?:\d\)))(?:[-:;|\\]?\s?)/g,
+    projectPhase: /(?:(?:[,-:;|\\]|(?:[Aa][Nn][Dd]))\s?)?(?:(?:\(?(?:[Bb][Pp]\W|[Pp](?:[Hh][Aa][Ss][Ee])?|\((?=\d\)))\s?\d\)?\s?)|(?:\d\)))(?:[-:;|\\]?\s?)/g,
     twoPlusNoVowels: /(?i:\b[b-df-hj-np-tv-xz]{2,}\b)/g,
     everythingBeforeClosingCharAtEnd: /(.*)([)}\]]$)/g,
     firstLetterLowercase: /(^[a-z])/g,
