@@ -7,9 +7,11 @@ import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
 import { format } from 'date-fns';
 
-import { formatString as formatProjectName } from '@/composables/formatString'
+import regexDictionary from '@/composables/regexDictionary';
 import { normalizeCategory as normalizeProjectCategory } from '@/composables/normalizeCategory'
 import { isArchiveProject } from '@/composables/isArchiveProject'
+import { formatProjectScope } from '@/composables/formatProjectScope'
+import { formatStringSentenceCase } from '@/composables/formatStringSentenceCase'
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -117,8 +119,6 @@ const actualCompletionDate = computed(() => {
   return value;
 });
 
-const headingSplitCharacter = computed(() => { return '\u00AA' })
-
 // METHODS
 const parseAddress = (address) => {
   return address.replace(/(Phila.+)/g, city => `${city}`).replace(/^\d+\s[A-z]+\s[A-z]+/g, lineOne => `${lineOne}`).replace(/,/, '');
@@ -146,32 +146,6 @@ const handleMoreClick = () => {
   moreIsOpen.value = !moreIsOpen.value;
 };
 
-// check for a special character being used to mark a group heading
-const getSplitChar = (str) => {
-  return str.replace(/[a-zA-Z0-9,;'`~!@$%&(){}[\]]/g, '').trim()
-}
-
-// Standardize format of project_scope so it can be rendered more easily in Template
-const formatProjectScope = (projectScope) => {
-  // Is list with headings? change heading marker standard character splitting on headings
-  if (projectScope.includes(';')) {
-    const projectScopeSplit = projectScope.split(';');
-    const splitChars = Array.from(projectScopeSplit, (item) => getSplitChar(item)).filter(Boolean);
-    if (splitChars.length === projectScopeSplit.length && splitChars.every((chr) => chr === splitChars[0])) {
-      projectScope = projectScope.replaceAll(splitChars[0], headingSplitCharacter.value).replaceAll(`${headingSplitCharacter.value}`, headingSplitCharacter.value);
-    }
-  }
-
-  // turn '.', ', and', ' /' into ',' so they act as regular list items, turn 'bb' and 'pg' into 'basketball' and 'playground', remove leading/trailing whitespace
-  projectScope = projectScope.replace(/\bbb|Bb|BB\b/, 'basketball').replace(/\bpg|Pg|PG\b/, 'playground').replace(/\.|, and| \//g, ',').trim()
-  return projectScope.endsWith(',') ? projectScope.substr(0, projectScope.length - 1) : projectScope; // remove trailing comma is it exists
-}
-
-const toSentenceCaseNoEnclosing = (rawString) => {
-  // strips enclosing (), {}, or [], then converts result into sentence case
-  return rawString.toLowerCase().replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '').replace(/\.\s+([a-z])[^.]|^(\s*[a-z])[^.]/g, str => str.replace(/([a-z])/, str => str.toUpperCase())).replace(/\btbd|Tbd\b/, 'TBD').replace(/\bhvac|Hvac\b/, 'HVAC');
-}
-
 </script>
 
 <template>
@@ -182,7 +156,7 @@ const toSentenceCaseNoEnclosing = (rawString) => {
         'project-selected': !moreIsOpen && item.properties.projects[0].fields_hash === selectedProjectHash
       }" @click="handleProjectClick(item.properties.projects[0].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ formatProjectName(item.properties.projects[0].project_name) }}
+        {{ formatStringSentenceCase(item.properties.projects[0].project_name) }}
       </div>
     </button>
 
@@ -192,7 +166,7 @@ const toSentenceCaseNoEnclosing = (rawString) => {
         'second-child-final': item.properties.projects.length == 2
       }" @click="handleProjectClick(item.properties.projects[1].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ formatProjectName(item.properties.projects[1].project_name) }}
+        {{ formatStringSentenceCase(item.properties.projects[1].project_name) }}
       </div>
     </button>
 
@@ -201,7 +175,7 @@ const toSentenceCaseNoEnclosing = (rawString) => {
         'project-selected': !moreIsOpen && item.properties.projects[2].fields_hash === selectedProjectHash,
       }" @click="handleProjectClick(item.properties.projects[2].fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ formatProjectName(item.properties.projects[2].project_name) }}
+        {{ formatStringSentenceCase(item.properties.projects[2].project_name) }}
       </div>
     </button>
 
@@ -234,7 +208,7 @@ const toSentenceCaseNoEnclosing = (rawString) => {
     <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive" />
 
     <div>
-      <h2 class="project-name">{{ formatProjectName(selectedProject.project_name) }}</h2>
+      <h2 class="project-name">{{ formatStringSentenceCase(selectedProject.project_name) }}</h2>
     </div>
 
     <div class="columns top-section">
@@ -310,19 +284,9 @@ const toSentenceCaseNoEnclosing = (rawString) => {
         <ul v-if="selectedProject && selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'">
           <li
-            v-for="(group, groupIndex) in selectedProject.project_scope.includes(';') ? selectedProject.project_scope.split(';') : selectedProject.project_scope.split(',')"
-            :key="groupIndex" class="li-card">
-            {{ toSentenceCaseNoEnclosing(selectedProject.project_scope.includes(';') &&
-              selectedProject.project_scope.includes(headingSplitCharacter) ? group.split(headingSplitCharacter)[0] :
-              group) }}
-            <ul
-              v-if="selectedProject.project_scope.includes(';') && selectedProject.project_scope.includes(headingSplitCharacter)"
-              :style="'list-style-type: disc; margin-left: 20px;'">
-              <li v-for="(subGroup, index) in group.split(headingSplitCharacter)[1].split(',')" :key="index"
-                class="li-card">
-                {{ toSentenceCaseNoEnclosing(subGroup) }}
-              </li>
-            </ul>
+            v-for="(item, i) in selectedProject.project_scope.split(regexDictionary.character.unenclosedComma)"
+            :key="i" class="li-card">
+            {{ item }}
           </li>
         </ul>
       </div>
