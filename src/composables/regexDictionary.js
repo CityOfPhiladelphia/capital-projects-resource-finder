@@ -1,13 +1,13 @@
 export default {
   pattern: {
     projectPhase: /(?:(?:[,-:;|\\]|(?:[Aa][Nn][Dd]))\s?)?(?:(?:\(?(?:[Bb][Pp]\W|[Pp](?:[Hh][Aa][Ss][Ee])?|\((?=\d\)))\s?\d\)?\s?)|(?:\d\)))(?:[-:;|\\]?\s?)/g,
-    twoPlusNoVowels: /(?i:\b[b-df-hj-np-tv-xz]{2,}\b)/g,
+    twoPlusNoVowels: /(?:\b[b-df-hj-np-tv-xz]{2,}\b)/gi,
     everythingBeforeClosingCharAtEnd: /(.*)([)}\]]$)/g,
     firstLetterLowercase: /(^[a-z])/g,
     wordAfterBy: /(?<= by )\w(?=\w)/g,
-    mtName: /(\b(?i:mt))(?:. )([A-Z-a-z])(\w{2,})/g,
+    mtName: /(\b(?:[Mm][Tt]))(?:. )([A-Z-a-z])(\w{2,})/g,
     singleInitialNotMalcolm: /(?<!Malcolm )(?<=\W|\b)([A-Z])(?=\s)/g,
-    centerRepeated: /(?i:center(?:\s|\b)){2,}/g,
+    centerRepeated: /(?:[Cc][Ee][Nn][Tt][Ee][Rr](?:\s|\b)){2,}/g,
     firstLowerAndMinLength: /(\b[a-z](?=\w{3}|'\w{2}))/g,
     stringSeparators: /(?<!(?:\b\w)|(?:\b\w\w))(?<=\w)[.;]|(?:(?:,|(?<=[)}\]]))\s?[Aa]nd)(?=\s?\S)/g,
     initialUpperNotStreetOrAllCaps: /(?<!(?:(?:\d\w*)(?:\s(?:and))?\s)|(?:\.\s))(?<=\W)(?:[A-Z])(?!\.|(?:[A-Z]+)|(?:[a-z]{1,2}[A-Z.])|(?:'[A-Z]))|(?:[A-Z]{2,}(?=[a-rt-z]))/g,
