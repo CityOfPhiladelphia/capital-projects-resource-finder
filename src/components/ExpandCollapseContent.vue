@@ -36,7 +36,7 @@ const archiveActive = ref(isArchiveProject(props.item.properties.projects[0]))
 // LIFECYCLE HOOKS
 onBeforeMount(() => {
   props.item.properties.projects.forEach((project) => {
-    project.project_scope = formatProjectScope(project.project_scope)
+    project.project_scope = project.project_scope ? formatProjectScope(project.project_scope) : project.project_scope
   })
 })
 

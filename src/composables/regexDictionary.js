@@ -9,22 +9,23 @@ export default {
     singleInitialNotMalcolm: /(?<!Malcolm )(?<=\W|\b)([A-Z])(?=\s)/g,
     centerRepeated: /(?:[Cc][Ee][Nn][Tt][Ee][Rr](?:\s|\b)){2,}/g,
     firstLowerAndMinLength: /(\b[a-z](?=\w{3}|'\w{2}))/g,
-    stringSeparators: /(?<!(?:\b\w)|(?:\b\w\w))(?<=\w)[.;]|(?:(?:,|(?<=[)}\]]))\s?[Aa]nd)(?=\s?\S)/g,
-    initialUpperNotStreetOrAllCaps: /(?<!(?:(?:\d\w*)(?:\s(?:and))?\s)|(?:\.\s))(?<=\W)(?:[A-Z])(?!\.|(?:[A-Z]+)|(?:[a-z]{1,2}[A-Z.])|(?:'[A-Z]))|(?:[A-Z]{2,}(?=[a-rt-z]))/g,
+    stringSeparators: /(?<!\b\w{1,2})(?:[,.;]\s?(?:[Aa]nd)?)(?=\s)/g,
+    initialUpperNotStreetOrAllCaps: /(?<!(?:(?:\d[Tt][Hh])(?:\s(?:[Aa][Nn][Dd]|&))?\s)|(?:\.\s)|^)(?<=\s)(?:[A-Z])(?!\.|(?:[A-Z]+)|(?:[a-z]{1,2}[A-Z.])|(?:'[A-Z]))/g,
     engineSingleDigit: /(engine )(\d)(?=\b)/gi
   },
   whiteSpace: {
     leadingTrailingPunctAndWhite: /^\W*|\s*[,.]\s*$/g,
-    whiteBeforePunct: /(?:\s)([^\\/[{()}\]])(?=\s)/g
+    whiteBeforePunct: /(?:\s+)([,.?;:!]\s?)/g,
+    unbalancedWhitespace: /(\s(?=[\\\/-]\w))([\\\/-])|([\\\/-])((?<=\w[\\\/-])\s)/g
   },
   character: {
     amp: /\s?&\s?/g,
     unenclosedComma: /(?<!\([^)}\]]*),(?![^({[)}\]]*[)}\]])/g,
     openingBrackParen: /[({[\]]/,
-    slashOrOpening: /((?<=[A-Za-z])[\\/[{(])/g,
-    slashOrClosing: /([\\/)}\]](?=[A-Za-z]))/g,
-    slashDashOrOpening: /((?<=[A-Za-z])[\\/[{(-])/g,
-    slashDashOrClosing: /([\\/)}\]-](?=[A-Za-z]))/g
+    charThenSlashOrOpening: /((?<=[A-Za-z])[\\/[{(])/g,
+    charThenSlashOrClosing: /([\\/)}\]](?=[A-Za-z]))/g,
+    charThenSlashDashOrOpening: /((?<=[A-Za-z])[\\/[{(-])/g,
+    charThenSlashDashOrClosing: /([\\/)}\]-](?=[A-Za-z]))/g
   },
   contraction: {
     with: /(?<=\s)[Ww]\W(?=\s\w)/g,
@@ -49,6 +50,7 @@ export default {
     and: /(?<=\W|\b)[Aa][Nn][Dd](?=\W|\b)/g,
     fdr: /(?<=\W|\b)[Ff][Dd][Rr](?=\W|\b)/g,
     mlk: /(?<=\W|\b)[Mm][Ll][Kk](?=\W|\b)/g,
+    fifa: /(?<=\W|\b)[Ff][Ii][Ff][Aa](?=\W|\b)/g,
     love: /(?<=\W|\b)[Ll][Oo][Vv][Ee](?=\W|\b)/g
   }
 }

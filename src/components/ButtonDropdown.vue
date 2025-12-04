@@ -1,4 +1,5 @@
 <script setup>
+import { formatStringSentenceCase } from '@/composables/formatStringSentenceCase'
 
 const props = defineProps({
   projects: {
@@ -25,7 +26,7 @@ const $emit = defineEmits(['clickedProject']);
         'is-selected': project.fields_hash == props.selectedProject,
       }" @click="$emit('clickedProject', project.fields_hash)">
       <div class="project-button-text has-text-centered pl-1 pr-1">
-        {{ project.project_name }}
+        {{ formatStringSentenceCase(project.project_name) }}
       </div>
     </button>
 
