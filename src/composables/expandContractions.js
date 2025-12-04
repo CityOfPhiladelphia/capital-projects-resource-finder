@@ -3,6 +3,7 @@ import regexDictionary from "./regexDictionary"
 // uses regex to expand some abbreviations back to full words, e.g. bb => basketball
 // will remove trailing periods from contractions, e.g. bldg. => building
 export const expandContractions = (rawString) => {
+  if (!rawString) return rawString;
   return rawString
   .replace(regexDictionary.contraction.with, 'with') // 'w.' to 'with'
   .replace(regexDictionary.contraction.cb, 'Cecil B') // cb to Cecil B
@@ -17,6 +18,7 @@ export const expandContractions = (rawString) => {
   .replace(regexDictionary.contraction.rd, 'road') // rd to road
   .replace(regexDictionary.contraction.st, 'street') // st to street
   .replace(regexDictionary.contraction.ave, 'avenue') // ave to avenue
+  .replace(regexDictionary.contraction.phila, 'Philadelphia') // Phila to Philadelphia
   .replace(regexDictionary.contraction.bldg, (match, p1, p2) => `building${(p2 && p2.length > 1) ? 's' : ''}`) // bldg to building or bldgs to buildings
   .replace(regexDictionary.pattern.centerRepeated, 'center ') // Fixes the specific case of "rec ctr" or "rc ctr" turning to "Recreation Center Center"
   .trim()

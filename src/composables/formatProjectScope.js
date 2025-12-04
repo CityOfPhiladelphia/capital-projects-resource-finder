@@ -1,9 +1,10 @@
+import regexDictionary from "./regexDictionary"
 import { expandContractions } from "./expandContractions"
 import { formatStringSentenceCase } from "./formatStringSentenceCase"
-import regexDictionary from "./regexDictionary";
 
 // Standardize format of project_scope so it can be rendered more easily in Template
 export const formatProjectScope = (projectScope) => {
+  if (!projectScope) return projectScope;
   projectScope = expandContractions(projectScope)
     .replace(regexDictionary.pattern.projectPhase, ',') // turns refrences to project phases into ','
     .replace(regexDictionary.pattern.stringSeparators, ',') // turn ';', '.', ', and' into ',' to make lists all coma seperated. Ignores '.' after one or two letter words

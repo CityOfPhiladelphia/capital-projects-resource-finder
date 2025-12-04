@@ -4,7 +4,6 @@ export default {
     twoPlusNoVowels: /(?:\b[b-df-hj-np-tv-xz]{2,}\b)/gi,
     everythingBeforeClosingCharAtEnd: /(.*)([)}\]]$)/g,
     firstLetterLowercase: /(^[a-z])/g,
-    wordAfterBy: /(?<= by )\w(?=\w)/g,
     mtName: /(\b(?:[Mm][Tt]))(?:. )([A-Z-a-z])(\w{2,})/g,
     singleInitialNotMalcolm: /(?<!Malcolm )(?<=\W|\b)([A-Z])(?=\s)/g,
     centerRepeated: /(?:[Cc][Ee][Nn][Tt][Ee][Rr](?:\s|\b)){2,}/g,
@@ -14,9 +13,10 @@ export default {
     engineSingleDigit: /(engine )(\d)(?=\b)/gi
   },
   whiteSpace: {
-    leadingTrailingPunctAndWhite: /^\W*|\s*[,.]\s*$/g,
+    leadingTrailingPunctAndWhite: /(?<=^)\W*|\s*(?:[,./?;:[{(!@#$%&*^_=+\\\-]+|\s*)+(?=$)/g,
     whiteBeforePunct: /(?:\s+)([,.?;:!]\s?)/g,
-    unbalancedWhitespace: /(\s(?=[\\\/-]\w))([\\\/-])|([\\\/-])((?<=\w[\\\/-])\s)/g
+    unbalancedWhitespace: /(\s(?=[\\\/-]\w))([\\\/-])|([\\\/-])((?<=\w[\\\/-])\s)/g,
+    moreThanOneSpace: /\s+/g
   },
   character: {
     amp: /\s?&\s?/g,
@@ -41,7 +41,8 @@ export default {
     rd: /(?<=\W|\b)[Rr][Dd](\.(?=[ ])|(?=\W|\b))/g,
     st: /(?<=\W|\b)[Ss][Tt](\.(?=[ ])|(?=\W|\b))/g,
     ave: /(?<=\W|\b)[Aa][Vv][Ee](\.(?=[ ])|(?=\W|\b))/g,
-    bldg: /(?<=\W|\b)[Bb][Ll][Dd][Gg]((s\.|\.)(?=[ ])|(?=s\W|\b))/g
+    bldg: /(?<=\W|\b)[Bb][Ll][Dd][Gg]((s\.|\.)(?=[ ])|(?=s\W|\b))/g,
+    phila: /(?<=\W|\b)[Pp][Hh][Ii][Ll][Aa]((s\.|\.)(?=[ ])|(?=s\W|\b))/g
   },
   word: {
     ada: /\b[Aa][Dd][Aa]\b/g,
