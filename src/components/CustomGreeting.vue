@@ -80,7 +80,7 @@ const props = defineProps({
     </div>
 
   </div>
-  <!-- end of main-area -->
+
 </template>
 
 <style lang="scss" scoped>

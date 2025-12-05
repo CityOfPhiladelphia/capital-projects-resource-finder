@@ -1,5 +1,4 @@
 import regexDictionary from "./regexDictionary"
-import { expandContractions } from "./expandContractions"
 import { formatString } from "./formatString"
 import { fixWords } from "./fixWords"
 
