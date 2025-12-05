@@ -70,36 +70,6 @@ const excessProjectSelected = computed(() => {
   return excessProjectNames.includes(selectedProjectHash.value);
 })
 
-// const projectTeam = computed(() => {
-//   let columns = [
-//     {
-//       label: 'Name',
-//       i18nLabel: 'card.team_name',
-//       field: 'name',
-//       thClass: 'th-black-class',
-//       tdClass: 'table-text',
-//     },
-//     {
-//       label: 'Role',
-//       i18nLabel: 'card.team_role',
-//       field: 'role',
-//       thClass: 'th-black-class',
-//       tdClass: 'table-text',
-//     }
-//   ];
-//   let rows = [
-//     {
-//       name: function (selectedProject) { if (selectedProject) return selectedProject.value.project_coordinator },
-//       role: 'Project Coordinator'
-//     },
-//     {
-//       name: function (selectedProject) { if (selectedProject) return selectedProject.value.inspector },
-//       role: 'Inspector'
-//     },
-//   ];
-//   return { columns, rows };
-// });
-
 const estimatedCompletion = computed(() => {
   if (!selectedProject.value) return 'TBD';
   const season = selectedProject.value.estimated_completion_season ? selectedProject.value.estimated_completion_season : '';
@@ -180,8 +150,8 @@ const handleMoreClick = () => {
     </button>
 
     <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0 middle-child"
-      id="moreButton" type="button"
-      :class="{ 'project-selected': excessProjectSelected || moreIsOpen }" @click="handleMoreClick()">
+      id="moreButton" type="button" :class="{ 'project-selected': excessProjectSelected || moreIsOpen }"
+      @click="handleMoreClick()">
       <div class="project-button-text has-text-centered pl-1 pr-1">
         More
         <font-awesome-icon v-if="!moreIsOpen" icon="caret-down" />
@@ -212,6 +182,7 @@ const handleMoreClick = () => {
     </div>
 
     <div class="columns top-section">
+
       <div class="column is-6">
         <div v-if="selectedProject && selectedProject.project_address" class="columns is-mobile">
           <div class="column is-1">
@@ -250,7 +221,6 @@ const handleMoreClick = () => {
           </div>
           <div class="column is-11"
             v-html="'<b>' + t('card.budget') + ': </b>' + accounting.formatMoney(selectedProject.project_estimated_cost)" />
-
         </div>
 
         <div v-if="selectedProject && selectedProject.council_district" class="columns is-mobile">
@@ -271,20 +241,20 @@ const handleMoreClick = () => {
           </div>
         </div>
 
-
       </div>
+
     </div>
 
     <div>
       <h3>
         {{ t('card.section_description') }}
       </h3>
+
       <div>
         {{ t('card.improvements_include') }}
         <ul v-if="selectedProject && selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'">
-          <li
-            v-for="(item, i) in selectedProject.project_scope.split(regexDictionary.character.unenclosedComma)"
+          <li v-for="(item, i) in selectedProject.project_scope.split(regexDictionary.character.unenclosedComma)"
             :key="i" class="li-card">
             {{ item }}
           </li>
@@ -293,6 +263,7 @@ const handleMoreClick = () => {
     </div>
 
     <div v-if="selectedProject">
+
       <h3>
         {{ t('card.section_status') }}
       </h3>
@@ -323,8 +294,6 @@ const handleMoreClick = () => {
         {{ t('card.project.team') }}
       </h3>
 
-      <!-- <vue-good-table :columns="projectTeam.columns" :rows="projectTeam.rows" :sort-options="{ enabled: false }"
-        style-class="table-style" /> -->
       <ul :style="'list-style-type: disc; margin-left: 20px;'">
         <li class="li-card"><b>{{ t('card.project.coordinator') }}:</b> {{ selectedProject.project_coordinator ?
           selectedProject.project_coordinator : 'TBD' }}</li>

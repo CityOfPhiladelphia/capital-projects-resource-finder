@@ -1,10 +1,13 @@
 <script setup>
 
 import { useMainStore } from '@pinboard';
+const MainStore = useMainStore();
+
 import { useRoute, useRouter } from '@pinboard';
+const router = useRouter();
+const route = useRoute();
 
 import * as bulmaToast from 'bulma-toast'
-
 bulmaToast.setDefaults({
   position: 'top-center',
   type: 'is-success',
@@ -13,18 +16,13 @@ bulmaToast.setDefaults({
   zIndex: 9999,
 });
 
-const router = useRouter();
-const route = useRoute();
-
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
-
-const MainStore = useMainStore();
 
 const props = defineProps({
   'item': {
     type: Object,
-    default: () => {}
+    default: () => { }
   },
   'featureId': {
     type: [String, Number],
@@ -55,40 +53,39 @@ const clickedShare = () => {
 
 const clickedPrint = () => {
   if (import.meta.env.VITE_DEBUG) console.log('clickedPrint is running');
-  MainStore.printCheckboxes = [ props.featureId ];
-  router.push({ name: 'printView'  });
+  MainStore.printCheckboxes = [props.featureId];
+  router.push({ name: 'printView' });
 }
 
 </script>
 
 <template>
+
   <div v-if="route.name !== 'printView'">
+
     <div style="text-align:right;">
-      <button
-        class="button is-small card-button"
-        @click="clickedShare"
-      >
+
+      <button class="button is-small card-button" @click="clickedShare">
         <font-awesome-icon icon="share-alt" />
         <span class="card-button-text">
           {{ $t('share') }}
         </span>
       </button>
-      <button
-        v-if="!isMobile"
-        class="button is-small card-button"
-        @click="clickedPrint"
-      >
+
+      <button v-if="!isMobile" class="button is-small card-button" @click="clickedPrint">
         <font-awesome-icon icon="print" />
         <span class="card-button-text">
           {{ $t('print') }}
         </span>
       </button>
+
     </div>
+
   </div>
+
 </template>
 
 <style>
-
 .card-button {
   border-width: 0px;
   color: #0f4d90;
@@ -98,7 +95,8 @@ const clickedPrint = () => {
   color: black;
 }
 
-.card-button:focus:not(:active), .card-button.is-focused:not(:active) {
+.card-button:focus:not(:active),
+.card-button.is-focused:not(:active) {
   box-shadow: none !important;
 }
 
@@ -108,5 +106,4 @@ const clickedPrint = () => {
   padding-left: 5px;
   text-transform: none;
 }
-
 </style>

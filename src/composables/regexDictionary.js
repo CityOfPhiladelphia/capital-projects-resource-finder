@@ -28,7 +28,7 @@ export default {
     charThenSlashDashOrClosing: /([\\/)}\]-](?=[A-Za-z]))/g
   },
   contraction: {
-    with: /(?<=\s)[Ww]\W(?=\s\w)/g,
+    with: /(?<=\s)w[./\\](?=\s\w)/g,
     cb: /(?<=\W|\b)[Cc][Bb](?=\W|\b)/g,
     bb: /(?<=\W|\b)[Bb][Bb](\.(?=[ ])|(?=\W|\b))/g,
     pg: /(?<=\W|\b)([Pp][\\/]?[Gg])(\.(?=[ ])|(?=\W|\b))/g,
