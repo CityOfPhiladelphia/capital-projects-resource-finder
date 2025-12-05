@@ -62,32 +62,7 @@ export default {
         row.site_category = normalizeSiteCategory(row.site_category);
         row.keywords = Array.from(row.keywords, (keyword) => expandContractions(keyword))
       })
-
       if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);
-
-      ////////////////////////////////////////////////// TEMP FIXES FOR DATA //////////////////////////////////////////////////////////////
-      const stdStatuses = ['Construction', 'Design', 'Complete', 'Planning'];
-      const statuses = new Set();
-      const hashesSet = new Set();
-      const hashesArray = [];
-      data.rows.forEach((site) => {
-        // FIX STATUS
-        site.projects.forEach((project) => {
-          statuses.add(project.project_status)
-          project.project_status = stdStatuses.includes(project.project_status) ? project.project_status : "Planning";
-          hashesSet.add(project.fields_hash);
-          hashesArray.push(project.fields_hash)
-        })
-      })
-      if (import.meta.env.VITE_DEBUG) {
-        console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXX")
-        console.log([...statuses])
-        console.log(hashesSet.size)
-        console.log(hashesArray.length)
-        console.log("REPEATED PROJECTS: ", hashesArray.filter((value, index) => hashesArray.indexOf(value) !== index && hashesArray.lastIndexOf(value) === index))
-      }
-      /////////////////////////////////////////////////////////// END TEMP FIXES //////////////////////////////////////////////////
-
       return data.rows;
     },
   }

@@ -40,8 +40,8 @@ export default{
     },
     "p4": "You can also find recently completed and archived projects (completed within the last six months).",
     "p5": "Projects are organized by facility. Some facilities may have multiple active projects at one time.",
-    "h3_3": "Learn more",
-    "p6": "We update the information [time period]. If something is wrong, you can let us know through our <a target='_blank' href='https://www.phila.gov/feedback/'>feedback form.</a>"
+    "h3_3": "Feedback",
+    "p6": "We update project information on a quarterly basis. If something is wrong, you can let us know through our <a target='_blank' href='https://www.phila.gov/feedback/'>feedback form.</a>"
   },
   "status": {
     "category": "Status",
