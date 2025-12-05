@@ -50,16 +50,16 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 
   <div class="status-labels">
     <div class="inline-block-div planning-div">
-      Planning
+      {{ $t('status.planning') }}
     </div>
     <div class="inline-block-div design-div">
-      Design
+      {{ $t('status.design') }}
     </div>
     <div class="inline-block-div construction-div">
-      Construction
+      {{ $t('status.construction') }}
     </div>
     <div class="inline-block-div complete-div">
-      Complete
+      {{ $t('status.complete') }}
     </div>
   </div>
 
