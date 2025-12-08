@@ -28,7 +28,9 @@ export default{
       "li3": "Xe đô thị chuyên dụng",
       "li4": "Đường bộ và hệ thống giao thông do thành phố quản lý"
     },
-    "p2": "Hợp tác với các cơ quan khác của Thành phố, Văn phòng Chương trình Thủ <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>đô</a> quản lý hoạt động cho hơn 200 dự án vốn trên toàn thành phố. ",
+    "p2_1": "Hợp tác với các cơ quan khác của Thành phố,",
+    "p2_a": "Văn phòng Chương trình Vốn",
+    "p2_2": "quản lý hoạt động cho hơn 200 dự án vốn trên toàn thành phố.",
     "h3_2": "Sử dụng Công cụ tìm tài nguyên dự án vốn",
     "p3": "Sử dụng công cụ tìm kiếm này để xác định vị trí các dự án vốn đang diễn ra tại các cơ sở thuộc sở hữu của Thành phố trên khắp Philadelphia. Ví dụ: bạn có thể tìm thấy các dự án đang hoạt động tại:",
     "ul2": {
@@ -41,7 +43,8 @@ export default{
     "p4": "Bạn cũng có thể tìm thấy các dự án đã hoàn thành và lưu trữ gần đây (đã hoàn thành trong vòng sáu tháng qua).",
     "p5": "Các dự án được tổ chức theo cơ sở. Một số cơ sở có thể có nhiều dự án đang hoạt động cùng một lúc.",
     "h3_3": "Phản hồi",
-    "p6": "Chúng tôi cập nhật thông tin dự án hàng quý. Nếu có gì đó không ổn, bạn có thể cho chúng tôi biết thông qua biểu mẫu <a target='_blank' href='https://www.phila.gov/feedback/'>phản hồi của chúng tôi.</a>"
+    "p6": "Chúng tôi cập nhật thông tin dự án hàng quý. Nếu có gì đó không ổn, bạn có thể cho chúng tôi biết thông qua",
+    "p6_a": "hình thức phản hồi."
   },
   "status": {
     "category": "Trạng thái",

@@ -68,7 +68,11 @@ const props = defineProps({
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p2')" />
+      <p>
+        {{ t('introPage.p2_1') }}
+        <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>{{ t('introPage.p2_a') }}</a>
+        {{ t('introPage.p2_2') }}
+      </p>
     </div>
 
     <div class="half-data-section">
@@ -76,7 +80,10 @@ const props = defineProps({
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p6')" />
+      <p>
+        {{ t('introPage.p6') }}
+        <a target='_blank' href='https://www.phila.gov/feedback/'>{{ t('introPage.p6_a') }}</a>
+      </p>
     </div>
 
   </div>

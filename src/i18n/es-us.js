@@ -28,7 +28,9 @@ export default{
       "li3": "Vehículos municipales especializados",
       "li4": "Carreteras y sistemas de transporte gestionados por la ciudad"
     },
-    "p2": "En asociación con otras agencias municipales, la Oficina del Programa <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>Capital</a> administra las operaciones de más de 200 proyectos de capital en toda la ciudad. ",
+    "p2_1": "En asociación con otras agencias municipales, el",
+    "p2_a": "Oficina del Programa de Capital",
+    "p2_2": "administra las operaciones de más de 200 proyectos de capital en toda la ciudad.",
     "h3_2": "Uso del buscador de recursos para proyectos de capital",
     "p3": "Utilice este buscador para localizar los proyectos de capital que se llevan a cabo en instalaciones de propiedad municipal en Filadelfia. Por ejemplo, puede encontrar proyectos activos en:",
     "ul2": {
@@ -41,7 +43,8 @@ export default{
     "p4": "También puede encontrar proyectos finalizados y archivados recientemente (completados en los últimos seis meses).",
     "p5": "Los proyectos se organizan por instalación. Algunas instalaciones pueden tener varios proyectos activos a la vez.",
     "h3_3": "Retroalimentación",
-    "p6": "Actualizamos la información del proyecto trimestralmente. Si algo va mal, puedes hacérnoslo saber a través de nuestro formulario de <a target='_blank' href='https://www.phila.gov/feedback/'>comentarios.</a>"
+    "p6": "Actualizamos la información del proyecto trimestralmente. Si algo está mal, puede hacérnoslo saber a través de nuestro",
+    "p6_a": "formulario de comentarios."
   },
   "status": {
     "category": "Estado",

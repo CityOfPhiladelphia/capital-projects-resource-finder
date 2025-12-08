@@ -28,7 +28,9 @@ export default{
       "li3": "Automjete komunale të specializuara",
       "li4": "Rrugët dhe sistemet e transportit të menaxhuara nga qyteti"
     },
-    "p2": "Në partneritet me agjencitë e tjera të qytetit, Zyra <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>e Programit të Kap</a> italit menaxhon operacionet për më shumë se 200 projekte kapitale në të gjithë qytetin. ",
+    "p2_1": "Në bashkëpunim me agjencitë e tjera të qytetit,",
+    "p2_a": "Zyra e Programit të Kapitalit",
+    "p2_2": "Menaxhon operacionet për më shumë se 200 projekte kapitale në të gjithë qytetin.",
     "h3_2": "Përdorimi i kërkuesit të burimeve të projekteve kapitale",
     "p3": "Përdorni këtë gjetës për të gjetur projekte kapitale që zhvillohen në objektet në pronësi të Qytetit në të gjithë Filadelfia. Për shembull, mund të gjeni projekte aktive në:",
     "ul2": {
@@ -41,7 +43,8 @@ export default{
     "p4": "Ju gjithashtu mund të gjeni projekte të përfunduara dhe të arkivuara së fundmi (të përfunduara brenda gjashtë muajve të fundit).",
     "p5": "Projektet organizohen sipas objekteve. Disa objekte mund të kenë projekte të shumta aktive në të njëjtën kohë.",
     "h3_3": "Reagime",
-    "p6": "Ne përditësojmë informacionin e projektit në baza tremujore. Nëse diçka nuk shkon, ju mund të na tregoni përmes formularit tonë <a target='_blank' href='https://www.phila.gov/feedback/'>të reagimit.</a>"
+    "p6": "Ne përditësojmë informacionin e projektit në baza tremujore. Nëse diçka nuk është në rregull, ju mund të na tregoni përmes",
+    "p6_a": "formularin e reagimit."
   },
   "status": {
     "category": "Statusi",
