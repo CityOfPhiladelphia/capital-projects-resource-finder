@@ -86,6 +86,7 @@ const clickedPrint = () => {
 </template>
 
 <style>
+
 .card-button {
   border-width: 0px;
   color: #0f4d90;
@@ -106,4 +107,5 @@ const clickedPrint = () => {
   padding-left: 5px;
   text-transform: none;
 }
+
 </style>

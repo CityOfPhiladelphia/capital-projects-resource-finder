@@ -74,6 +74,7 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 </template>
 
 <style scoped>
+
 .past:after {
   background: v-bind('green');
 }
@@ -297,4 +298,5 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
     margin-left: 10px;
   }
 }
+
 </style>

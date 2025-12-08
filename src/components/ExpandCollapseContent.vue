@@ -5,7 +5,6 @@ import ButtonDropdown from './ButtonDropdown.vue';
 import StatusBar from './StatusBar.vue';
 import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
-import { format } from 'date-fns';
 
 import regexDictionary from '@/composables/regexDictionary';
 import { normalizeCategory as normalizeProjectCategory } from '@/composables/normalizeCategory'
@@ -165,8 +164,7 @@ const handleMoreClick = () => {
 
   <div class='main-ec-content'>
 
-    <print-share-section :item="selectedProject" :featureId="item._featureId" :is-mobile="isMobile"
-      v-if="selectedProject" />
+    <print-share-section :item="selectedProject" :featureId="item._featureId" :is-mobile="isMobile"/>
 
     <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive" />
 
@@ -177,7 +175,7 @@ const handleMoreClick = () => {
     <div class="columns top-section">
 
       <div class="column is-6">
-        <div v-if="selectedProject && selectedProject.project_address" class="columns is-mobile">
+        <div v-if="selectedProject.project_address" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="map-marker-alt" />
           </div>
@@ -186,7 +184,7 @@ const handleMoreClick = () => {
           </div>
         </div>
 
-        <div v-if="selectedProject && selectedProject.project_category" class="columns is-mobile">
+        <div v-if="selectedProject.project_category" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="folder" />
           </div>
@@ -194,7 +192,7 @@ const handleMoreClick = () => {
             v-html="'<b>' + t('card.category') + ': </b>' + t(`projectCategory.${normalizeProjectCategory(selectedProject.project_category)}`)" />
         </div>
 
-        <div v-if="selectedProject && selectedProject.website_link" class="columns is-mobile website-div">
+        <div v-if="selectedProject.website_link" class="columns is-mobile website-div">
           <div class="column is-1">
             <font-awesome-icon icon="globe" />
           </div>
@@ -204,11 +202,12 @@ const handleMoreClick = () => {
             </a>
           </div>
         </div>
+
       </div>
 
       <div class="column is-6">
 
-        <div v-if="selectedProject && selectedProject.project_estimated_cost" class="columns is-mobile">
+        <div v-if="selectedProject.project_estimated_cost" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="money-check-dollar" />
           </div>
@@ -216,7 +215,7 @@ const handleMoreClick = () => {
             v-html="'<b>' + t('card.budget') + ': </b>' + accounting.formatMoney(selectedProject.project_estimated_cost)" />
         </div>
 
-        <div v-if="selectedProject && selectedProject.council_district" class="columns is-mobile">
+        <div v-if="selectedProject.council_district" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="chart-tree-map" />
           </div>
@@ -224,7 +223,7 @@ const handleMoreClick = () => {
             v-html="'<b>' + t('card.district') + ': </b>' + selectedProject.council_district.replace(/[^0-9]/g, '')" />
         </div>
 
-        <div v-if="selectedProject && selectedProject.contact_email" class="columns is-mobile">
+        <div v-if="selectedProject.contact_email" class="columns is-mobile">
           <div class="column is-1">
             <font-awesome-icon icon="envelope" />
           </div>
@@ -245,7 +244,7 @@ const handleMoreClick = () => {
 
       <div>
         {{ t('card.improvements_include') }}
-        <ul v-if="selectedProject && selectedProject.project_scope"
+        <ul v-if="selectedProject.project_scope"
           :style="'list-style-type: disc; margin-left: 20px;'">
           <li v-for="(item, i) in selectedProject.project_scope.split(regexDictionary.character.unenclosedComma)"
             :key="i" class="li-card">
@@ -255,7 +254,7 @@ const handleMoreClick = () => {
       </div>
     </div>
 
-    <div v-if="selectedProject">
+    <div>
 
       <h3>
         {{ t('card.section_status') }}
@@ -272,11 +271,11 @@ const handleMoreClick = () => {
       </div>
 
       <div id="completion-info">
-        <div v-if="selectedProject.project_status !== 'Complete'">
-          <b>{{ t('card.estimated_completion') }}:</b> {{ estimatedCompletion }}
-        </div>
         <div v-if="selectedProject.project_status === 'Complete'">
           <b>{{ t('card.completed') }}:</b> {{ actualCompletionDate }}
+        </div>
+        <div v-else>
+          <b>{{ t('card.estimated_completion') }}:</b> {{ estimatedCompletion }}
         </div>
       </div>
 
