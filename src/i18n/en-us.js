@@ -111,6 +111,7 @@ export default{
       "team": "Project team",
       "coordinator": "Project Coordinator",
       "inspector": "Inspector"
-    }
+    },
+    "last_update": "Last updated"
   }
 }

@@ -40,8 +40,8 @@ export default{
     },
     "p4": "Ou ka jwenn tou pwojè dènyèman ranpli ak achiv (ranpli nan sis dènye mwa yo).",
     "p5": "Pwojè yo òganize pa etablisman. Gen kèk enstalasyon yo ka gen plizyè pwojè aktif nan yon sèl fwa.",
-    "h3_3": "Aprann plis",
-    "p6": "Nou mete ajou enfòmasyon an [peryòd tan]. Si yon bagay ki mal, ou ka fè nou konnen nan fòm fidb <a target='_blank' href='https://www.phila.gov/feedback/'>ak nou an.</a>"
+    "h3_3": "Feedback",
+    "p6": "Nou mete ajou enfòmasyon pwojè sou yon baz chak trimès. Si yon bagay ki mal, ou ka fè nou konnen nan fòm fidb <a target='_blank' href='https://www.phila.gov/feedback/'>ak nou an.</a>"
   },
   "status": {
     "category": "Estati",
@@ -111,6 +111,7 @@ export default{
       "team": "Ekip pwojè",
       "coordinator": "Kòdonatè Pwoj",
       "inspector": "Enspektè"
-    }
+    },
+    "last_update": "Dènye mete ajou"
   }
 }

@@ -40,8 +40,8 @@ export default{
     },
     "p4": "Você também pode encontrar projetos recentemente concluídos e arquivados (concluídos nos últimos seis meses).",
     "p5": "Os projetos são organizados por instalação. Algumas instalações podem ter vários projetos ativos ao mesmo tempo.",
-    "h3_3": "Saiba mais",
-    "p6": "Nós atualizamos as informações [período de tempo]. Se algo estiver errado, você pode nos informar por meio do nosso formulário de <a target='_blank' href='https://www.phila.gov/feedback/'>feedback.</a>"
+    "h3_3": "Feedback",
+    "p6": "Atualizamos as informações do projeto trimestralmente. Se algo estiver errado, você pode nos informar por meio do nosso formulário de <a target='_blank' href='https://www.phila.gov/feedback/'>feedback.</a>"
   },
   "status": {
     "category": "Status",
@@ -111,6 +111,7 @@ export default{
       "team": "Equipe do projeto",
       "coordinator": "Coordenador do Projeto",
       "inspector": "Inspetor"
-    }
+    },
+    "last_update": "Última atualização"
   }
 }

@@ -10,12 +10,13 @@ export default {
     firstLowerAndMinLength: /(\b[a-z](?=\w{3}|'\w{2}))/g,
     stringSeparators: /(?<!\b\w{1,2})(?:[,.;]\s?(?:[Aa]nd)?)(?=\s)/g,
     initialUpperNotStreetOrAllCaps: /(?<!(?:(?:\d[Tt][Hh])(?:\s(?:[Aa][Nn][Dd]|&))?\s)|(?:\.\s)|^)(?<=\s)(?:[A-Z])(?!\.|(?:[A-Z]+)|(?:[a-z]{1,2}[A-Z.])|(?:'[A-Z]))/g,
-    engineSingleDigit: /(engine )(\d)(?=\b)/gi
+    engineSingleDigit: /(engine )(\d)(?=\b)/gi,
+    isDate: /\d\d\d\d-\d{1,2}-\d{1,2}/
   },
   whiteSpace: {
-    leadingTrailingPunctAndWhite: /(?<=^)\W*|\s*(?:[,./?;:[{(!@#$%&*^_=+\\\-]+|\s*)+(?=$)/g,
+    leadingTrailingPunctAndWhite: /(?<=^)\W*|\s*(?:[,./?;:[{(!@#$%&*^_=+\\-]+|\s*)+(?=$)/g,
     whiteBeforePunct: /(?:\s+)([,.?;:!]\s?)/g,
-    unbalancedWhitespace: /(\s(?=[\\\/-]\w))([\\\/-])|([\\\/-])((?<=\w[\\\/-])\s)/g,
+    unbalancedWhitespace: /(\s(?=[\\/-]\w))([\\/-])|([\\/-])((?<=\w[\\/-])\s)/g,
     moreThanOneSpace: /\s+/g
   },
   character: {

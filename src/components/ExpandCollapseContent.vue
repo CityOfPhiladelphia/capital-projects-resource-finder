@@ -12,6 +12,7 @@ import { normalizeCategory as normalizeProjectCategory } from '@/composables/nor
 import { isArchiveProject } from '@/composables/isArchiveProject'
 import { formatProjectScope } from '@/composables/formatProjectScope'
 import { formatStringSentenceCase } from '@/composables/formatStringSentenceCase'
+import { formatDate } from '@/composables/formatDate';
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -60,33 +61,25 @@ const archiveMessage = computed(() => {
 })
 
 const excessProjects = computed(() => {
-  if (props.item.properties.projects.length <= 3) return [];
-  let projects = [...props.item.properties.projects];
-  return projects.splice(2);
+  return props.item.properties.projects.length <= 3 ? [] : [...props.item.properties.projects].splice(2);
 });
 
 const excessProjectSelected = computed(() => {
-  let excessProjectNames = excessProjects.value.map(project => project.fields_hash);
-  return excessProjectNames.includes(selectedProjectHash.value);
+  return excessProjects.value.map(project => project.fields_hash).includes(selectedProjectHash.value);
 })
 
 const estimatedCompletion = computed(() => {
-  if (!selectedProject.value) return 'TBD';
   const season = selectedProject.value.estimated_completion_season ? selectedProject.value.estimated_completion_season : '';
   const year = selectedProject.value.estimated_completion_year ? selectedProject.value.estimated_completion_year : '';
-  return `${season} ${year}`.trim();
+  return season ? `${season} ${year}`.trim() : `TBD ${year}`.trim()
 });
 
 const actualCompletionDate = computed(() => {
-  if (!selectedProject.value || !selectedProject.value.actual_completion) return 'No date provided';
-  let value;
-  try {
-    value = format(selectedProject.value.actual_completion, 'MMMM d, yyyy');
-  } catch (error) {
-    console.log(error);
-    value = 'No date provided';
-  }
-  return value;
+  return selectedProject.value.actual_completion ? formatDate(selectedProject.value.actual_completion) : 'No date provided';
+});
+
+const lastUpdatedDate = computed(() => {
+  return selectedProject.value.last_update ? formatDate(selectedProject.value.last_update) : 'No date provided';
 });
 
 // METHODS
@@ -285,6 +278,10 @@ const handleMoreClick = () => {
         <div v-if="selectedProject.project_status === 'Complete'">
           <b>{{ t('card.completed') }}:</b> {{ actualCompletionDate }}
         </div>
+      </div>
+
+      <div id="update-date">
+          <b>{{ t('card.last_update') }}:</b> {{ lastUpdatedDate }}
       </div>
 
     </div>

@@ -40,8 +40,8 @@ export default{
     },
     "p4": "Unaweza pia kupata miradi iliyokamilishwa na iliyohifadhiwa hivi karibuni (iliyokamilishwa ndani ya miezi sita",
     "p5": "Miradi imeandaliwa na kituo. Baadhi ya vifaa vinaweza kuwa na miradi mingi inayofanya kazi kwa wakati mmoja.",
-    "h3_3": "Jifunze zaidi",
-    "p6": "Tunasasisha habari [kipindi cha muda]. Ikiwa kuna kitu kibaya, unaweza kutujulisha kupitia fomu yetu <a target='_blank' href='https://www.phila.gov/feedback/'>ya maoni.</a>"
+    "h3_3": "Maoni",
+    "p6": "Tunasasisha habari ya mradi kwa kila robo. Ikiwa kuna kitu kibaya, unaweza kutujulisha kupitia fomu yetu <a target='_blank' href='https://www.phila.gov/feedback/'>ya maoni.</a>"
   },
   "status": {
     "category": "Hali",
@@ -111,6 +111,7 @@ export default{
       "team": "Timu ya mradi",
       "coordinator": "Mratibu wa Mradi",
       "inspector": "Mkaguzi"
-    }
+    },
+    "last_update": "Imesasishwa mwish"
   }
 }

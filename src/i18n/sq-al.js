@@ -40,8 +40,8 @@ export default{
     },
     "p4": "Ju gjithashtu mund të gjeni projekte të përfunduara dhe të arkivuara së fundmi (të përfunduara brenda gjashtë muajve të fundit).",
     "p5": "Projektet organizohen sipas objekteve. Disa objekte mund të kenë projekte të shumta aktive në të njëjtën kohë.",
-    "h3_3": "Mësoni më shumë",
-    "p6": "Ne përditësojmë informacionin [periudha kohore]. Nëse diçka nuk shkon, ju mund të na tregoni përmes formularit tonë <a target='_blank' href='https://www.phila.gov/feedback/'>të reagimit.</a>"
+    "h3_3": "Reagime",
+    "p6": "Ne përditësojmë informacionin e projektit në baza tremujore. Nëse diçka nuk shkon, ju mund të na tregoni përmes formularit tonë <a target='_blank' href='https://www.phila.gov/feedback/'>të reagimit.</a>"
   },
   "status": {
     "category": "Statusi",
@@ -111,6 +111,7 @@ export default{
       "team": "Ekipi i projektit",
       "coordinator": "Koordinator i Projektit",
       "inspector": "Inspektor"
-    }
+    },
+    "last_update": "Përditësuar së fundmi"
   }
 }

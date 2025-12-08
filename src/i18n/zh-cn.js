@@ -40,8 +40,8 @@ export default{
     },
     "p4": "您还可以找到最近完成和存档的项目（在过去六个月内完成）。",
     "p5": "项目按设施组织。一些设施可能同时有多个活跃的项目。",
-    "h3_3": "了解更多",
-    "p6": "我们更新信息 [时间段]。如果有问题，您可以通过我们的<a target='_blank' href='https://www.phila.gov/feedback/'>反馈表告知我们。</a>"
+    "h3_3": "反馈",
+    "p6": "我们每季度更新项目信息。如果有问题，您可以通过我们的<a target='_blank' href='https://www.phila.gov/feedback/'>反馈表告知我们。</a>"
   },
   "status": {
     "category": "状态",
@@ -111,6 +111,7 @@ export default{
       "team": "项目组",
       "coordinator": "项目协调员",
       "inspector": "检查员"
-    }
+    },
+    "last_update": "上次更新时间"
   }
 }

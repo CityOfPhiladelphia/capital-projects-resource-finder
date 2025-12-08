@@ -40,8 +40,8 @@ export default{
     },
     "p4": "Bạn cũng có thể tìm thấy các dự án đã hoàn thành và lưu trữ gần đây (đã hoàn thành trong vòng sáu tháng qua).",
     "p5": "Các dự án được tổ chức theo cơ sở. Một số cơ sở có thể có nhiều dự án đang hoạt động cùng một lúc.",
-    "h3_3": "Tìm hiểu thêm",
-    "p6": "Chúng tôi cập nhật thông tin [khoảng thời gian]. Nếu có gì đó không ổn, bạn có thể cho chúng tôi biết thông qua biểu mẫu <a target='_blank' href='https://www.phila.gov/feedback/'>phản hồi của chúng tôi.</a>"
+    "h3_3": "Phản hồi",
+    "p6": "Chúng tôi cập nhật thông tin dự án hàng quý. Nếu có gì đó không ổn, bạn có thể cho chúng tôi biết thông qua biểu mẫu <a target='_blank' href='https://www.phila.gov/feedback/'>phản hồi của chúng tôi.</a>"
   },
   "status": {
     "category": "Trạng thái",
@@ -111,6 +111,7 @@ export default{
       "team": "Đội ngũ dự án",
       "coordinator": "Điều phối viên dự án",
       "inspector": "Thanh tra"
-    }
+    },
+    "last_update": "Cập nhật lần cuối"
   }
 }
