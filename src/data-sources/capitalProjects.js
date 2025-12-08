@@ -33,8 +33,8 @@ const sqlQuery = `
         'fields_hash', pt.fields_hash
       ) AS project,
       concat_ws(',',
-        regexp_replace(pt.project_name, '[^\\w]+', ',', 'g'),
-        regexp_replace(pt.project_scope, '[^\\w]+', ',', 'g'),
+        regexp_replace(pt.project_name, '\\W+', ',', 'g'),
+        regexp_replace(pt.project_scope, '\\W+', ',', 'g'),
         regexp_replace(pt.project_coordinator, '[\\/-:;]', ',', 'g'),
         regexp_replace(pt.inspector, '[\\/-:;]', ',', 'g'),
         pt.estimated_completion_year,
@@ -60,7 +60,10 @@ export default {
       data.rows.forEach((row) => {
         row.site_name = row.lat === null ? `Council District ${row.council_district}` : getShortestSiteName(row.site_name);
         row.site_category = normalizeSiteCategory(row.site_category);
-        row.keywords = Array.from(row.keywords, (keyword) => expandContractions(keyword))
+        row.keywords = [... new Set(row.keywords.flatMap((keyword) => {
+          keyword = expandContractions(keyword)
+          return keyword.length > 2 ? keyword : []
+        }))]
       })
       if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);
       return data.rows;
