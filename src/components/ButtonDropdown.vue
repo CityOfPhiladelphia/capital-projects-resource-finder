@@ -1,4 +1,5 @@
 <script setup>
+
 import { formatStringSentenceCase } from '@/composables/formatStringSentenceCase'
 
 const props = defineProps({
@@ -19,6 +20,7 @@ const $emit = defineEmits(['clickedProject']);
 </script>
 
 <template>
+
   <div class="dropdown column is-4 is-hoverable">
 
     <button v-for="project in projects" :key="project.fields_hash" type="button"
@@ -31,6 +33,7 @@ const $emit = defineEmits(['clickedProject']);
     </button>
 
   </div>
+
 </template>
 
 <style scoped>

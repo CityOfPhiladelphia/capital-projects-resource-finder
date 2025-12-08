@@ -1,4 +1,5 @@
 <script setup>
+
 import { computed } from 'vue';
 const publicPath = import.meta.env.VITE_PUBLICPATH || '/';
 
@@ -31,6 +32,7 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 </script>
 
 <template>
+
   <div class="status-bar">
 
     <div :class="`chevron planning ${planningStatus}`">
@@ -74,7 +76,6 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 </template>
 
 <style scoped>
-
 .past:after {
   background: v-bind('green');
 }
@@ -298,5 +299,4 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
     margin-left: 10px;
   }
 }
-
 </style>

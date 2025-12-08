@@ -18,14 +18,15 @@ const props = defineProps({
 </script>
 
 <template>
+
   <div class="main-greeting">
 
     <div class="half-data-section">
-      <h3 v-html="t('introPage.h3_2')" />
+      <h3 v-text="t('introPage.h3_2')" />
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p3')" />
+      <p v-text="t('introPage.p3')" />
     </div>
 
     <div class="half-data-section">
@@ -37,26 +38,26 @@ const props = defineProps({
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p4')" />
+      <p v-text="t('introPage.p4')" />
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p5')" />
+      <p v-text="t('introPage.p5')" />
     </div>
 
     <div class="half-data-section">
       <div class="has-text-centered container">
-        <button class="button greeting-button" @click="$emit('view-list')" v-html="$t('app.viewList')" />
-        <button v-if="isMobile" class="button greeting-button" @click="$emit('view-map')" v-html="$t('app.viewMap')" />
+        <button class="button greeting-button" @click="$emit('view-list')" v-text="$t('app.viewList')" />
+        <button v-if="isMobile" class="button greeting-button" @click="$emit('view-map')" v-text="$t('app.viewMap')" />
       </div>
     </div>
 
     <div class="half-data-section">
-      <h3 v-html="t('introPage.h3_1')" />
+      <h3 v-text="t('introPage.h3_1')" />
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p1')" />
+      <p v-text="t('introPage.p1')" />
     </div>
 
     <div class="half-data-section">
@@ -70,13 +71,14 @@ const props = defineProps({
     <div class="half-data-section">
       <p>
         {{ t('introPage.p2_1') }}
-        <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>{{ t('introPage.p2_a') }}</a>
+        <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>{{ t('introPage.p2_a')
+        }}</a>
         {{ t('introPage.p2_2') }}
       </p>
     </div>
 
     <div class="half-data-section">
-      <h3 v-html="t('introPage.h3_3')" />
+      <h3 v-text="t('introPage.h3_3')" />
     </div>
 
     <div class="half-data-section">
