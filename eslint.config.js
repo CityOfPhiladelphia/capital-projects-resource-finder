@@ -1,17 +1,43 @@
-import js from '@eslint/js'
-import pluginVue from 'eslint-plugin-vue'
+import eslint from "@eslint/js";
+import eslintPluginVue from "eslint-plugin-vue";
+import globals from "globals";
+import typescriptEslint from "typescript-eslint";
+import eslintConfigPrettier from "eslint-config-prettier";
 
-export default [
+export default typescriptEslint.config(
   {
-    name: 'app/files-to-lint',
-    files: ['**/*.{js,mjs,jsx,vue}'],
+    ignores: [
+      "*.d.ts",
+      "**/coverage/**",
+      "**/dist/**",
+      "**/node_modules/**",
+      "**/plop-templates/**",
+      "**/.vue-global-types/**",
+    ],
   },
-
   {
-    name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
+    extends: [
+      eslint.configs.recommended,
+      ...typescriptEslint.configs.recommended,
+      ...eslintPluginVue.configs["flat/essential"],
+      ...eslintPluginVue.configs["flat/recommended"],
+      eslintConfigPrettier,
+    ],
+    files: ["**/*.{ts,vue}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: globals.browser,
+      parserOptions: {
+        parser: typescriptEslint.parser,
+      },
+    },
+    rules: {
+      "vue/multi-word-component-names": "off",
+      "vue/no-v-html": "off",
+      "vue/order-in-components": "error",
+      "vue/attributes-order": "error",
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    },
   },
-
-  js.configs.recommended,
-  ...pluginVue.configs['flat/essential'],
-]
+);
