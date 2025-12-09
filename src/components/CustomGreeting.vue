@@ -15,6 +15,8 @@ const props = defineProps({
   },
 });
 
+const $emit = defineEmits(["view-map", "view-list"]);
+
 </script>
 
 <template>
@@ -54,7 +56,7 @@ const props = defineProps({
           v-text="$t('app.viewList')"
         />
         <button
-          v-if="isMobile"
+          v-if="props.isMobile"
           class="button greeting-button"
           @click="$emit('view-map')"
           v-text="$t('app.viewMap')"
