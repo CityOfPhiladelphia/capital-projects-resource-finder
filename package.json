@@ -2,6 +2,7 @@
   "name": "capital-projects-resource-finder",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite --mode=development",
     "dev:linked": "vite --mode=linked",
@@ -11,7 +12,7 @@
     "build:production": "vite build --mode=production",
     "build:testing": "vite build --mode=testing",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",

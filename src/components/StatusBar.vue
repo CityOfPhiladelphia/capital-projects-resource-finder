@@ -32,29 +32,40 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 </script>
 
 <template>
-
   <div class="status-bar">
-
     <div :class="`chevron planning ${planningStatus}`">
-      <img class="rotated-image" :src="publicPath + planningImage">
+      <img
+        class="rotated-image"
+        :src="publicPath + planningImage"
+      >
     </div>
 
     <div :class="`chevron design ${designStatus}`">
-      <img class="rotated-image" :src="publicPath + designImage">
+      <img
+        class="rotated-image"
+        :src="publicPath + designImage"
+      >
     </div>
 
     <div :class="`chevron construction ${constructionStatus}`">
-      <img class="rotated-image" :src="publicPath + constructionImage">
+      <img
+        class="rotated-image"
+        :src="publicPath + constructionImage"
+      >
     </div>
 
-    <div :class="`flag complete ${completeStatus}`" :style="`background: ${completeColor}`">
-      <img class="spaced-image" :src="publicPath + completeImage">
+    <div
+      :class="`flag complete ${completeStatus}`"
+      :style="`background: ${completeColor}`"
+    >
+      <img
+        class="spaced-image"
+        :src="publicPath + completeImage"
+      >
     </div>
-
   </div>
 
   <div class="status-labels">
-
     <div class="inline-block-div planning-div">
       {{ $t('status.planning') }}
     </div>
@@ -70,9 +81,7 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
     <div class="inline-block-div complete-div">
       {{ $t('status.complete') }}
     </div>
-
   </div>
-
 </template>
 
 <style scoped>

@@ -111,72 +111,119 @@ const handleMoreClick = () => {
 </script>
 
 <template>
-
-  <div v-if="item.properties.projects.length > 1" class="ec-content button-row is-multiline columns is-mobile">
-
-    <button class="project-button column is-4 p-0 first-child" type="button"
-      :id="item.properties.projects[0].fields_hash" :class="{
+  <div
+    v-if="item.properties.projects.length > 1"
+    class="ec-content button-row is-multiline columns is-mobile"
+  >
+    <button
+      :id="item.properties.projects[0].fields_hash"
+      class="project-button column is-4 p-0 first-child"
+      type="button"
+      :class="{
         'project-selected': !moreIsOpen && item.properties.projects[0].fields_hash === selectedProjectHash
-      }" @click="handleProjectClick(item.properties.projects[0].fields_hash)">
+      }"
+      @click="handleProjectClick(item.properties.projects[0].fields_hash)"
+    >
       <div class="project-button-text has-text-centered pl-1 pr-1">
         {{ formatStringSentenceCase(item.properties.projects[0].project_name) }}
       </div>
     </button>
 
-    <button class="project-button column is-4 p-0 middle-child" type="button"
-      :id="item.properties.projects[1].fields_hash" :class="{
+    <button
+      :id="item.properties.projects[1].fields_hash"
+      class="project-button column is-4 p-0 middle-child"
+      type="button"
+      :class="{
         'project-selected': !moreIsOpen && item.properties.projects[1].fields_hash === selectedProjectHash,
         'second-child-final': item.properties.projects.length == 2
-      }" @click="handleProjectClick(item.properties.projects[1].fields_hash)">
+      }"
+      @click="handleProjectClick(item.properties.projects[1].fields_hash)"
+    >
       <div class="project-button-text has-text-centered pl-1 pr-1">
         {{ formatStringSentenceCase(item.properties.projects[1].project_name) }}
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length == 3" class="project-button column is-4 p-0 middle-child"
-      type="button" :id="item.properties.projects[2].fields_hash" :class="{
+    <button
+      v-if="item.properties.projects.length == 3"
+      :id="item.properties.projects[2].fields_hash"
+      class="project-button column is-4 p-0 middle-child"
+      type="button"
+      :class="{
         'project-selected': !moreIsOpen && item.properties.projects[2].fields_hash === selectedProjectHash,
-      }" @click="handleProjectClick(item.properties.projects[2].fields_hash)">
+      }"
+      @click="handleProjectClick(item.properties.projects[2].fields_hash)"
+    >
       <div class="project-button-text has-text-centered pl-1 pr-1">
         {{ formatStringSentenceCase(item.properties.projects[2].project_name) }}
       </div>
     </button>
 
-    <button v-if="item.properties.projects.length > 3" class="project-button column is-4 p-0 middle-child"
-      id="moreButton" type="button" :class="{ 'project-selected': excessProjectSelected || moreIsOpen }"
-      @click="handleMoreClick()">
+    <button
+      v-if="item.properties.projects.length > 3"
+      id="moreButton"
+      class="project-button column is-4 p-0 middle-child"
+      type="button"
+      :class="{ 'project-selected': excessProjectSelected || moreIsOpen }"
+      @click="handleMoreClick()"
+    >
       <div class="project-button-text has-text-centered pl-1 pr-1">
         More
-        <font-awesome-icon v-if="!moreIsOpen" icon="caret-down" />
-        <font-awesome-icon v-if="moreIsOpen" icon="caret-up" />
+        <font-awesome-icon
+          v-if="!moreIsOpen"
+          icon="caret-down"
+        />
+        <font-awesome-icon
+          v-if="moreIsOpen"
+          icon="caret-up"
+        />
       </div>
     </button>
 
-    <div v-if="item.properties.projects.length == 1" class="spacer column is-8"></div>
-    <div v-if="item.properties.projects.length == 2" class="spacer column is-4"></div>
+    <div
+      v-if="item.properties.projects.length == 1"
+      class="spacer column is-8"
+    />
+    <div
+      v-if="item.properties.projects.length == 2"
+      class="spacer column is-4"
+    />
 
     <div class="more-zone column is-12 p-0">
-      <button-dropdown v-if="moreIsOpen" :projects="excessProjects" :selectedProject="selectedProjectHash"
-        @clicked-project="handleProjectClick">
-      </button-dropdown>
+      <button-dropdown
+        v-if="moreIsOpen"
+        :projects="excessProjects"
+        :selected-project="selectedProjectHash"
+        @clicked-project="handleProjectClick"
+      />
     </div>
-
   </div>
 
-  <div class='main-ec-content'>
+  <div class="main-ec-content">
+    <print-share-section
+      :item="selectedProject"
+      :feature-id="item._featureId"
+      :is-mobile="isMobile"
+    />
 
-    <print-share-section :item="selectedProject" :featureId="item._featureId" :is-mobile="isMobile" />
-
-    <callout v-if="archiveActive" :message="archiveMessage" class="is-warning is-archive" />
+    <callout
+      v-if="archiveActive"
+      :message="archiveMessage"
+      class="is-warning is-archive"
+    />
 
     <div>
-      <h2 class="project-name">{{ formatStringSentenceCase(selectedProject.project_name) }}</h2>
+      <h2 class="project-name">
+        {{ formatStringSentenceCase(selectedProject.project_name) }}
+      </h2>
     </div>
 
     <div class="columns top-section">
-
       <div class="column is-6">
-        <div v-if="selectedProject.project_address" class="columns is-mobile">
+        <div
+          v-if="selectedProject.project_address"
+          class="columns is-mobile"
+        >
           <div class="column is-1">
             <font-awesome-icon icon="map-marker-alt" />
           </div>
@@ -185,7 +232,10 @@ const handleMoreClick = () => {
           </div>
         </div>
 
-        <div v-if="selectedProject.project_category" class="columns is-mobile">
+        <div
+          v-if="selectedProject.project_category"
+          class="columns is-mobile"
+        >
           <div class="column is-1">
             <font-awesome-icon icon="folder" />
           </div>
@@ -195,22 +245,29 @@ const handleMoreClick = () => {
           </div>
         </div>
 
-        <div v-if="selectedProject.website_link" class="columns is-mobile website-div">
+        <div
+          v-if="selectedProject.website_link"
+          class="columns is-mobile website-div"
+        >
           <div class="column is-1">
             <font-awesome-icon icon="globe" />
           </div>
           <div class="column is-11">
-            <a target="_blank" :href="makeValidUrl(selectedProject.website_link)">
+            <a
+              target="_blank"
+              :href="makeValidUrl(selectedProject.website_link)"
+            >
               Project website
             </a>
           </div>
         </div>
-
       </div>
 
       <div class="column is-6">
-
-        <div v-if="selectedProject.project_estimated_cost" class="columns is-mobile">
+        <div
+          v-if="selectedProject.project_estimated_cost"
+          class="columns is-mobile"
+        >
           <div class="column is-1">
             <font-awesome-icon icon="money-check-dollar" />
           </div>
@@ -219,7 +276,10 @@ const handleMoreClick = () => {
           </div>
         </div>
 
-        <div v-if="selectedProject.council_district" class="columns is-mobile">
+        <div
+          v-if="selectedProject.council_district"
+          class="columns is-mobile"
+        >
           <div class="column is-1">
             <font-awesome-icon icon="chart-tree-map" />
           </div>
@@ -228,7 +288,10 @@ const handleMoreClick = () => {
           </div>
         </div>
 
-        <div v-if="selectedProject.contact_email" class="columns is-mobile">
+        <div
+          v-if="selectedProject.contact_email"
+          class="columns is-mobile"
+        >
           <div class="column is-1">
             <font-awesome-icon icon="envelope" />
           </div>
@@ -237,9 +300,7 @@ const handleMoreClick = () => {
             <a :href="`mailto:${selectedProject.contact_email}`">{{ selectedProject.contact_email }}</a>
           </div>
         </div>
-
       </div>
-
     </div>
 
     <div>
@@ -249,17 +310,22 @@ const handleMoreClick = () => {
 
       <div>
         {{ t('card.improvements_include') }}
-        <ul v-if="selectedProject.project_scope" :style="'list-style-type: disc; margin-left: 20px;'">
-          <li v-for="(item, i) in selectedProject.project_scope.split(regexDictionary.character.unenclosedComma)"
-            :key="i" class="li-card">
-            {{ item }}
+        <ul
+          v-if="selectedProject.project_scope"
+          :style="'list-style-type: disc; margin-left: 20px;'"
+        >
+          <li
+            v-for="(improvement, i) in selectedProject.project_scope.split(regexDictionary.character.unenclosedComma)"
+            :key="i"
+            class="li-card"
+          >
+            {{ improvement }}
           </li>
         </ul>
       </div>
     </div>
 
     <div>
-
       <h3>
         {{ t('card.section_status') }}
       </h3>
@@ -286,7 +352,6 @@ const handleMoreClick = () => {
       <div id="update-date">
         <b>{{ t('card.last_update') }}:</b> {{ lastUpdatedDate }}
       </div>
-
     </div>
 
     <div>
@@ -295,16 +360,17 @@ const handleMoreClick = () => {
       </h3>
 
       <ul :style="'list-style-type: disc; margin-left: 20px;'">
-        <li class="li-card"><b>{{ t('card.project.coordinator') }}:</b> {{ selectedProject.project_coordinator ?
-          selectedProject.project_coordinator : 'TBD' }}</li>
-        <li class="li-card"><b>{{ t('card.project.inspector') }}:</b> {{ selectedProject.inspector ?
-          selectedProject.inspector : 'TBD' }}</li>
+        <li class="li-card">
+          <b>{{ t('card.project.coordinator') }}:</b> {{ selectedProject.project_coordinator ?
+            selectedProject.project_coordinator : 'TBD' }}
+        </li>
+        <li class="li-card">
+          <b>{{ t('card.project.inspector') }}:</b> {{ selectedProject.inspector ?
+            selectedProject.inspector : 'TBD' }}
+        </li>
       </ul>
-
     </div>
-
   </div>
-
 </template>
 
 <style>

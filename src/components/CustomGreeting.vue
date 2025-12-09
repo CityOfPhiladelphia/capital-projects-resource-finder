@@ -15,12 +15,12 @@ const props = defineProps({
   },
 });
 
+const $emit = defineEmits(["view-map", "view-list"]);
+
 </script>
 
 <template>
-
   <div class="main-greeting">
-
     <div class="half-data-section">
       <h3 v-text="t('introPage.h3_2')" />
     </div>
@@ -31,7 +31,10 @@ const props = defineProps({
 
     <div class="half-data-section">
       <ul class="bullet-list">
-        <li v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul2" :key="index">
+        <li
+          v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul2"
+          :key="index"
+        >
           {{ t('introPage.ul2.' + index) }}
         </li>
       </ul>
@@ -47,8 +50,17 @@ const props = defineProps({
 
     <div class="half-data-section">
       <div class="has-text-centered container">
-        <button class="button greeting-button" @click="$emit('view-list')" v-text="$t('app.viewList')" />
-        <button v-if="isMobile" class="button greeting-button" @click="$emit('view-map')" v-text="$t('app.viewMap')" />
+        <button
+          class="button greeting-button"
+          @click="$emit('view-list')"
+          v-text="$t('app.viewList')"
+        />
+        <button
+          v-if="props.isMobile"
+          class="button greeting-button"
+          @click="$emit('view-map')"
+          v-text="$t('app.viewMap')"
+        />
       </div>
     </div>
 
@@ -62,7 +74,10 @@ const props = defineProps({
 
     <div class="half-data-section">
       <ul class="bullet-list">
-        <li v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul1" :key="index">
+        <li
+          v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul1"
+          :key="index"
+        >
           {{ t('introPage.ul1.' + index) }}
         </li>
       </ul>
@@ -71,7 +86,10 @@ const props = defineProps({
     <div class="half-data-section">
       <p>
         {{ t('introPage.p2_1') }}
-        <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>{{ t('introPage.p2_a')
+        <a
+          target="_blank"
+          href="https://www.phila.gov/departments/capital-program-office/"
+        >{{ t('introPage.p2_a')
         }}</a>
         {{ t('introPage.p2_2') }}
       </p>
@@ -84,12 +102,13 @@ const props = defineProps({
     <div class="half-data-section">
       <p>
         {{ t('introPage.p6') }}
-        <a target='_blank' href='https://www.phila.gov/feedback/'>{{ t('introPage.p6_a') }}</a>
+        <a
+          target="_blank"
+          href="https://www.phila.gov/feedback/"
+        >{{ t('introPage.p6_a') }}</a>
       </p>
     </div>
-
   </div>
-
 </template>
 
 <style lang="scss" scoped>
