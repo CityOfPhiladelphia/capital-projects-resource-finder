@@ -28,7 +28,9 @@ export default{
       "li3": "Specialized municipal vehicles",
       "li4": "City-managed roads and transportation systems"
     },
-    "p2": "In partnership with other City agencies, the <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>Capital Program Office</a> manages the operations for more than 200 capital projects citywide. ",
+    "p2_1": "In partnership with other City agencies, the",
+    "p2_a": "Capital Program Office",
+    "p2_2": "manages the operations for more than 200 capital projects citywide.",
     "h3_2": "Using the Capital Projects Resource Finder",
     "p3": "Use this finder to locate capital projects taking place at City-owned facilities across Philadelphia. For example, you can find active projects at:",
     "ul2": {
@@ -41,7 +43,8 @@ export default{
     "p4": "You can also find recently completed and archived projects (completed within the last six months).",
     "p5": "Projects are organized by facility. Some facilities may have multiple active projects at one time.",
     "h3_3": "Feedback",
-    "p6": "We update project information on a quarterly basis. If something is wrong, you can let us know through our <a target='_blank' href='https://www.phila.gov/feedback/'>feedback form.</a>"
+    "p6": "We update project information on a quarterly basis. If something is wrong, you can let us know through our",
+    "p6_a": "feedback form."
   },
   "status": {
     "category": "Status",
@@ -111,6 +114,7 @@ export default{
       "team": "Project team",
       "coordinator": "Project Coordinator",
       "inspector": "Inspector"
-    }
+    },
+    "last_update": "Last updated"
   }
 }

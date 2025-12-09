@@ -28,7 +28,9 @@ export default{
       "li3": "Magari maalum ya manispaa",
       "li4": "Barabara na mifumo ya usafiri zinazosimamiwa na"
     },
-    "p2": "Kwa kushirikiana na mashirika mengine ya Jiji, Ofisi ya Programu ya Mji M <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>kuu</a> inasimamia shughuli za zaidi ya miradi 200 ya mji mkubwa kote. ",
+    "p2_1": "Kwa kushirikiana na mashirika mengine ya Jiji,",
+    "p2_a": "Ofisi ya Programu ya Mtaji",
+    "p2_2": "inasimamia shughuli kwa zaidi ya miradi 200 ya mji mkuu kote.",
     "h3_2": "Kutumia Mtafutaji wa Rasilimali ya Miradi ya M",
     "p3": "Tumia mtafutaji huu kupata miradi ya mtaji inayofanyika katika vituo vinavyoomilikiwa na Jiji kote Philadelphia. Kwa mfano, unaweza kupata miradi inayofanya kazi katika:",
     "ul2": {
@@ -40,8 +42,9 @@ export default{
     },
     "p4": "Unaweza pia kupata miradi iliyokamilishwa na iliyohifadhiwa hivi karibuni (iliyokamilishwa ndani ya miezi sita",
     "p5": "Miradi imeandaliwa na kituo. Baadhi ya vifaa vinaweza kuwa na miradi mingi inayofanya kazi kwa wakati mmoja.",
-    "h3_3": "Jifunze zaidi",
-    "p6": "Tunasasisha habari [kipindi cha muda]. Ikiwa kuna kitu kibaya, unaweza kutujulisha kupitia fomu yetu <a target='_blank' href='https://www.phila.gov/feedback/'>ya maoni.</a>"
+    "h3_3": "Maoni",
+    "p6": "Tunasasisha habari ya mradi kwa kila robo. Ikiwa kuna kitu kibaya, unaweza kutujulisha kupitia yetu",
+    "p6_a": "fomu ya maoni."
   },
   "status": {
     "category": "Hali",
@@ -111,6 +114,7 @@ export default{
       "team": "Timu ya mradi",
       "coordinator": "Mratibu wa Mradi",
       "inspector": "Mkaguzi"
-    }
+    },
+    "last_update": "Imesasishwa mwish"
   }
 }

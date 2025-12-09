@@ -28,7 +28,9 @@ export default{
       "li3": "Veículos municipais especializados",
       "li4": "Estradas e sistemas de transporte administrados pela cidade"
     },
-    "p2": "Em parceria com outras agências municipais, o Escritório do Programa de <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>Capital</a> gerencia as operações de mais de 200 projetos de capital em toda a cidade. ",
+    "p2_1": "Em parceria com outras agências municipais, o",
+    "p2_a": "Escritório do Programa de Capital",
+    "p2_2": "gerencia as operações de mais de 200 projetos de capital em toda a cidade.",
     "h3_2": "Usando o Localizador de Recursos de Projetos de Capital",
     "p3": "Use este localizador para localizar projetos de capital que estão ocorrendo em instalações de propriedade da cidade em toda a Filadélfia. Por exemplo, você pode encontrar projetos ativos em:",
     "ul2": {
@@ -40,8 +42,9 @@ export default{
     },
     "p4": "Você também pode encontrar projetos recentemente concluídos e arquivados (concluídos nos últimos seis meses).",
     "p5": "Os projetos são organizados por instalação. Algumas instalações podem ter vários projetos ativos ao mesmo tempo.",
-    "h3_3": "Saiba mais",
-    "p6": "Nós atualizamos as informações [período de tempo]. Se algo estiver errado, você pode nos informar por meio do nosso formulário de <a target='_blank' href='https://www.phila.gov/feedback/'>feedback.</a>"
+    "h3_3": "Feedback",
+    "p6": "Atualizamos as informações do projeto trimestralmente. Se algo estiver errado, você pode nos informar através do nosso",
+    "p6_a": "formulário de feedback."
   },
   "status": {
     "category": "Status",
@@ -111,6 +114,7 @@ export default{
       "team": "Equipe do projeto",
       "coordinator": "Coordenador do Projeto",
       "inspector": "Inspetor"
-    }
+    },
+    "last_update": "Última atualização"
   }
 }

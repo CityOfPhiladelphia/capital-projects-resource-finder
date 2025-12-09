@@ -1,11 +1,11 @@
-# immigrant-resource-finder
+# capital-projects-finder
 
-This is the sourcecode for the [Resources for immigrants](http://phila-resource-finder.s3-website-us-east-1.amazonaws.com/immigrant/prod/#/) app.
+This is the sourcecode for the [Capital projects finder](http://phila-resource-finder-v2.s3-website-us-east-1.amazonaws.com/dev/capital-projects-finder/) app.
 
 The app uses the framework [Pinboard](https://github.com/CityOfPhiladelphia/pinboard), in npm as [@phila/pinboard](https://www.npmjs.com/package/@phila/pinboard).
 
-![Example](https://mapboard-images.s3.amazonaws.com/pinboard/immigrant-resource-finder.JPG)
-![Example](https://mapboard-images.s3.amazonaws.com/pinboard/phone-immigrant-resource-finder.JPG)
+![Example](https://mapboard-images.s3.amazonaws.com/pinboard/capital-projects-finder.png)
+![Example](https://mapboard-images.s3.amazonaws.com/pinboard/capital-projects-finder-mobile.png)
 
 Full instructions for how this repo uses the @phila/pinboard package can be found in the [Pinboard wiki](https://github.com/CityOfPhiladelphia/pinboard/wiki).
 
@@ -13,22 +13,22 @@ Basic instructions for Getting started are here:
 
 ## Project setup
 ```
-yarn install
+npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn run serve
+npm run dev
 ```
 
 ### Compiles and minifies for production
 ```
-yarn run build
+npm run build
 ```
 
 ### Lints and fixes files
 ```
-yarn run lint
+npm run lint
 ```
 
 ### Customize configuration

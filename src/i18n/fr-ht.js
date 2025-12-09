@@ -28,7 +28,9 @@ export default{
       "li3": "Machin minisipal espesyalize",
       "li4": "Wout ki jere nan vil ak sistèm transpò"
     },
-    "p2": "An patenarya ak lòt ajans vil, Biwo Pw <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>ogram Kapital</a> la jere operasyon yo pou plis pase 200 pwojè kapital nan tout lavil la. ",
+    "p2_1": "Nan patenarya ak lòt ajans vil yo, la",
+    "p2_a": "Biwo Pwogram Kapital",
+    "p2_2": "jere operasyon yo pou plis pase 200 pwojè kapital nan tout lavil la.",
     "h3_2": "Sèvi ak Resous Chèche Pwojè Kapital la",
     "p3": "Sèvi ak chèche sa a pou lokalize pwojè kapital k ap pran plas nan enstalasyon City-posede atravè Philadelphia. Pou egzanp, ou ka jwenn pwojè aktif nan:",
     "ul2": {
@@ -40,8 +42,9 @@ export default{
     },
     "p4": "Ou ka jwenn tou pwojè dènyèman ranpli ak achiv (ranpli nan sis dènye mwa yo).",
     "p5": "Pwojè yo òganize pa etablisman. Gen kèk enstalasyon yo ka gen plizyè pwojè aktif nan yon sèl fwa.",
-    "h3_3": "Aprann plis",
-    "p6": "Nou mete ajou enfòmasyon an [peryòd tan]. Si yon bagay ki mal, ou ka fè nou konnen nan fòm fidb <a target='_blank' href='https://www.phila.gov/feedback/'>ak nou an.</a>"
+    "h3_3": "Feedback",
+    "p6": "Nou mete ajou enfòmasyon pwojè sou yon baz chak trimès. Si yon bagay ki mal, ou ka fè nou konnen nan nou an",
+    "p6_a": "fòm fidbak."
   },
   "status": {
     "category": "Estati",
@@ -111,6 +114,7 @@ export default{
       "team": "Ekip pwojè",
       "coordinator": "Kòdonatè Pwoj",
       "inspector": "Enspektè"
-    }
+    },
+    "last_update": "Dènye mete ajou"
   }
 }

@@ -60,29 +60,30 @@ const clickedPrint = () => {
 </script>
 
 <template>
-
   <div v-if="route.name !== 'printView'">
-
     <div style="text-align:right;">
-
-      <button class="button is-small card-button" @click="clickedShare">
+      <button
+        class="button is-small card-button"
+        @click="clickedShare"
+      >
         <font-awesome-icon icon="share-alt" />
         <span class="card-button-text">
           {{ $t('share') }}
         </span>
       </button>
 
-      <button v-if="!isMobile" class="button is-small card-button" @click="clickedPrint">
+      <button
+        v-if="!isMobile"
+        class="button is-small card-button"
+        @click="clickedPrint"
+      >
         <font-awesome-icon icon="print" />
         <span class="card-button-text">
           {{ $t('print') }}
         </span>
       </button>
-
     </div>
-
   </div>
-
 </template>
 
 <style>

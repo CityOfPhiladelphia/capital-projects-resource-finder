@@ -28,7 +28,9 @@ export default{
       "li3": "Véhicules municipaux spécialisés",
       "li4": "Routes et systèmes de transport gérés par la ville"
     },
-    "p2": "En partenariat avec d'autres agences municipales, le Bureau du programme d'<a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>investissement</a> gère les opérations de plus de 200 projets d'investissement dans toute la ville. ",
+    "p2_1": "En partenariat avec d'autres agences de la ville, le",
+    "p2_a": "Bureau du programme d'équipement",
+    "p2_2": "gère les opérations de plus de 200 projets d'investissement dans toute la ville.",
     "h3_2": "Utilisation de l'outil de recherche de ressources sur les projets d'investissement",
     "p3": "Utilisez ce moteur de recherche pour localiser les projets d'investissement en cours dans les installations appartenant à la ville de Philadelphie. Par exemple, vous pouvez trouver des projets actifs à l'adresse suivante :",
     "ul2": {
@@ -40,8 +42,9 @@ export default{
     },
     "p4": "Vous pouvez également trouver les projets récemment achevés et archivés (achevés au cours des six derniers mois).",
     "p5": "Les projets sont organisés par établissement. Certaines installations peuvent avoir plusieurs projets actifs en même temps.",
-    "h3_3": "En savoir plus",
-    "p6": "Nous mettons à jour les informations [période]. Si quelque chose ne va pas, vous pouvez nous le faire savoir via notre formulaire de <a target='_blank' href='https://www.phila.gov/feedback/'>commentaires.</a>"
+    "h3_3": "Feedback",
+    "p6": "Nous mettons à jour les informations relatives aux projets tous les trimestres. Si quelque chose ne va pas, vous pouvez nous en informer via notre",
+    "p6_a": "formulaire de commentaires."
   },
   "status": {
     "category": "État",
@@ -111,6 +114,7 @@ export default{
       "team": "L'équipe du projet",
       "coordinator": "Coordinateur du projet",
       "inspector": "Inspecteur"
-    }
+    },
+    "last_update": "Dernière mise à jour"
   }
 }
