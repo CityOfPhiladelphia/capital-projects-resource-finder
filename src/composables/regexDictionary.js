@@ -31,7 +31,7 @@ export default {
   contraction: {
     with: /(?<=\s)w[./\\](?=\s\w)/g,
     cb: /(?<=\W|\b)[Cc][Bb](?=\W|\b)/g,
-    bb: /(?<=\W|\b)[Bb][Bb](\.(?=[ ])|(?=\W|\b))/g,
+    bb: /(?<=\W|\b)[Bb][Bb](?:[Aa][Ll][Ll])?(\.(?=[ ])|(?=\W|\b))/g,
     pg: /(?<=\W|\b)([Pp][\\/]?[Gg])(\.(?=[ ])|(?=\W|\b))/g,
     rcOrRec: /(?<=\W|\b)[Rr][Ee]?[Cc](\.(?=[ ])|(?=\W|\b))/g,
     ccOrCrc: /(?<=\W|\b)[Cc][Rr]?[Cc](\.(?=[ ])|(?=\W|\b))/g,
