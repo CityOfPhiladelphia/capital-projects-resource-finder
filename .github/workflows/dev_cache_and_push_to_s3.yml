@@ -6,7 +6,7 @@ name: Development caching with npm and push
 on:
   push:
     branches:
-      - fix/cleanup-for-launch
+      - main
 
 jobs:
   build:

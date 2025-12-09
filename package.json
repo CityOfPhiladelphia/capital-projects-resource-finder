@@ -2,6 +2,7 @@
   "name": "capital-projects-resource-finder",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite --mode=development",
     "dev:linked": "vite --mode=linked",
