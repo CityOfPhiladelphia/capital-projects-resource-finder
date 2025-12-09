@@ -56,7 +56,7 @@ const $emit = defineEmits(["view-map", "view-list"]);
           v-text="$t('app.viewList')"
         />
         <button
-          v-if="props.isMobile"
+          v-if="isMobile"
           class="button greeting-button"
           @click="$emit('view-map')"
           v-text="$t('app.viewMap')"
