@@ -15,8 +15,6 @@ const props = defineProps({
   },
 });
 
-const $emit = defineEmits(["view-map", "view-list"]);
-
 </script>
 
 <template>
