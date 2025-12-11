@@ -25,8 +25,8 @@ export default {
     openingBrackParen: /[({[\]]/,
     charThenSlashOrOpening: /((?<=[A-Za-z])[\\/[{(])/g,
     charThenSlashOrClosing: /([\\/)}\]](?=[A-Za-z]))/g,
-    charThenSlashDashOrOpening: /((?<=[A-Za-z])[\\/[{(-])/g,
-    charThenSlashDashOrClosing: /([\\/)}\]-](?=[A-Za-z]))/g
+    charThenSlashDashOrOpening: /((?<=[\w])[\\/[{(-])/g,
+    charThenSlashDashOrClosing: /([\\/)}\]-](?=[\w]))/g
   },
   contraction: {
     with: /(?<=\s)w[./\\](?=\s\w)/g,
