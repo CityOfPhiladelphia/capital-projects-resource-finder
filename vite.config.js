@@ -1,5 +1,5 @@
+import  * as process from 'node:process'
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig, searchForWorkspaceRoot, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'

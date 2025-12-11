@@ -1,4 +1,4 @@
-import { getShortestSiteName } from '@/composables/getShortestSiteName';
+import { formatStringTitleCase } from '@/composables/formatStringTitleCase';
 import { normalizeCategory as normalizeSiteCategory } from '@/composables/normalizeCategory';
 import { expandContractions } from '@/composables/expandContractions';
 
@@ -7,7 +7,7 @@ const sqlQuery = `
     st.lat AS lat,
     st.lon AS lon,
     st.council_district AS council_district,
-    array_agg(DISTINCT st.site_name) AS site_name,
+    st.site_name AS site_name,
     array_agg(DISTINCT st.client_category) AS site_category,
     array_agg(DISTINCT project) AS projects,
     ARRAY( SELECT DISTINCT
@@ -42,7 +42,7 @@ const sqlQuery = `
       ) AS keywords
     ) pq
   WHERE (COALESCE(st.lat, 0), COALESCE(st.lon, 0), st.council_district, st.site_name) = (COALESCE(pt.lat, 0), COALESCE(pt.lon, 0), pt.council_district, pt.site_name)
-  GROUP BY st.council_district, st.lat, st.lon
+  GROUP BY st.council_district, st.lat, st.lon, st.site_name
 `
 
 export default {
@@ -58,7 +58,7 @@ export default {
     },
     success: function (data) {
       data.rows.forEach((row) => {
-        row.site_name = row.lat === null ? `Council District ${row.council_district}` : getShortestSiteName(row.site_name);
+        row.site_name = formatStringTitleCase(row.site_name);
         row.site_category = normalizeSiteCategory(row.site_category);
         row.keywords = [... new Set(row.keywords.flatMap((keyword) => {
           keyword = expandContractions(keyword)

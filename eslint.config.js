@@ -20,7 +20,7 @@ export default defineConfig(
       ...eslintPluginVue.configs["flat/essential"],
       ...eslintPluginVue.configs["flat/recommended"],
     ],
-    files: ["**/*.{ts,vue}"],
+    files: ["**/*.{js,ts,vue}"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
