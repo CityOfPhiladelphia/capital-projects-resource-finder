@@ -94,68 +94,8 @@ const $config = {
       {
         type: 'array',
         field: 'keywords'
-      },
-      {
-        type: 'array',
-        field: 'en_synonyms',
-        i18nDependent: true,
-      },
-      {
-        type: 'array',
-        field: 'ar_synonyms',
-        i18nDependent: true,
-      },
-      {
-        type: 'array',
-        field: 'ch_synonyms',
-        i18nDependent: true,
-      },
-      {
-        type: 'array',
-        field: 'es_synonyms',
-        i18nDependent: true,
-      },
-      {
-        type: 'array',
-        field: 'fr_synonyms',
-        i18nDependent: true,
-      },
-      {
-        type: 'array',
-        field: 'hi_synonyms',
-        i18nDependent: true,
-      },
-      {
-        type: 'array',
-        field: 'ht_synonyms',
-        i18nDependent: true,
-      },
-      {
-        type: 'array',
-        field: 'pt_synonyms',
-        i18nDependent: true,
-      },
-      {
-        type: 'array',
-        field: 'ru_synonyms',
-        i18nDependent: true,
-      },
-      {
-        type: 'array',
-        field: 'sq_synonyms',
-        i18nDependent: true,
-      },
-      {
-        type: 'array',
-        field: 'sw_synonyms',
-        i18nDependent: true,
-      },
-      {
-        type: 'array',
-        field: 'vi_synonyms',
-        i18nDependent: true,
-      },
-    ],
+      }
+    ]
   },
   customComps,
   refine: {
