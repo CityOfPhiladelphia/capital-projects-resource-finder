@@ -1,4 +1,4 @@
-import { formatStringTitleCase } from '@/composables/formatStringTitleCase';
+import { getShortestSiteName } from '@/composables/getShortestSiteName';
 import { normalizeCategory as normalizeSiteCategory } from '@/composables/normalizeCategory';
 import { expandContractions } from '@/composables/expandContractions';
 
@@ -58,7 +58,7 @@ export default {
     },
     success: function (data) {
       data.rows.forEach((row) => {
-        row.site_name = formatStringTitleCase(row.site_name);
+        row.site_name = getShortestSiteName(row.site_name);
         row.site_category = normalizeSiteCategory(row.site_category);
         row.keywords = [... new Set(row.keywords.flatMap((keyword) => {
           keyword = expandContractions(keyword)
