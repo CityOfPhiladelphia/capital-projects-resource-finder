@@ -11,7 +11,7 @@ export const expandContractions = (rawString) => {
     .replace(regexDictionary.contraction.pg, 'playground') // pg to playground
     .replace(regexDictionary.contraction.rcOrRec, 'recreation center') // rc or rec to recreation center
     .replace(regexDictionary.contraction.ccOrCrc, 'community center') // cc or crc to community center
-    .replace(regexDictionary.contraction.ec, 'environmental center') // cc or crc to community center
+    .replace(regexDictionary.contraction.ec, 'environmental center') // ec to environmental center
     .replace(regexDictionary.contraction.oac, 'older adult center') // oac to older adult center
     .replace(regexDictionary.contraction.ctr, 'center') // ctr to center
     .replace(regexDictionary.contraction.hort, 'horticulture') // hort to horticulture
