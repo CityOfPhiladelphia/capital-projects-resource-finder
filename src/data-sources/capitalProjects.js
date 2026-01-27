@@ -64,7 +64,6 @@ export default {
           keyword = expandContractions(keyword);
           return keyword.length > 2 && !/(the|and|for)/.test(keyword) ? keyword.split(' ') : []
         }))]
-          console.log(row.keywords)
       })
       if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);
       return data.rows;
