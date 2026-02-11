@@ -1,11 +1,12 @@
 <script setup>
+
 import { computed } from 'vue';
 const publicPath = import.meta.env.VITE_PUBLICPATH || '/';
 
 const props = defineProps({
   project: {
     type: Object,
-    default: function(){
+    default: function () {
       return {};
     },
   }
@@ -32,41 +33,58 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
 
 <template>
   <div class="status-bar">
-
     <div :class="`chevron planning ${planningStatus}`">
-      <img class="rotated-image" :src="publicPath + planningImage">
-    </div>
-    <div :class="`chevron design ${designStatus}`">
-      <img class="rotated-image" :src="publicPath + designImage">
-    </div>
-    <div :class="`chevron construction ${constructionStatus}`">
-      <img class="rotated-image" :src="publicPath + constructionImage">
-    </div>
-    <div :class="`flag complete ${completeStatus}`" :style="`background: ${completeColor}`">
-      <img class="spaced-image" :src="publicPath + completeImage">
+      <img
+        class="rotated-image"
+        :src="publicPath + planningImage"
+      >
     </div>
 
+    <div :class="`chevron design ${designStatus}`">
+      <img
+        class="rotated-image"
+        :src="publicPath + designImage"
+      >
+    </div>
+
+    <div :class="`chevron construction ${constructionStatus}`">
+      <img
+        class="rotated-image"
+        :src="publicPath + constructionImage"
+      >
+    </div>
+
+    <div
+      :class="`flag complete ${completeStatus}`"
+      :style="`background: ${completeColor}`"
+    >
+      <img
+        class="spaced-image"
+        :src="publicPath + completeImage"
+      >
+    </div>
   </div>
 
   <div class="status-labels">
     <div class="inline-block-div planning-div">
-      Planning
+      {{ $t('status.planning') }}
     </div>
+
     <div class="inline-block-div design-div">
-      Design
+      {{ $t('status.design') }}
     </div>
+
     <div class="inline-block-div construction-div">
-      Construction
+      {{ $t('status.construction') }}
     </div>
+
     <div class="inline-block-div complete-div">
-      Complete
+      {{ $t('status.complete') }}
     </div>
   </div>
-
 </template>
 
 <style scoped>
-
 .past:after {
   background: v-bind('green');
 }
@@ -290,5 +308,4 @@ const completeImage = computed(() => { return completeStatus.value === 'past' ? 
     margin-left: 10px;
   }
 }
-
 </style>

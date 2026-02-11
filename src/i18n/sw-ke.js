@@ -28,8 +28,10 @@ export default{
       "li3": "Magari maalum ya manispaa",
       "li4": "Barabara na mifumo ya usafiri zinazosimamiwa na"
     },
-    "p2": "Kwa kushirikiana na mashirika mengine ya Jiji, Ofisi ya Programu ya Mji M <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>kuu</a> inasimamia shughuli za zaidi ya miradi 200 ya mji mkubwa kote. ",
-    "h3_2": "Kutumia mtafutaji wa miradi ya mtaji",
+    "p2_1": "Kwa kushirikiana na mashirika mengine ya Jiji,",
+    "p2_a": "Ofisi ya Programu ya Mtaji",
+    "p2_2": "inasimamia shughuli kwa zaidi ya miradi 200 ya mji mkuu kote.",
+    "h3_2": "Kutumia Mtafutaji wa Rasilimali ya Miradi ya M",
     "p3": "Tumia mtafutaji huu kupata miradi ya mtaji inayofanyika katika vituo vinavyoomilikiwa na Jiji kote Philadelphia. Kwa mfano, unaweza kupata miradi inayofanya kazi katika:",
     "ul2": {
       "li": "Hifadhi na vituo vya burudani",
@@ -40,28 +42,39 @@ export default{
     },
     "p4": "Unaweza pia kupata miradi iliyokamilishwa na iliyohifadhiwa hivi karibuni (iliyokamilishwa ndani ya miezi sita",
     "p5": "Miradi imeandaliwa na kituo. Baadhi ya vifaa vinaweza kuwa na miradi mingi inayofanya kazi kwa wakati mmoja.",
-    "h3_3": "Jifunze zaidi",
-    "p6": "Tunasasisha habari [kipindi cha muda]. Ikiwa kuna kitu kibaya, unaweza kutujulisha kupitia fomu yetu <a target='_blank' href='https://www.phila.gov/feedback/'>ya maoni.</a>"
+    "h3_3": "Maoni",
+    "p6": "Tunasasisha habari ya mradi kwa kila robo. Ikiwa kuna kitu kibaya, unaweza kutujulisha kupitia yetu",
+    "p6_a": "fomu ya maoni."
   },
   "status": {
     "category": "Hali",
     "active": "Miradi inayotumika",
-    "archived": "Miradi iliyohifadhi",
+    "archive": "Angalia Kumbukumbu",
+    "archiveAlt": "Imeandikwa",
     "design": "Ubunifu",
     "planning": "Kupanga",
     "construction": "Ujenzi",
     "complete": "Kamilisha"
   },
+  "status_description": {
+    "active": "Miradi hii kwa sasa inaendelea katika vituo vinavyoamilikiwa na Jiji.",
+    "archive": "Miradi hii imekamilika katika miezi sita iliyopita.",
+    "planning": "Mradi huo uko katika awamu ya kupanga. Uingizaji wa umma unaweza kuombwa.",
+    "design": "Miundo au mipango ya mradi inatengenezwa. Uingizaji wa umma unaweza kuombwa.",
+    "construction": "Ujenzi unaendelea.",
+    "complete": "Mradi umekamilika."
+  },
   "projectCategory": {
     "category": "Jamii ya Mradi",
-    "parksRecreation": "Hifadhi na Burudani",
-    "publicHealth": "Afya ya Umma",
-    "humanServices": "Huduma za Binadamu",
-    "freeLibrary": "Maktaba ya bure",
-    "fireDepartment": "Idara ya Moto",
-    "policeDepartment": "Idara ya Polisi",
-    "publicProperty": "Mali ya Umma",
-    "other": "nyingine"
+    "parks": "Hifadhi na Burudani",
+    "health": "Afya ya Umma",
+    "human": "Huduma za Binadamu",
+    "library": "Maktaba ya bure",
+    "fire": "Idara ya Moto",
+    "police": "Idara ya Polisi",
+    "property": "Mali ya Umma",
+    "other": "nyingine",
+    "multiple": "Idara nyingi"
   },
   "councilDistrict": {
     "category": "Wilaya ya Baraza",
@@ -76,24 +89,32 @@ export default{
     "district9": "Wilaya 9",
     "district10": "Wilaya ya 10"
   },
-  "Philadephia Parks and Recreation": "Hifadhi za Philadephia na Burudani",
   "card": {
+    "address": "Anwani",
     "category": "Jamii",
-    "district": "Wilaya",
+    "district": "Wilaya ya Baraza",
     "budget": "Bajeti",
-    "section_description": "Maelezo",
-    "description_text": "Maandishi haya mafupi ya maelezo yatatoa muktadha wa asili juu ya mradi huo na inapaswa kuwa ndefu kuliko sentensi mbili hadi tatu kwa urefu",
+    "contact": "Wasiliana",
+    "section_description": "Maelezo ya mradi",
+    "improvements_include": "Uboreshaji ni pamoja na:",
     "section_status": "Hali",
     "status_text": "Nakala haya mafupi ya maelezo yatatoa muktadha wa ziada kusaidia mtumiaji kutafsiri sehemu hii ya hali",
     "current_stage": "Hatua ya sasa",
-    "status_descriptions": {
-      "planning": "Mradi huo uko katika awamu ya kupanga. Uingizaji wa umma unaweza kuombwa.",
-      "design": "Miundo au mipango ya mradi inatengenezwa. Uingizaji wa umma unaweza kuombwa.",
-      "construction": "Ujenzi unaendelea.",
-      "complete": "Mradi umekamilika."
+    "status_description": {
+      "planning": "Tunafafanua mahitaji ya mradi na wigo. Uingizaji wa umma unaweza kuombwa.",
+      "design": "Tunaendeleza miundo au mipango ya mradi. Uingizaji wa umma unaweza kuombwa.",
+      "construction": "Tumeanza ujenzi. Kulingana na aina ya kazi, kusafiri inaweza kuathiriwa katika eneo hilo.",
+      "complete": "Mradi umekamilika. Tunaweza kuendelea kushiriki sasisho juu ya kazi iliyokamilishwa."
     },
-    "estimated_completion_description": "Makadiriwa Ukamil",
-    "estimated_completion_text": "Maandishi haya mafupi ya maelezo yatatoa muktadha wa ziada kusaidia mtumiaji kutafsiri meza hii na lebo",
-    "project_team_description": "Timu ya Mradi"
+    "completed": "Imekamilika",
+    "estimated_completion": "Ukamilika uliokadi",
+    "archived_on": "Mradi huu ulihifadhiwa kwenye",
+    "archive_message": "Miradi imehifadhiwa miezi sita baada ya kukamilika.",
+    "project": {
+      "team": "Timu ya mradi",
+      "coordinator": "Mratibu wa Mradi",
+      "inspector": "Mkaguzi"
+    },
+    "last_update": "Imesasishwa mwish"
   }
 }

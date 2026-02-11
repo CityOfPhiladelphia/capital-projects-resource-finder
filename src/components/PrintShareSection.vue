@@ -1,15 +1,13 @@
 <script setup>
 
-// use these if running off unlinked package
-import { useMainStore } from '@phila/pinboard';
-import { useRoute, useRouter } from '@phila/pinboard';
-// OR
-// use this if running off linked package
-// import { useMainStore } from '../../node_modules/@phila/pinboard/src/stores/MainStore.js';
-// import { useRoute, useRouter } from '../../node_modules/@phila/pinboard/src/main.js';
+import { useMainStore } from '@pinboard';
+const MainStore = useMainStore();
+
+import { useRoute, useRouter } from '@pinboard';
+const router = useRouter();
+const route = useRoute();
 
 import * as bulmaToast from 'bulma-toast'
-
 bulmaToast.setDefaults({
   position: 'top-center',
   type: 'is-success',
@@ -18,18 +16,13 @@ bulmaToast.setDefaults({
   zIndex: 9999,
 });
 
-const router = useRouter();
-const route = useRoute();
-
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
-
-const MainStore = useMainStore();
 
 const props = defineProps({
   'item': {
     type: Object,
-    default: () => {}
+    default: () => { }
   },
   'featureId': {
     type: [String, Number],
@@ -60,8 +53,8 @@ const clickedShare = () => {
 
 const clickedPrint = () => {
   if (import.meta.env.VITE_DEBUG) console.log('clickedPrint is running');
-  MainStore.printCheckboxes = [ props.featureId ];
-  router.push({ name: 'printView'  });
+  MainStore.printCheckboxes = [props.featureId];
+  router.push({ name: 'printView' });
 }
 
 </script>
@@ -78,6 +71,7 @@ const clickedPrint = () => {
           {{ $t('share') }}
         </span>
       </button>
+
       <button
         v-if="!isMobile"
         class="button is-small card-button"
@@ -93,7 +87,6 @@ const clickedPrint = () => {
 </template>
 
 <style>
-
 .card-button {
   border-width: 0px;
   color: #0f4d90;
@@ -103,7 +96,8 @@ const clickedPrint = () => {
   color: black;
 }
 
-.card-button:focus:not(:active), .card-button.is-focused:not(:active) {
+.card-button:focus:not(:active),
+.card-button.is-focused:not(:active) {
   box-shadow: none !important;
 }
 
@@ -113,5 +107,4 @@ const clickedPrint = () => {
   padding-left: 5px;
   text-transform: none;
 }
-
 </style>

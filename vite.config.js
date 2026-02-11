@@ -1,5 +1,5 @@
+import  * as process from 'node:process'
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig, searchForWorkspaceRoot, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
@@ -44,11 +44,11 @@ export default defineConfig(({ mode }) => {
         // ],
       }),
     ],
-    // base: 'testing/primary-care/',
     base: env.VITE_PUBLICPATH,
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+        '@pinboard': env.VITE_LINKED ? fileURLToPath(new URL('./node_modules/@phila/pinboard/src/main.js', import.meta.url)) : '@phila/pinboard',
       }
     },
     optimizeDeps: {

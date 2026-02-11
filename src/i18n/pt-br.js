@@ -28,8 +28,10 @@ export default{
       "li3": "Veículos municipais especializados",
       "li4": "Estradas e sistemas de transporte administrados pela cidade"
     },
-    "p2": "Em parceria com outras agências municipais, o Escritório do Programa de <a target='_blank' href='https://www.phila.gov/departments/capital-program-office/'>Capital</a> gerencia as operações de mais de 200 projetos de capital em toda a cidade. ",
-    "h3_2": "Usando o localizador de projetos de capital",
+    "p2_1": "Em parceria com outras agências municipais, o",
+    "p2_a": "Escritório do Programa de Capital",
+    "p2_2": "gerencia as operações de mais de 200 projetos de capital em toda a cidade.",
+    "h3_2": "Usando o Localizador de Recursos de Projetos de Capital",
     "p3": "Use este localizador para localizar projetos de capital que estão ocorrendo em instalações de propriedade da cidade em toda a Filadélfia. Por exemplo, você pode encontrar projetos ativos em:",
     "ul2": {
       "li": "Parques e centros recreativos",
@@ -40,28 +42,39 @@ export default{
     },
     "p4": "Você também pode encontrar projetos recentemente concluídos e arquivados (concluídos nos últimos seis meses).",
     "p5": "Os projetos são organizados por instalação. Algumas instalações podem ter vários projetos ativos ao mesmo tempo.",
-    "h3_3": "Saiba mais",
-    "p6": "Nós atualizamos as informações [período de tempo]. Se algo estiver errado, você pode nos informar por meio do nosso formulário de <a target='_blank' href='https://www.phila.gov/feedback/'>feedback.</a>"
+    "h3_3": "Feedback",
+    "p6": "Atualizamos as informações do projeto trimestralmente. Se algo estiver errado, você pode nos informar através do nosso",
+    "p6_a": "formulário de feedback."
   },
   "status": {
     "category": "Status",
     "active": "Projetos ativos",
-    "archived": "Projetos arquivados",
+    "archive": "Exibir arquivo",
+    "archiveAlt": "Arquivado",
     "design": "Design",
     "planning": "Planejamento",
     "construction": "Construção",
     "complete": "Completo"
   },
+  "status_description": {
+    "active": "Esses projetos estão em andamento em instalações de propriedade da cidade.",
+    "archive": "Esses projetos foram concluídos nos últimos seis meses.",
+    "planning": "O projeto está em fase de planejamento. A opinião pública pode ser solicitada.",
+    "design": "Os desenhos ou planos do projeto são desenvolvidos. A opinião pública pode ser solicitada.",
+    "construction": "A construção está em andamento.",
+    "complete": "O projeto está concluído."
+  },
   "projectCategory": {
     "category": "Categoria do projeto",
-    "parksRecreation": "Parques e recreação",
-    "publicHealth": "Saúde pública",
-    "humanServices": "Serviços humanos",
-    "freeLibrary": "Biblioteca gratuita",
-    "fireDepartment": "Corpo de Bombeiros",
-    "policeDepartment": "Departamento de Polícia",
-    "publicProperty": "Propriedade pública",
-    "other": "Outros"
+    "parks": "Parques e recreação",
+    "health": "Saúde pública",
+    "human": "Serviços humanos",
+    "library": "Biblioteca gratuita",
+    "fire": "Corpo de Bombeiros",
+    "police": "Departamento de Polícia",
+    "property": "Propriedade pública",
+    "other": "Outros",
+    "multiple": "Vários departamentos"
   },
   "councilDistrict": {
     "category": "Distrito do Conselho",
@@ -76,24 +89,32 @@ export default{
     "district9": "Distrito 9",
     "district10": "Distrito 10"
   },
-  "Philadephia Parks and Recreation": "Parques e recreação da Filadélfia",
   "card": {
+    "address": "Endereço",
     "category": "Categoria",
-    "district": "Distrito",
+    "district": "Distrito do Conselho",
     "budget": "Orçamento",
-    "section_description": "Descrição",
-    "description_text": "Este breve texto descritivo fornecerá um contexto de fundo sobre o projeto e deve ter mais de duas a três frases.",
+    "contact": "Entre em contato",
+    "section_description": "Descrição do projeto",
+    "improvements_include": "As melhorias incluem:",
     "section_status": "Status",
     "status_text": "Esse breve texto descritivo fornecerá contexto adicional para ajudar o usuário a interpretar esse componente de status.",
     "current_stage": "Estágio atual",
-    "status_descriptions": {
-      "planning": "O projeto está em fase de planejamento. A opinião pública pode ser solicitada.",
-      "design": "Os desenhos ou planos do projeto são desenvolvidos. A opinião pública pode ser solicitada.",
-      "construction": "A construção está em andamento.",
-      "complete": "O projeto está concluído."
+    "status_description": {
+      "planning": "Estamos definindo as necessidades e o escopo do projeto. A contribuição do público pode ser solicitada.",
+      "design": "Estamos desenvolvendo os desenhos ou planos do projeto. A contribuição do público pode ser solicitada.",
+      "construction": "Começamos a construção. Dependendo do tipo de trabalho, as viagens podem ser afetadas na área.",
+      "complete": "O projeto está concluído. Podemos continuar compartilhando atualizações sobre o trabalho finalizado."
     },
-    "estimated_completion_description": "Conclusão estimada",
-    "estimated_completion_text": "Esse breve texto descritivo fornecerá contexto adicional para ajudar o usuário a interpretar essa tabela e os rótulos.",
-    "project_team_description": "Equipe do projeto"
+    "completed": "Concluído",
+    "estimated_completion": "Conclusão estimada",
+    "archived_on": "Este projeto foi arquivado em",
+    "archive_message": "Os projetos são arquivados seis meses após a conclusão.",
+    "project": {
+      "team": "Equipe do projeto",
+      "coordinator": "Coordenador do Projeto",
+      "inspector": "Inspetor"
+    },
+    "last_update": "Última atualização"
   }
 }

@@ -1,12 +1,8 @@
 <script setup>
 
-// use these if running off unlinked package
-import { useConfigStore } from '@phila/pinboard';
-// OR
-// use this if running off linked package
-// import { useConfigStore } from '../../node_modules/@phila/pinboard/src/stores/ConfigStore.js';
-
+import { useConfigStore } from '@pinboard';
 const $config = useConfigStore().config;
+
 if (import.meta.env.VITE_DEBUG) console.log('$config:', $config);
 
 import { useI18n } from 'vue-i18n';
@@ -19,72 +15,100 @@ const props = defineProps({
   },
 });
 
+const $emit = defineEmits(["view-map", "view-list"]);
+
 </script>
 
 <template>
   <div class="main-greeting">
-
     <div class="half-data-section">
-      <h3 v-html="t('introPage.h3_2')" />
+      <h3 v-text="t('introPage.h3_2')" />
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p3')" />
+      <p v-text="t('introPage.p3')" />
     </div>
 
     <div class="half-data-section">
       <ul class="bullet-list">
-        <li v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul2" :key="index">
+        <li
+          v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul2"
+          :key="index"
+        >
           {{ t('introPage.ul2.' + index) }}
         </li>
       </ul>
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p4')" />
+      <p v-text="t('introPage.p4')" />
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p5')" />
+      <p v-text="t('introPage.p5')" />
     </div>
 
     <div class="half-data-section">
       <div class="has-text-centered container">
-        <button class="button greeting-button" @click="$emit('view-list')" v-html="$t('app.viewList')" />
-        <button v-if="isMobile" class="button greeting-button" @click="$emit('view-map')" v-html="$t('app.viewMap')" />
+        <button
+          class="button greeting-button"
+          @click="$emit('view-list')"
+          v-text="$t('app.viewList')"
+        />
+        <button
+          v-if="props.isMobile"
+          class="button greeting-button"
+          @click="$emit('view-map')"
+          v-text="$t('app.viewMap')"
+        />
       </div>
     </div>
 
     <div class="half-data-section">
-      <h3 v-html="t('introPage.h3_1')" />
+      <h3 v-text="t('introPage.h3_1')" />
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p1')" />
+      <p v-text="t('introPage.p1')" />
     </div>
 
     <div class="half-data-section">
       <ul class="bullet-list">
-        <li v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul1" :key="index">
+        <li
+          v-for="(item, index) in $config.i18n.data.messages['en'].introPage.ul1"
+          :key="index"
+        >
           {{ t('introPage.ul1.' + index) }}
         </li>
       </ul>
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p2')" />
+      <p>
+        {{ t('introPage.p2_1') }}
+        <a
+          target="_blank"
+          href="https://www.phila.gov/departments/capital-program-office/"
+        >{{ t('introPage.p2_a')
+        }}</a>
+        {{ t('introPage.p2_2') }}
+      </p>
     </div>
 
     <div class="half-data-section">
-      <h3 v-html="t('introPage.h3_3')" />
+      <h3 v-text="t('introPage.h3_3')" />
     </div>
 
     <div class="half-data-section">
-      <p v-html="t('introPage.p6')" />
+      <p>
+        {{ t('introPage.p6') }}
+        <a
+          target="_blank"
+          href="https://www.phila.gov/feedback/"
+        >{{ t('introPage.p6_a') }}</a>
+      </p>
     </div>
-
   </div>
-  <!-- end of main-area -->
 </template>
 
 <style lang="scss" scoped>

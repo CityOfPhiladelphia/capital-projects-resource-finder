@@ -1,17 +1,36 @@
-import js from '@eslint/js'
-import pluginVue from 'eslint-plugin-vue'
+import eslint from "@eslint/js";
+import { defineConfig } from "eslint/config";
+import eslintPluginVue from "eslint-plugin-vue";
+import globals from "globals";
 
-export default [
+export default defineConfig(
   {
-    name: 'app/files-to-lint',
-    files: ['**/*.{js,mjs,jsx,vue}'],
+    ignores: [
+      "*.d.ts",
+      "**/coverage/**",
+      "**/dist/**",
+      "**/node_modules/**",
+      "**/plop-templates/**",
+      "**/.vue-global-types/**",
+    ],
   },
-
   {
-    name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
+    extends: [
+      eslint.configs.recommended,
+      ...eslintPluginVue.configs["flat/essential"],
+      ...eslintPluginVue.configs["flat/recommended"],
+    ],
+    files: ["**/*.{js,ts,vue}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: globals.browser,
+    },
+    rules: {
+      "vue/multi-word-component-names": "off",
+      "vue/no-v-html": "off",
+      "vue/order-in-components": "error",
+      "vue/attributes-order": "error",
+    },
   },
-
-  js.configs.recommended,
-  ...pluginVue.configs['flat/essential'],
-]
+);
