@@ -66,7 +66,6 @@ export default {
         }))]
       })
       if (import.meta.env.VITE_DEBUG) { console.log('capitalProjects data:', data) };
-      console.log(import.meta.env)
       return data.rows;
     }
   }
