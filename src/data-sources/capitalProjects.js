@@ -1,6 +1,6 @@
 import { getShortestSiteName } from '@/composables/getShortestSiteName';
 import { normalizeCategory as normalizeSiteCategory } from '@/composables/normalizeCategory';
-import { expandContractions } from '@/composables/text formatting/expandContractions';
+import { expandContractions } from '@/composables/text-formatting/expandContractions';
 
 const sqlQuery = `
   SELECT

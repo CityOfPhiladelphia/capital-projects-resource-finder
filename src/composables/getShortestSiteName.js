@@ -1,5 +1,5 @@
-import { formatStringTitleCase as formatSiteName } from './text formatting/formatStringTitleCase'
-import regexDictionary from './text formatting/regexDictionary';
+import { formatStringTitleCase as formatSiteName } from './text-formatting/formatStringTitleCase'
+import regexDictionary from './text-formatting/regexDictionary';
 
 // when sites have multiple names, chooses the most concice
 // also removes refrences to the project phase from the site name
