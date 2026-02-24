@@ -54,15 +54,15 @@ export default {
   url: 'https://phl.carto.com/api/v2/sql',
   options: {
     params: {
-      q: sqlQuery,
+      q: sqlQuery.replace(/(\n|\s)+/g, ' '),
     },
     success: function (data) {
       data.rows.forEach((row) => {
         row.site_name = getShortestSiteName(row.site_name);
         row.site_category = normalizeSiteCategory(row.site_category);
         row.keywords = [... new Set(row.keywords.flatMap((keyword) => {
-          keyword = expandContractions(keyword)
-          return keyword.length > 2 ? keyword : []
+          keyword = expandContractions(keyword);
+          return keyword.length > 2 && !/(the|and|for)/.test(keyword) ? keyword.split(' ') : []
         }))]
       })
       if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);
