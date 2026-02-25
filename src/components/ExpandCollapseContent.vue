@@ -6,12 +6,12 @@ import StatusBar from './StatusBar.vue';
 import accounting from 'accounting';
 import { ref, computed, watch, onBeforeMount } from 'vue';
 
-import regexDictionary from '@/composables/regexDictionary';
+import regexDictionary from '@/composables/text-formatting/regexDictionary';
 import { normalizeCategory as normalizeProjectCategory } from '@/composables/normalizeCategory'
 import { isArchiveProject } from '@/composables/isArchiveProject'
-import { formatProjectScope } from '@/composables/formatProjectScope'
-import { formatStringSentenceCase } from '@/composables/formatStringSentenceCase'
-import { formatDate } from '@/composables/formatDate';
+import { formatProjectScope } from '@/composables/text-formatting/formatProjectScope'
+import { formatStringSentenceCase } from '@/composables/text-formatting/formatStringSentenceCase'
+import { formatDate } from '@/composables/text-formatting/formatDate';
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -99,12 +99,12 @@ const makeValidUrl = (url) => {
 
 const handleProjectClick = (projectHash) => {
   moreIsOpen.value = false;
-  if (import.meta.env.VITE_DEBUG) console.log('handleProjectClick projectHash:', projectHash);
+  if (import.meta.env.VITE_DEBUG) { console.log('handleProjectClick projectHash:', projectHash) };
   selectedProjectHash.value = projectHash;
 };
 
 const handleMoreClick = () => {
-  if (import.meta.env.VITE_DEBUG) console.log('handleMoreClick projectHash:', 'more');
+  if (import.meta.env.VITE_DEBUG) { console.log('handleMoreClick projectHash:', 'more') };
   moreIsOpen.value = !moreIsOpen.value;
 };
 

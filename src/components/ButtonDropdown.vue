@@ -1,6 +1,6 @@
 <script setup>
 
-import { formatStringSentenceCase } from '@/composables/formatStringSentenceCase'
+import { formatStringSentenceCase } from '@/composables/text-formatting/formatStringSentenceCase'
 
 const props = defineProps({
   projects: {
