@@ -1,6 +1,6 @@
 import { getShortestSiteName } from '@/composables/getShortestSiteName';
 import { normalizeCategory as normalizeSiteCategory } from '@/composables/normalizeCategory';
-import { expandContractions } from '@/composables/text-formatting/expandContractions';
+import { expandContractions } from '@/composables/expandContractions';
 
 const sqlQuery = `
   SELECT
@@ -65,7 +65,7 @@ export default {
           return keyword.length > 2 && !/(the|and|for)/.test(keyword) ? keyword.split(' ') : []
         }))]
       })
-      if (import.meta.env.VITE_DEBUG) { console.log('capitalProjects data:', data) };
+      if (import.meta.env.VITE_DEBUG) console.log('capitalProjects data:', data);
       return data.rows;
     }
   }
