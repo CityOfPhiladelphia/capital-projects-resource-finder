@@ -77,8 +77,8 @@ const actualCompletionDate = computed(() => {
   return selectedProject.value.actual_completion ? formatDate(selectedProject.value.actual_completion) : 'No date provided';
 });
 
-const lastUpdatedDate = computed(() => {
-  return selectedProject.value.last_update ? formatDate(selectedProject.value.last_update) : 'No date provided';
+const lastUpdate = computed(() => {
+  return selectedProject.value.project_updates ? selectedProject.value.project_updates : 'No update provided';
 });
 
 // METHODS
@@ -350,7 +350,7 @@ const handleMoreClick = () => {
       </div>
 
       <div id="update-date">
-        <b>{{ t('card.last_update') }}:</b> {{ lastUpdatedDate }}
+        <b>{{ t('card.last_update') }}:</b> {{ lastUpdate }}
       </div>
     </div>
 
