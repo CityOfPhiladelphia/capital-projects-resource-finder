@@ -38,3 +38,6 @@ coverage
 /playwright/.auth/
 
 CLAUDE.md
+
+# Claude Code
+.claude/
