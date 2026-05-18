@@ -31,7 +31,7 @@ export default{
     "p2_1": "Hợp tác với các cơ quan khác của Thành phố,",
     "p2_a": "Văn phòng Chương trình Vốn",
     "p2_2": "quản lý hoạt động cho hơn 200 dự án vốn trên toàn thành phố.",
-    "h3_2": "Sử dụng Công cụ tìm tài nguyên dự án vốn",
+    "h3_2": "Sử dụng Công cụ tìm dự án vốn",
     "p3": "Sử dụng công cụ tìm kiếm này để xác định vị trí các dự án vốn đang diễn ra tại các cơ sở thuộc sở hữu của Thành phố trên khắp Philadelphia. Ví dụ: bạn có thể tìm thấy các dự án đang hoạt động tại:",
     "ul2": {
       "li": "Công viên và trung tâm giải trí",

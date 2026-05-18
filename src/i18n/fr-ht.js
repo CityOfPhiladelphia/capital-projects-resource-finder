@@ -31,7 +31,7 @@ export default{
     "p2_1": "Nan patenarya ak lòt ajans vil yo, la",
     "p2_a": "Biwo Pwogram Kapital",
     "p2_2": "jere operasyon yo pou plis pase 200 pwojè kapital nan tout lavil la.",
-    "h3_2": "Sèvi ak Resous Chèche Pwojè Kapital la",
+    "h3_2": "Sèvi ak Chèche Pwojè Kapital la",
     "p3": "Sèvi ak chèche sa a pou lokalize pwojè kapital k ap pran plas nan enstalasyon City-posede atravè Philadelphia. Pou egzanp, ou ka jwenn pwojè aktif nan:",
     "ul2": {
       "li": "Pak ak sant rekreyasyon",

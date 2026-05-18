@@ -31,7 +31,7 @@ export default{
     "p2_1": "Në bashkëpunim me agjencitë e tjera të qytetit,",
     "p2_a": "Zyra e Programit të Kapitalit",
     "p2_2": "Menaxhon operacionet për më shumë se 200 projekte kapitale në të gjithë qytetin.",
-    "h3_2": "Përdorimi i kërkuesit të burimeve të projekteve kapitale",
+    "h3_2": "Përdorimi i kërkuesit të projekteve kapitale",
     "p3": "Përdorni këtë gjetës për të gjetur projekte kapitale që zhvillohen në objektet në pronësi të Qytetit në të gjithë Filadelfia. Për shembull, mund të gjeni projekte aktive në:",
     "ul2": {
       "li": "Parqet dhe qendrat rekreative",
