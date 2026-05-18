@@ -31,7 +31,7 @@ export default{
     "p2_1": "Em parceria com outras agências municipais, o",
     "p2_a": "Escritório do Programa de Capital",
     "p2_2": "gerencia as operações de mais de 200 projetos de capital em toda a cidade.",
-    "h3_2": "Usando o Localizador de Recursos de Projetos de Capital",
+    "h3_2": "Usando o Localizador de Projetos de Capital",
     "p3": "Use este localizador para localizar projetos de capital que estão ocorrendo em instalações de propriedade da cidade em toda a Filadélfia. Por exemplo, você pode encontrar projetos ativos em:",
     "ul2": {
       "li": "Parques e centros recreativos",

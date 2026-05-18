@@ -31,7 +31,7 @@ export default{
     "p2_1": "In partnership with other City agencies, the",
     "p2_a": "Capital Program Office",
     "p2_2": "manages the operations for more than 200 capital projects citywide.",
-    "h3_2": "Using the Capital Projects Resource Finder",
+    "h3_2": "Using the Capital Projects Finder",
     "p3": "Use this finder to locate capital projects taking place at City-owned facilities across Philadelphia. For example, you can find active projects at:",
     "ul2": {
       "li": "Parks and recreation centers",

@@ -31,7 +31,7 @@ export default{
     "p2_1": "Kwa kushirikiana na mashirika mengine ya Jiji,",
     "p2_a": "Ofisi ya Programu ya Mtaji",
     "p2_2": "inasimamia shughuli kwa zaidi ya miradi 200 ya mji mkuu kote.",
-    "h3_2": "Kutumia Mtafutaji wa Rasilimali ya Miradi ya M",
+    "h3_2": "Kutumia Mtafutaji wa Miradi ya Mtaji",
     "p3": "Tumia mtafutaji huu kupata miradi ya mtaji inayofanyika katika vituo vinavyoomilikiwa na Jiji kote Philadelphia. Kwa mfano, unaweza kupata miradi inayofanya kazi katika:",
     "ul2": {
       "li": "Hifadhi na vituo vya burudani",

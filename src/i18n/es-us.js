@@ -31,7 +31,7 @@ export default{
     "p2_1": "En asociación con otras agencias municipales, el",
     "p2_a": "Oficina del Programa de Capital",
     "p2_2": "administra las operaciones de más de 200 proyectos de capital en toda la ciudad.",
-    "h3_2": "Uso del buscador de recursos para proyectos de capital",
+    "h3_2": "Uso del buscador de proyectos de capital",
     "p3": "Utilice este buscador para localizar los proyectos de capital que se llevan a cabo en instalaciones de propiedad municipal en Filadelfia. Por ejemplo, puede encontrar proyectos activos en:",
     "ul2": {
       "li": "Parques y centros recreativos",
