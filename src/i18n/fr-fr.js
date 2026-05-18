@@ -31,7 +31,7 @@ export default{
     "p2_1": "En partenariat avec d'autres agences de la ville, le",
     "p2_a": "Bureau du programme d'équipement",
     "p2_2": "gère les opérations de plus de 200 projets d'investissement dans toute la ville.",
-    "h3_2": "Utilisation de l'outil de recherche sur les projets d'investissement",
+    "h3_2": "Utilisation de l'outil de recherche des projets d'investissement",
     "p3": "Utilisez ce moteur de recherche pour localiser les projets d'investissement en cours dans les installations appartenant à la ville de Philadelphie. Par exemple, vous pouvez trouver des projets actifs à l'adresse suivante :",
     "ul2": {
       "li": "Parcs et centres de loisirs",
